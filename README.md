@@ -269,7 +269,7 @@ The traffic shown in the figure below means that when the interception rule is s
 
 **Surveying and mapping platform - effect of redirection interception:**
 
-![1653200439(1).jpg](https://github.com/wikiZ/RedGuardImage/raw/main/20220522142048-526e916c-d997-1.jpeg)
+![1653200439(1).jpg](https://github.com/wikiZ/RedGuardImage/raw/main/20220522142048-526e916c-d997-1.png)
 
 ## Domain fronting
 
@@ -324,5 +324,5 @@ For the listener settings, the online port is set to the RedGuard reverse proxy 
 
 If you have any questions or requirements, you can submit an issue under the project, or contact the tool author by adding WeCat.
 
-![867551fe860b10ca1396498a85422b4.jpg](https://github.com/wikiZ/RedGuardImage/raw/main/20220522141706-ce37e178-d996-1.jpeg)
+![867551fe860b10ca1396498a85422b4.jpg](https://github.com/wikiZ/RedGuardImage/raw/main/20220522141706-ce37e178-d996-1.png)
 
