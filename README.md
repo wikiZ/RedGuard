@@ -42,9 +42,6 @@ go build -ldflags "-s -w"
 # Give the tool executable permission and perform initialization operations
 chmod +x ./RedGuard&&./RedGuard
 
-# go command download
-go get github.com/wikiZ/RedGuard
-
 ```
 
 # 0x02 Configuration Description
