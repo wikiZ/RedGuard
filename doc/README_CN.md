@@ -42,9 +42,6 @@ go build -ldflags "-s -w"
 # 赋予工具可执行权限，并进行初始化操作
 chmod +x ./RedGuard&&./RedGuard
 
-# go 命令下载
-go get github.com/wikiZ/RedGuard
-
 ```
 
 # 0x02 配置说明
