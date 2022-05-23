@@ -53,11 +53,11 @@ go get github.com/wikiZ/RedGuard
 
 ​	As shown in the figure below, first grant executable permissions to RedGuard and perform initialization operations. The first run will generate a configuration file in the current user directory to achieve flexible function configuration. Configuration file name: **.RedGuard_CobaltStrike.ini**.
 
-![1653117445(1).png](https://xzfile.aliyuncs.com/media/upload/picture/20220521151731-13f938b8-d8d6-1.png)
+![1653117445(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/20220521151731-13f938b8-d8d6-1.png)
 
 **Configuration file content:**
 
-![1653117707(1).png](https://xzfile.aliyuncs.com/media/upload/picture/20220521152151-af330f34-d8d6-1.png)
+![1653117707(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/20220521152151-af330f34-d8d6-1.png)
 
 The configuration options of cert are mainly for the configuration information of the HTTPS traffic exchange certificate between the sample and the C2 front-end facility. The proxy is mainly used to configure the control options in the reverse proxy traffic. The specific use will be explained in detail below.
 
@@ -67,7 +67,7 @@ The SSL certificate used in the traffic interaction will be generated in the cer
 openssl x509 -in ca.crt -noout -text
 ```
 
-![1653118330(1).png](https://xzfile.aliyuncs.com/media/upload/picture/20220521153216-23d83cd2-d8d8-1.png)
+![1653118330(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/20220521153216-23d83cd2-d8d8-1.png)
 
 ## RedGuard Usage
 
@@ -123,7 +123,7 @@ Usage of ./RedGuard:
 
 Here, in order to facilitate the display of the output effect, the actual use can be run in the background through `nohup ./RedGuard &`.
 
-![1653130661(1).png](https://xzfile.aliyuncs.com/media/upload/picture/20220521185753-dd1280a6-d8f4-1.png)
+![1653130661(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/20220521185753-dd1280a6-d8f4-1.png)
 
 ```bash
 {"360.net":"http://127.0.0.1:8080","360.com":"https://127.0.0.1:4433"}
@@ -131,7 +131,7 @@ Here, in order to facilitate the display of the output effect, the actual use ca
 
 It is not difficult to see from the above slice that 360.net corresponds to the proxy to the local port 8080, 360.com points to the local port 4433, and corresponds to the difference in the HTTP protocol used. In the subsequent online, you need to pay attention to the protocol of the listener. The type needs to be consistent with the one set here, and set the corresponding HOST request header.
 
-![image.png](https://xzfile.aliyuncs.com/media/upload/picture/20220521191828-bd41a344-d8f7-1.png)
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/20220521191828-bd41a344-d8f7-1.png)
 
 As shown in the figure above, in the case of unauthorized access, the response information we get is also the return information of the redirected site.
 
@@ -161,7 +161,7 @@ Note that when modifying the configuration file through the command line. The -u
 
 Another interception method is DROP, which directly closes the HTTP communication response and is enabled by setting **DROP = true**. The specific interception effect is as follows:
 
-![1653132755(1).png](https://xzfile.aliyuncs.com/media/upload/picture/20220521193245-bc078708-d8f9-1.png)
+![1653132755(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/20220521193245-bc078708-d8f9-1.png)
 
 It can be seen that the C2 pre-flow control directly responds to illegal requests without the HTTP response code. In the detection of cyberspace mapping, the DROP method can achieve the function of hiding the opening of ports. The specific effect can be seen in the following case. analyze.
 
@@ -180,7 +180,7 @@ Port_HTTP = :80
 
 The blue team tracing behavior is analyzed through the interception log of the target request, which can be used to track peer connection events/problems. The log file is generated in the directory where RedGuard is running, **file name: RedGuard.log**.
 
-![image.png](https://xzfile.aliyuncs.com/media/upload/picture/20220523104050-c1c67296-da41-1.png)
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/20220523104050-c1c67296-da41-1.png)
 
 ## Request geographic restrictions
 
@@ -193,7 +193,7 @@ P.S. Domestic users, do not use **AllowLocation = Jinan,beijing** this way! It d
 AllowLocation = *
 ```
 
-![1653134160(1).png](https://xzfile.aliyuncs.com/media/upload/picture/20220521195609-00f19fb8-d8fd-1.png)
+![1653134160(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/20220521195609-00f19fb8-d8fd-1.png)
 
 Before deciding to restrict the region, you can manually query the IP address by the following command.
 
@@ -204,15 +204,15 @@ Before deciding to restrict the region, you can manually query the IP address by
 
 Here we set to allow only the Shandong region to go online
 
-![image.png](https://xzfile.aliyuncs.com/media/upload/picture/20220521200158-d0d34d6c-d8fd-1.png)
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/20220521200158-d0d34d6c-d8fd-1.png)
 
 **Legit traffic:**
 
-![1653137496(1).png](https://xzfile.aliyuncs.com/media/upload/picture/20220521205147-c6bb200a-d904-1.png)
+![1653137496(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/20220521205147-c6bb200a-d904-1.png)
 
 **Illegal request area:**
 
-![1653137621(1).png](https://xzfile.aliyuncs.com/media/upload/picture/20220521205347-0dbc1efa-d905-1.png)
+![1653137621(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/20220521205347-0dbc1efa-d905-1.png)
 
 Regarding the launch of geographical restrictions, it may be more practical in the current offensive and defensive drills. Basically, the targets of provincial and municipal protection network restrictions are in designated areas, and the traffic requested by other areas can naturally be ignored, and the function of RedGuard is Not only can a single region be restricted, but multiple online regions can be restricted based on provinces and cities, and traffic requested by other regions can be intercepted.
 
@@ -225,7 +225,7 @@ Regarding the launch of geographical restrictions, it may be more practical in t
 AllowIP       = 127.0.0.1
 ```
 
-![image.png](https://xzfile.aliyuncs.com/media/upload/picture/20220522133017-43a90ce0-d990-1.png)
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/20220522133017-43a90ce0-d990-1.png)
 
 As shown in the figure above, we only allow 127.0.0.1 to go online, then the request traffic of other IPs will be intercepted.
 
@@ -238,7 +238,7 @@ As shown in the figure above, we only allow 127.0.0.1 to go online, then the req
 AllowTime     = 8:00 - 21：00
 ```
 
-![image.png](https://xzfile.aliyuncs.com/media/upload/picture/20220522133644-2a6054c2-d991-1.png)
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/20220522133644-2a6054c2-d991-1.png)
 
 ## Malleable Profile
 
@@ -249,7 +249,7 @@ RedGuard uses the Malleable C2 profile. It then parses the provided malleable co
 MalleableFile = /root/cobaltstrike/Malleable.profile
 ```
 
-![image.png](https://xzfile.aliyuncs.com/media/upload/picture/20220522134214-ef2c5ae4-d991-1.png)
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/20220522134214-ef2c5ae4-d991-1.png)
 
 The profile written by 风起 is recommended to use:
 
@@ -261,29 +261,29 @@ The profile written by 风起 is recommended to use:
 
 ​	As shown in the figure below, when our interception rule is set to DROP, the spatial mapping system probe will probe the / directory of our reverse proxy port several times. In theory, the request packet sent by mapping is faked as normal traffic. Show. But after several attempts, because the characteristics of the request packet do not meet the release requirements of RedGuard, they are all responded by Close HTTP. The final effect displayed on the surveying and mapping platform is that the reverse proxy port is not open.
 
-![image.png](https://xzfile.aliyuncs.com/media/upload/picture/20220522135625-ea658a42-d993-1.png)
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/20220522135625-ea658a42-d993-1.png)
 
 The traffic shown in the figure below means that when the interception rule is set to Redirect, we will find that when the mapping probe receives a response, it will continue to scan our directory. UserAgent is random, which seems to be in line with normal traffic requests, but both successfully blocked.
 
-![image.png](https://xzfile.aliyuncs.com/media/upload/picture/20220522140326-e5723b4c-d994-1.png)
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/20220522140326-e5723b4c-d994-1.png)
 
 **Surveying and mapping platform - effect of redirection interception:**
 
-![1653200439(1).jpg](https://xzfile.aliyuncs.com/media/upload/picture/20220522142048-526e916c-d997-1.jpeg)
+![1653200439(1).jpg](https://github.com/wikiZ/RedGuardImage/raw/main/20220522142048-526e916c-d997-1.jpeg)
 
 ## Domain fronting
 
 ​	RedGuard supports Domain fronting. In my opinion, there are two forms of presentation. One is to use the traditional Domain fronting method, which can be achieved by setting the port of our reverse proxy in the site-wide acceleration back-to-source address. On the original basis, the function of traffic control is added to the domain fronting, and it can be redirected to the specified URL according to the setting we set to make it look more real. It should be noted that the RedGuard setting of the HTTPS HOST header must be consistent with the domain name of the site-wide acceleration.
 
-![1653201007(1).png](https://xzfile.aliyuncs.com/media/upload/picture/20220522143012-a26ab442-d998-1.png)
+![1653201007(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/20220522143012-a26ab442-d998-1.png)
 
 In individual combat, I suggest that the above method can be used, and in team tasks, it can also be achieved by self-built "Domain fronting".
 
-![image.png](https://xzfile.aliyuncs.com/media/upload/picture/20220522143837-cf77a944-d999-1.png)
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/20220522143837-cf77a944-d999-1.png)
 
 In the self-built Domain fronting, keep multiple reverse proxy ports consistent, and the HOST header consistently points to the real C2 server listening port of the backend. In this way, our real C2 server can be well hidden, and the server of the reverse proxy can only open the proxy port by configuring the firewall.
 
-![image.png](https://xzfile.aliyuncs.com/media/upload/picture/20220522144944-5cb4032e-d99b-1.png)
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/20220522144944-5cb4032e-d99b-1.png)
 
 This can be achieved through multiple node servers, and configure multiple IPs of our nodes in the CS listener HTTPS online IP.
 
@@ -293,7 +293,7 @@ This can be achieved through multiple node servers, and configure multiple IPs o
 
 If it is a single soldier, we can set an interception strategy on the cloud server firewall.
 
-![image.png](https://xzfile.aliyuncs.com/media/upload/picture/20220522150356-58b9586c-d99d-1.png)
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/20220522150356-58b9586c-d99d-1.png)
 
 Then set the address pointed to by the proxy to https://127.0.0.1:4433.
 
@@ -303,7 +303,7 @@ Then set the address pointed to by the proxy to https://127.0.0.1:4433.
 
 And because our basic verification is based on the HTTP HOST request header, what we see in the HTTP traffic is also the same as the domain fronting method, but the cost is lower, and only one cloud server is needed.
 
-![image.png](https://xzfile.aliyuncs.com/media/upload/picture/20220522150942-26f6c264-d99e-1.png)
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/20220522150942-26f6c264-d99e-1.png)
 
 For the listener settings, the online port is set to the RedGuard reverse proxy port, and the listening port is the actual online port of the local machine.
 
@@ -324,5 +324,5 @@ For the listener settings, the online port is set to the RedGuard reverse proxy 
 
 If you have any questions or requirements, you can submit an issue under the project, or contact the tool author by adding WeCat.
 
-![867551fe860b10ca1396498a85422b4.jpg](https://xzfile.aliyuncs.com/media/upload/picture/20220522141706-ce37e178-d996-1.jpeg)
+![867551fe860b10ca1396498a85422b4.jpg](https://github.com/wikiZ/RedGuardImage/raw/main/20220522141706-ce37e178-d996-1.jpeg)
 
