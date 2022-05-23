@@ -67,7 +67,7 @@ The SSL certificate used in the traffic interaction will be generated in the cer
 openssl x509 -in ca.crt -noout -text
 ```
 
-![1653118330(1).png](https://xzfile.aliyuncs.com/media/upload/picture/20220521153216-23d83cd2-d8d8-1.png)
+![1653118330(1).png](https://xzfile.aliyuncs.com/media/upload/picture/20220521153216-23d83cd2-d8d8-1.png) 
 
 ## RedGuard Usage
 
