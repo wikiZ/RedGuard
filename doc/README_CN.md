@@ -1,0 +1,328 @@
+<h1 align="center">RedGuard - Excellent C2 Front Flow Control tool</h1>
+
+[![GitHub stars](https://img.shields.io/github/stars/wikiZ/RedGuard)](https://github.com/knownsec/Kunyu) [![GitHub issues](https://img.shields.io/github/issues/wikiZ/RedGuard)](https://github.com/knownsec/Kunyu/issues) [![GitHub release](https://img.shields.io/github/release/wikiZ/RedGuard)](https://github.com/knownsec/Kunyu/releases) [![](https://img.shields.io/badge/author-风起-blueviolet)](https://github.com/wikiZ) 
+
+--------------
+
+English | [中文文档](https://github.com/wikiZ/RedGuard/blob/main/doc/README_CN.md)
+
+# 0x00 介绍
+
+## 工具介绍
+
+​	RedGuard，是一款C2设施前置流量控制技术的衍生作品，有着更加轻量的设计、高效的流量交互、以及使用go语言开发具有的可靠兼容性。它所解决的核心问题也是在面对日益复杂的红蓝攻防演练行动中，给予攻击队更加优秀的C2基础设施隐匿方案，赋予C2设施的交互流量以流量控制功能，拦截那些“恶意”的分析流量，更好的完成整个攻击任务。
+
+​	RedGuard是一个C2设施前置流量控制工具，可以避免Blue Team,AVS,EDR,Cyberspace Search Engine的检查。  
+
+## 应用场景
+
+- 攻防演练中防守方根据态势感知平台针对C2交互流量的分析溯源
+- 防范云沙箱环境下针对木马样本的恶意分析
+- 阻止恶意的请求来实施重放攻击，实现混淆上线的效果
+- 在明确上线服务器IP的情况下，以白名单的方式限制访问交互流量的请求
+- 防范网络空间测绘技术针对C2设施的扫描识别，并重定向或拦截扫描探针的流量
+- 支持对多个C2服务器的前置流量控制，并可实现域前置的效果实现负载均衡上线，达到隐匿的效果
+- 能够通过请求IP反查API接口针对根据 IP 地址的归属地进行地域性的主机上线限制
+- 通过目标请求的拦截日志分析蓝队溯源行为，可用于跟踪对等连接事件/问题
+- 具有自定义对样本合法交互的时间段进行设置，实现仅在工作时间段内进行流量交互的功能
+- Malleable C2 Profile 解析器能够严格根据 malleable profile验证入站 HTTP/S 请求，并在违规情况下丢弃外发数据包（支持Malleable Profiles 4.0+）
+- 内置大量与安全厂商相关联的设备、蜜罐、云沙箱的IPV4地址黑名单，实现自动拦截重定向请求流量
+- 可通过自定义工具与样本交互的SSL证书信息、重定向URL，以规避工具流量的固定特征
+- ..........
+
+# 0x01 安装
+
+​	可以直接下载并使用已经编译好的版本，也可以远程下载go包进行自主编译执行。
+
+```bash
+git clone https://github.com/wikiZ/RedGuard.git
+cd RedGuard
+# 也可以使用upx压缩编译后的文件体积
+go build -ldflags "-s -w"
+# 赋予工具可执行权限，并进行初始化操作
+chmod +x ./RedGuard&&./RedGuard
+
+# go 命令下载
+go get github.com/wikiZ/RedGuard
+
+```
+
+# 0x02 配置说明
+
+## 初始化
+
+​	如下图，首先对RedGuard赋予可执行权限并进行初始化操作，第一次运行会在当前用户目录下生成配置文件，以实现灵活的功能配置，**配置文件名：.RedGuard_CobaltStrike.ini**。
+
+![1653117445(1).png](https://xzfile.aliyuncs.com/media/upload/picture/20220521151731-13f938b8-d8d6-1.png)
+
+**配置文件内容：**
+
+![1653117707(1).png](https://xzfile.aliyuncs.com/media/upload/picture/20220521152151-af330f34-d8d6-1.png)
+
+cert的配置选项主要是针对样本与C2前置设施的HTTPS流量交互证书的配置信息，proxy主要用于配置反向代理流量中的控制选项，具体使用会在下面进行详细讲解。
+
+在流量的交互中使用的SSL证书会生成在RedGuard执行所在目录下的cert-rsa/目录下，可以通过修改配置文件进行工具的基础功能启停**(证书的序列号是根据时间戳生成的，不用担心被以此关联特征)**。
+
+```bash
+openssl x509 -in ca.crt -noout -text
+```
+
+![1653118330(1).png](https://xzfile.aliyuncs.com/media/upload/picture/20220521153216-23d83cd2-d8d8-1.png)
+
+## RedGuard Usage
+
+```bash
+root@VM-4-13-ubuntu:~# ./RedGuard -h
+
+Usage of ./RedGuard:
+  -allowIP string
+        Proxy Requests Allow IP (default "*")
+  -allowLocation string
+        Proxy Requests Allow Location (default "*")
+  -allowTime string
+        Proxy Requests Allow Time (default "*")
+  -common string
+        Cert CommonName (default "*.aliyun.com")
+  -country string
+        Cert Country (default "CN")
+  -dns string
+        Cert DNSName
+  -drop string
+        Proxy Filter Enable DROP (default "false")
+  -host string
+        Set Proxy HostTarget
+  -http string
+        Set Proxy HTTP Port (default ":80")
+  -https string
+        Set Proxy HTTPS Port (default ":443")
+  -ip string
+        IPLookUP IP
+  -locality string
+        Cert Locality (default "HangZhou")
+  -location string
+        IPLookUP Location (default "风起")
+  -malleable string
+        Set Proxy Requests Filter Malleable File (default "*")
+  -organization string
+        Cert Organization (default "Alibaba (China) Technology Co., Ltd.")
+  -redirect string
+        Proxy redirect URL (default "https://360.net")
+  -type string
+        C2 Server Type (default "CobaltStrike")
+  -u    Enable configuration file modification
+  
+```
+
+**P.S. 可以使用参数命令的方式修改配置文件，当然我觉得可能直接vim手动修改更方便。**
+
+# 0x03 工具使用
+
+## 基础拦截
+
+​	如果直接对反向代理的端口进行访问，则会触发拦截规则，这里通过输出的日志可以看到客户端请求根目录，但是因为其请求过程未带有请求的凭证，也就是正确的HOST请求头所以触发了基础拦截的规则，流量被重定向到了https://360.net
+
+这里为了方便展示输出效果，实际使用可以通过`nohup ./RedGuard &`后台运行。
+
+![1653130661(1).png](https://xzfile.aliyuncs.com/media/upload/picture/20220521185753-dd1280a6-d8f4-1.png)
+
+```bash
+{"360.net":"http://127.0.0.1:8080","360.com":"https://127.0.0.1:4433"}
+```
+
+从上面的slice不难看出，360.net对应了代理到本地8080端口，360.com指向了本地的4433端口，且对应了使用的HTTP协议的不同，在后续上线中，需要注意监听器的协议类型需要和这里设置的保持一致，并设置对应HOST请求头。
+
+![image.png](https://xzfile.aliyuncs.com/media/upload/picture/20220521191828-bd41a344-d8f7-1.png)
+
+如上图，在未授权情况下，我们得到的响应信息也是重定向的站点返回信息。
+
+## 拦截方式
+
+​	上述的基础拦截案例中，使用的是默认的拦截方式，也就是将非法流量以重定向的方式拦截，而通过配置文件的修改，我们可以更改拦截的方式，以及重定向的站点URL，其实这种方式与之说是重定向，描述为劫持、克隆或许更贴切，因为返回的响应状态码为200，是从另一个网站获取响应，以尽可能接近地模仿克隆/劫持的网站。
+
+无效数据包可能会根据两种策略被错误路由：
+
+- **reset**：立即终止 TCP 连接。
+- **proxy**：从另一个网站获取响应，以尽可能接近地模仿克隆/劫持的网站。
+
+```bash
+# Determines whether to intercept intercepted traffic default false / true
+DROP = false
+# URL to redirect to
+Redirect = https://360.net
+```
+
+配置文件中 **Redirect = URL**  指向的就是劫持的URL地址，RedGuard支持“热更改”，也就是说在工具通过nohup这种方式在后台运行的过程中，我们依旧可以通过修改配置文件的内容进行实时的功能启停。
+
+```bash
+./RedGuard -u --drop true
+```
+
+注意，通过命令行修改配置文件的时候。-u选项不要少，否则无法对配置文件修改成功，如果需要还原默认配置文件设置只需要输入 `./RedGuard -u` 即可。
+
+而另一种拦截方式就是DROP，直接Close HTTP通信响应，通过设置 **DROP = true** 启用，具体拦截效果如下图：
+
+![1653132755(1).png](https://xzfile.aliyuncs.com/media/upload/picture/20220521193245-bc078708-d8f9-1.png)
+
+可以看到，没有获取到HTTP响应码，C2前置流量控制对非法请求直接close响应，在网络空间测绘的探测中，DROP的方式可以实现隐藏端口开放情况的作用，具体效果可以看下面的案例分析。
+
+## 代理端口修改
+
+​	这里其实就很好理解了，对配置文件中以下两个参数的配置实现更改反向代理端口的效果，这里建议在不与当前服务器端口冲突的前提下，使用默认的端口隐匿性会更好，如果一定要修改，那么注意参数值的 **:** 不要缺少
+
+```bash
+# HTTPS Reverse proxy port
+Port_HTTPS = :443
+# HTTP Reverse proxy port
+Port_HTTP = :80
+```
+
+## RedGuard日志
+
+通过目标请求的拦截日志分析蓝队溯源行为，可用于跟踪对等连接事件/问题，日志文件生成在运行RedGuard所在目录下，**文件名：RedGuard.log**。
+
+![image.png](https://xzfile.aliyuncs.com/media/upload/picture/20220523104050-c1c67296-da41-1.png)
+
+## 请求地域限制
+
+​	配置方式以AllowLocation = 济南,北京 为例，这里值得注意的是，RedGuard提供了两个IP归属地反查的API，一个适用于国内用户，另一个适用于海外用户，并且可以根据输入的地域名动态的分配使用哪个API，如果目标是中国的那么设置的地域就输入中文，反之输入英文地名，建议国内的用户使用中文名即可，这样反查到的归属地准确度以及API的响应速度都是最好的选择。
+
+P.S. 国内用户，不要使用**AllowLocation = 济南,beijing**这种方式！没啥意义，参数值的首个字符决定使用哪个API！
+
+```bash
+# IP address owning restrictions example:AllowLocation = 山东,上海,杭州 or shanghai,beijing
+AllowLocation = *
+```
+
+![1653134160(1).png](https://xzfile.aliyuncs.com/media/upload/picture/20220521195609-00f19fb8-d8fd-1.png)
+
+决定限制地域之前，可以通过以下命令手动查询IP地址归属地。
+
+```bash
+./RedGuard --ip 111.14.218.206
+./RedGuard --ip 111.14.218.206 --location shandong # 使用海外API查询归属地
+```
+
+这里我们设置仅允许山东地域上线
+
+![image.png](https://xzfile.aliyuncs.com/media/upload/picture/20220521200158-d0d34d6c-d8fd-1.png)
+
+**合法流量：**
+
+![1653137496(1).png](https://xzfile.aliyuncs.com/media/upload/picture/20220521205147-c6bb200a-d904-1.png)
+
+**非法请求地域：**
+
+![1653137621(1).png](https://xzfile.aliyuncs.com/media/upload/picture/20220521205347-0dbc1efa-d905-1.png)
+
+关于地域限制的上线，在目前的攻防演练可能比较实用，基本上省市级的护网限制的目标都是在指定区域中，而对于其他地域请求的流量自然可以忽略不计，而RedGuard这一功能不仅仅可以限制单一地域也可以根据省、市限制多个上线地域，而对其他地域请求的流量进行拦截。
+
+## 基于白名单拦截
+
+​	除了RedGuard内置的安全厂商IP的黑名单，我们还可以依据白名单的方式进行限制，其实我也是建议在web打点的时候，我们可以根据白名单限制上线的IP的地址，以，分割多个IP地址的方式。
+
+```bash
+# Whitelist list example: AllowIP = 172.16.1.1,192.168.1.1
+AllowIP       = 127.0.0.1
+```
+
+![image.png](https://xzfile.aliyuncs.com/media/upload/picture/20220522133017-43a90ce0-d990-1.png)
+
+如上图，我们限制仅允许127.0.0.1上线，那么其他IP的请求流量就会被拦截。
+
+## 基于时间段拦截
+
+​	这个功能就比较有意思了，在配置文件中设置以下参数值，代表了流量控制设施仅可以上午8点至晚上9点上线，这里具体的应用场景也就是在指定攻击时间内，我们允许与C2进行流量交互，其他时间保持静默状态。这也能让红队们睡一个好觉，不用担心一些夜班的蓝队无聊去分析你的木马，然后醒来发生不可描述的事情，哈哈哈。
+
+```bash
+# Limit the time of requests example: AllowTime = 8:00 - 16:00
+AllowTime     = 8:00 - 21：00
+```
+
+![image.png](https://xzfile.aliyuncs.com/media/upload/picture/20220522133644-2a6054c2-d991-1.png)
+
+## Malleable Profile
+
+RedGuard采用 Malleable C2 配置文件。然后，它解析提供的可延展配置文件部分以了解合同并仅通过那些满足它的入站请求，同时误导其他请求。诸如`http-stager`,`http-get`和`http-post`它们对应的 uris, headers, User-Agent 等部分都用于区分合法信标的请求和不相关的 Internet 噪声或 IR/AV/EDR 越界数据包。
+
+```bash
+# C2 Malleable File Path
+MalleableFile = /root/cobaltstrike/Malleable.profile
+```
+
+![image.png](https://xzfile.aliyuncs.com/media/upload/picture/20220522134214-ef2c5ae4-d991-1.png)
+
+风起编写的profile，推荐使用：
+
+> https://github.com/wikiZ/CobaltStrike-Malleable-Profile
+
+# 0x04 案例分析
+
+## 空间测绘
+
+​	如下图所示，当我们的拦截规则设置为DROP的时候，空间测绘系统探针会对我们反向代理端口的/目录进行几次探测，理论上测绘发送的请求包就是伪造成正常的流量所示。但是当尝试几次因为请求包特征不符合RedGuard的放行要求，所以均被Close HTTP响应。最终展现在测绘平台上的效果也就是认为反向代理端口未开放。
+
+![image.png](https://xzfile.aliyuncs.com/media/upload/picture/20220522135625-ea658a42-d993-1.png)
+
+下图所示的流量也就是当拦截规则设置为Redirect时，我们会发现当测绘探针收到响应后会继续对我们进行目录扫描，UserAgent为随机，看起来符合正常流量的请求，但是也都成功被拦截了。
+
+![image.png](https://xzfile.aliyuncs.com/media/upload/picture/20220522140326-e5723b4c-d994-1.png)
+
+**测绘平台 - 重定向拦截方式效果：**
+
+![1653200439(1).jpg](https://xzfile.aliyuncs.com/media/upload/picture/20220522142048-526e916c-d997-1.jpeg)
+
+## 域前置
+
+​	RedGuard是支持域前置的，在我看来一共有两种展现形式，一种是利用传统的域前置方式，在全站加速回源地址中设置为我们反向代理的端口即可实现。在原有的基础上给域前置增加了流量控制的功能，并且可以根据我们设置的重定向到指定URL使其看起来更像是真的。需要注意HTTPS HOST头RedGuard设置的要与全站加速的域名一致才可以。
+
+![1653201007(1).png](https://xzfile.aliyuncs.com/media/upload/picture/20220522143012-a26ab442-d998-1.png)
+
+在单兵作战中，我建议可以使用上述方式，而在团队任务中，也可以通过自建“域前置”的方式来实现。 
+
+![image.png](https://xzfile.aliyuncs.com/media/upload/picture/20220522143837-cf77a944-d999-1.png)
+
+在自建域前置中，保持多个反向代理端口一致，HOST头一致指向后端真实的C2服务器监听端口。而这种方式，可以很好的隐藏我们的真实C2服务器，而反向代理的服务器可以通过配置防火墙仅开放代理端口即可。
+
+![image.png](https://xzfile.aliyuncs.com/media/upload/picture/20220522144944-5cb4032e-d99b-1.png)
+
+这里可以通过多个节点服务器实现，在CS监听器HTTPS上线IP配置多个我们的节点IP。
+
+## CobaltStrike上线
+
+​	如果说上面的这种方式有一个问题就是，实际上线的C2服务器是不能通过防火墙直接拦截掉的，因为在反向代理中实际进行负载均衡请求的是云服务器厂商IP进行的。
+
+如果是单兵作战的话，我们可以在云服务器防火墙设置拦截策略。
+
+![image.png](https://xzfile.aliyuncs.com/media/upload/picture/20220522150356-58b9586c-d99d-1.png)
+
+然后把代理指向的地址设置为https://127.0.0.1:4433这种即可。
+
+```bash
+{"360.net":"http://127.0.0.1:8080","360.com":"https://127.0.0.1:4433"}
+```
+
+而且因为我们的基础验证就是基于HTTP HOST请求头来做的，所以在HTTP流量中看到的也是与域前置的方式一致，但是成本更低，只需要一台云服务器即可实现。
+
+![image.png](https://xzfile.aliyuncs.com/media/upload/picture/20220522150942-26f6c264-d99e-1.png)
+
+对于监听器的设置上线端口设置为RedGuard反向代理端口，监听端口为本机实际上线端口。
+
+# 0x05 Loading
+
+​	感谢各位用户的支持，RedGuard也会坚持进行完善更新的，希望 RedGuard 能够让更多安全从业者所知，工具参考了RedWarden的设计思想。
+
+​	**欢迎大家多多提出需求，RedGuard也会在这些需求中不断地成长，完善！**
+
+​	**关于开发者 风起 相关文章：https://www.anquanke.com/member.html?memberId=148652**
+
+​	**Kunyu: https://github.com/knownsec/Kunyu**
+
+> 风起于青萍之末，浪成于微澜之间。
+
+
+# 0x06 Community
+
+如果有问题或者需求可以在项目下提交issue，或通过添加WeCat联系工具作者。
+
+![867551fe860b10ca1396498a85422b4.jpg](https://xzfile.aliyuncs.com/media/upload/picture/20220522141706-ce37e178-d996-1.jpeg)
+

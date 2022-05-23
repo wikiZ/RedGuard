@@ -1,0 +1,116 @@
+[2022-05-23 10:34:36] [RedGuard/lib.InitGenerateSelfSignedCert] A default SSL certificate is being generated for the reverse proxy...
+[2022-05-23 10:34:36] [main.(*cobaltStrike).serverInit] HostTarget: {"360.net":"http://127.0.0.1:8080","360.com":"https://127.0.0.1:4433"}
+[2022-05-23 10:34:36] [RedGuard/core.ProxyManger] Proxy Listen Port :80 (HTTP)
+[2022-05-23 10:34:36] [RedGuard/core.ProxyManger] Proxy Listen Port :443 (HTTPS)
+[2022-05-23 10:34:57] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /
+[2022-05-23 10:34:57] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 111.14.218.206 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36 Edg/101.0.1210.53
+[2022-05-23 10:34:57] [RedGuard/core.(*baseHandle).ServeHTTP] [REDIRECT] Source IP: 111.14.218.206 -> Destination Site: https://360.net
+[2022-05-23 10:35:52] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /
+[2022-05-23 10:35:52] [RedGuard/core.IPLookUp] {
+	"status": "0",
+	"t": "",
+	"set_cache_time": "",
+	"data": [
+		{
+			"ExtendedLocation": "",
+			"OriginQuery": "111.14.218.206",
+			"appinfo": "",
+			"disp_type": 0,
+			"fetchkey": "111.14.218.206",
+			"location": "山东省济南市 移动",
+			"origip": "111.14.218.206",
+			"origipquery": "111.14.218.206",
+			"resourceid": "6006",
+			"role_id": 0,
+			"shareImage": 1,
+			"showLikeShare": 1,
+			"showlamp": "1",
+			"titlecont": "IP地址查询",
+			"tplt": "ip"
+		}
+	]
+}
+[2022-05-23 10:35:52] [RedGuard/core.ProxyFilterManger] [DROP] 111.14.218.206 Does not meet the allowed online geographical restrictions
+[2022-05-23 10:35:52] [RedGuard/core.(*baseHandle).ServeHTTP] [REDIRECT] Source IP: 111.14.218.206 -> Destination Site: https://360.net
+[2022-05-23 10:36:36] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /
+[2022-05-23 10:36:36] [RedGuard/core.ProxyFilterManger] [DROP] 111.14.218.206 request online IP address is not whitelisted
+[2022-05-23 10:36:36] [RedGuard/core.(*baseHandle).ServeHTTP] [REDIRECT] Source IP: 111.14.218.206 -> Destination Site: https://360.net
+[2022-05-23 10:37:14] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /
+[2022-05-23 10:37:14] [RedGuard/core.ProxyFilterManger] [DROP] 111.14.218.206 Requests are made during prohibited periods of time
+[2022-05-23 10:37:14] [RedGuard/core.(*baseHandle).ServeHTTP] [REDIRECT] Source IP: 111.14.218.206 -> Destination Site: https://360.net
+[2022-05-23 10:37:36] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /js/config.js
+[2022-05-23 10:37:36] [RedGuard/core.ProxyFilterManger] [DROP] 111.14.218.206 Requests are made during prohibited periods of time
+[2022-05-23 10:37:36] [RedGuard/core.(*baseHandle).ServeHTTP] [REDIRECT] Source IP: 111.14.218.206 -> Destination Site: https://360.net
+[2022-05-23 10:39:05] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /
+[2022-05-23 10:39:05] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 198.135.57.147 - 
+[2022-05-23 10:39:05] [RedGuard/core.(*baseHandle).ServeHTTP] [DROP] Source IP: 198.135.57.147
+[2022-05-23 10:39:09] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /
+[2022-05-23 10:39:09] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 198.135.57.147 - 
+[2022-05-23 10:39:09] [RedGuard/core.(*baseHandle).ServeHTTP] [DROP] Source IP: 198.135.57.147
+[2022-05-23 10:39:09] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /
+[2022-05-23 10:39:10] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 198.135.57.147 - Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4 240.111 Safari/537.36
+[2022-05-23 10:39:10] [RedGuard/core.(*baseHandle).ServeHTTP] [DROP] Source IP: 198.135.57.147
+[2022-05-23 10:39:10] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /
+[2022-05-23 10:39:10] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 198.135.57.147 - Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4 240.111 Safari/537.36
+[2022-05-23 10:39:10] [RedGuard/core.(*baseHandle).ServeHTTP] [DROP] Source IP: 198.135.57.147
+[2022-05-23 10:39:16] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /
+[2022-05-23 10:39:16] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 198.135.57.147 - Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.0 Safari/537.36
+[2022-05-23 10:39:16] [RedGuard/core.(*baseHandle).ServeHTTP] [DROP] Source IP: 198.135.57.147
+[2022-05-23 10:39:50] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /
+[2022-05-23 10:39:50] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 45.67.223.118 - 
+[2022-05-23 10:39:50] [RedGuard/core.(*baseHandle).ServeHTTP] [DROP] Source IP: 45.67.223.118
+[2022-05-23 10:39:58] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /
+[2022-05-23 10:39:58] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 45.67.223.118 - 
+[2022-05-23 10:39:58] [RedGuard/core.(*baseHandle).ServeHTTP] [DROP] Source IP: 45.67.223.118
+[2022-05-23 10:39:59] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /
+[2022-05-23 10:39:59] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 45.67.223.118 - Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4 240.111 Safari/537.36
+[2022-05-23 10:39:59] [RedGuard/core.(*baseHandle).ServeHTTP] [DROP] Source IP: 45.67.223.118
+[2022-05-23 10:40:00] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /
+[2022-05-23 10:40:00] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 45.67.223.118 - Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4 240.111 Safari/537.36
+[2022-05-23 10:40:00] [RedGuard/core.(*baseHandle).ServeHTTP] [DROP] Source IP: 45.67.223.118
+[2022-05-23 10:40:07] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /
+[2022-05-23 10:40:07] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 45.67.223.118 - Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:40.0) Gecko/20100101 Firefox/40.0
+[2022-05-23 10:40:07] [RedGuard/core.(*baseHandle).ServeHTTP] [DROP] Source IP: 45.67.223.118
+[2022-05-23 10:47:30] [RedGuard/lib.InitGenerateSelfSignedCert] A default SSL certificate is being generated for the reverse proxy...
+[2022-05-23 10:47:30] [main.(*cobaltStrike).serverInit] HostTarget: {"360.net":"http://127.0.0.1:8080","360.com":"https://127.0.0.1:4433"}
+[2022-05-23 10:47:30] [RedGuard/core.ProxyManger] Proxy Listen Port :80 (HTTP)
+[2022-05-23 10:47:30] [RedGuard/core.ProxyManger] Proxy Listen Port :443 (HTTPS)
+[2022-05-23 10:48:11] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /js/config.js
+[2022-05-23 10:48:11] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/53L, like Gecko) Chrome/90.0.4430.212 Safari/537.36
+[2022-05-23 10:50:03] [RedGuard/lib.InitGenerateSelfSignedCert] A default SSL certificate is being generated for the reverse proxy...
+[2022-05-23 10:50:03] [main.(*cobaltStrike).serverInit] HostTarget: {"360.net":"http://127.0.0.1:8080","360.com":"https://127.0.0.1:4433"}
+[2022-05-23 10:50:03] [RedGuard/core.ProxyManger] Proxy Listen Port :443 (HTTPS)
+[2022-05-23 10:50:03] [RedGuard/core.ProxyManger] Proxy Listen Port :80 (HTTP)
+[2022-05-23 10:50:04] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /js/config.js
+[2022-05-23 10:50:04] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/53L, like Gecko) Chrome/90.0.4430.212 Safari/537.36
+[2022-05-23 10:50:17] [RedGuard/core.(*baseHandle).ServeHTTP] [DROP] Source IP: 127.0.0.1
+[2022-05-23 10:50:39] [RedGuard/lib.InitGenerateSelfSignedCert] A default SSL certificate is being generated for the reverse proxy...
+[2022-05-23 10:50:39] [main.(*cobaltStrike).serverInit] HostTarget: {"360.net":"http://127.0.0.1:8080","360.com":"https://127.0.0.1:4433"}
+[2022-05-23 10:50:39] [RedGuard/core.ProxyManger] Proxy Listen Port :80 (HTTP)
+[2022-05-23 10:50:39] [RedGuard/core.ProxyManger] Proxy Listen Port :443 (HTTPS)
+[2022-05-23 10:50:47] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /js/config.js
+[2022-05-23 10:50:47] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/53L, like Gecko) Chrome/90.0.4430.212 Safari/537.36
+[2022-05-23 10:50:47] [RedGuard/core.(*baseHandle).ServeHTTP] [DROP] Source IP: 127.0.0.1
+[2022-05-23 10:51:36] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /js/config.js
+[2022-05-23 10:51:36] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/53L, like Gecko) Chrome/90.0.4430.212 Safari/537.36
+[2022-05-23 10:51:36] [RedGuard/core.(*baseHandle).ServeHTTP] [DROP] Source IP: 127.0.0.1
+[2022-05-23 10:51:41] [RedGuard/lib.InitGenerateSelfSignedCert] A default SSL certificate is being generated for the reverse proxy...
+[2022-05-23 10:51:41] [main.(*cobaltStrike).serverInit] HostTarget: {"360.net":"http://127.0.0.1:8080","360.com":"https://127.0.0.1:4433"}
+[2022-05-23 10:51:41] [RedGuard/core.ProxyManger] Proxy Listen Port :443 (HTTPS)
+[2022-05-23 10:51:41] [RedGuard/core.ProxyManger] Proxy Listen Port :80 (HTTP)
+[2022-05-23 10:51:42] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /js/config.js
+[2022-05-23 10:51:42] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/53L, like Gecko) Chrome/90.0.4430.212 Safari/537.36
+[2022-05-23 10:51:42] [RedGuard/core.(*baseHandle).ServeHTTP] [DROP] Source IP: 127.0.0.1
+[2022-05-23 11:03:06] [RedGuard/lib.InitGenerateSelfSignedCert] A default SSL certificate is being generated for the reverse proxy...
+[2022-05-23 11:03:06] [main.(*cobaltStrike).serverInit] HostTarget: {"360.net":"http://127.0.0.1:8080","360.com":"https://127.0.0.1:4433"}
+[2022-05-23 11:03:06] [RedGuard/core.ProxyManger] Proxy Listen Port :80 (HTTP)
+[2022-05-23 11:03:06] [RedGuard/core.ProxyManger] Proxy Listen Port :443 (HTTPS)
+[2022-05-23 11:03:08] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /js/config.js
+[2022-05-23 11:03:08] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/53L, like Gecko) Chrome/90.0.4430.212 Safari/537.36
+[2022-05-23 11:03:08] [RedGuard/core.(*baseHandle).ServeHTTP] [DROP] Source IP: 127.0.0.1
+[2022-05-23 11:03:26] [RedGuard/lib.InitGenerateSelfSignedCert] A default SSL certificate is being generated for the reverse proxy...
+[2022-05-23 11:03:26] [main.(*cobaltStrike).serverInit] HostTarget: {"360.net":"http://127.0.0.1:8080","360.com":"https://127.0.0.1:4433"}
+[2022-05-23 11:03:26] [RedGuard/core.ProxyManger] Proxy Listen Port :80 (HTTP)
+[2022-05-23 11:03:26] [RedGuard/core.ProxyManger] Proxy Listen Port :443 (HTTPS)
+[2022-05-23 11:03:27] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /js/config.js
+[2022-05-23 11:03:27] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/53L, like Gecko) Chrome/90.0.4430.212 Safari/537.36
