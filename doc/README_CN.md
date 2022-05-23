@@ -324,5 +324,5 @@ MalleableFile = /root/cobaltstrike/Malleable.profile
 
 如果有问题或者需求可以在项目下提交issue，或通过添加WeCat联系工具作者。
 
-![867551fe860b10ca1396498a85422b4.jpg](https://github.com/wikiZ/RedGuardImage/raw/main/20220522141706-ce37e178-d996-1.jpeg)
+![867551fe860b10ca1396498a85422b4.jpg](https://github.com/wikiZ/RedGuardImage/raw/main/20220522141706-ce37e178-d996-1.png)
 
