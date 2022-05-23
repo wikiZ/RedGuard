@@ -269,7 +269,7 @@ MalleableFile = /root/cobaltstrike/Malleable.profile
 
 **测绘平台 - 重定向拦截方式效果：**
 
-![1653200439(1).jpg](https://github.com/wikiZ/RedGuardImage/raw/main/20220522142048-526e916c-d997-1.jpeg)
+![1653200439(1).jpg](https://github.com/wikiZ/RedGuardImage/raw/main/20220522142048-526e916c-d997-1.png)
 
 ## 域前置
 
