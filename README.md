@@ -4,7 +4,7 @@
 
 --------------
 
-中文文档 | [English](https://github.com/wikiZ/RedGuard/blob/main/README.md)
+English | [中文文档](https://github.com/wikiZ/RedGuard/blob/main/doc/README_CN.md)
 
 # 0x00 Introduction
 
