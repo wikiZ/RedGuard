@@ -53,11 +53,11 @@ go get github.com/wikiZ/RedGuard
 
 ​	如下图，首先对RedGuard赋予可执行权限并进行初始化操作，第一次运行会在当前用户目录下生成配置文件，以实现灵活的功能配置，**配置文件名：.RedGuard_CobaltStrike.ini**。
 
-![1653117445(1).png](https://xzfile.aliyuncs.com/media/upload/picture/20220521151731-13f938b8-d8d6-1.png)
+![1653117445(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/20220521151731-13f938b8-d8d6-1.png)
 
 **配置文件内容：**
 
-![1653117707(1).png](https://xzfile.aliyuncs.com/media/upload/picture/20220521152151-af330f34-d8d6-1.png)
+![1653117707(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/20220521152151-af330f34-d8d6-1.png)
 
 cert的配置选项主要是针对样本与C2前置设施的HTTPS流量交互证书的配置信息，proxy主要用于配置反向代理流量中的控制选项，具体使用会在下面进行详细讲解。
 
@@ -67,7 +67,7 @@ cert的配置选项主要是针对样本与C2前置设施的HTTPS流量交互证
 openssl x509 -in ca.crt -noout -text
 ```
 
-![1653118330(1).png](https://xzfile.aliyuncs.com/media/upload/picture/20220521153216-23d83cd2-d8d8-1.png)
+![1653118330(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/20220521153216-23d83cd2-d8d8-1.png)
 
 ## RedGuard Usage
 
@@ -123,7 +123,7 @@ Usage of ./RedGuard:
 
 这里为了方便展示输出效果，实际使用可以通过`nohup ./RedGuard &`后台运行。
 
-![1653130661(1).png](https://xzfile.aliyuncs.com/media/upload/picture/20220521185753-dd1280a6-d8f4-1.png)
+![1653130661(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/20220521185753-dd1280a6-d8f4-1.png)
 
 ```bash
 {"360.net":"http://127.0.0.1:8080","360.com":"https://127.0.0.1:4433"}
@@ -131,7 +131,7 @@ Usage of ./RedGuard:
 
 从上面的slice不难看出，360.net对应了代理到本地8080端口，360.com指向了本地的4433端口，且对应了使用的HTTP协议的不同，在后续上线中，需要注意监听器的协议类型需要和这里设置的保持一致，并设置对应HOST请求头。
 
-![image.png](https://xzfile.aliyuncs.com/media/upload/picture/20220521191828-bd41a344-d8f7-1.png)
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/20220521191828-bd41a344-d8f7-1.png)
 
 如上图，在未授权情况下，我们得到的响应信息也是重定向的站点返回信息。
 
@@ -161,7 +161,7 @@ Redirect = https://360.net
 
 而另一种拦截方式就是DROP，直接Close HTTP通信响应，通过设置 **DROP = true** 启用，具体拦截效果如下图：
 
-![1653132755(1).png](https://xzfile.aliyuncs.com/media/upload/picture/20220521193245-bc078708-d8f9-1.png)
+![1653132755(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/20220521193245-bc078708-d8f9-1.png)
 
 可以看到，没有获取到HTTP响应码，C2前置流量控制对非法请求直接close响应，在网络空间测绘的探测中，DROP的方式可以实现隐藏端口开放情况的作用，具体效果可以看下面的案例分析。
 
@@ -180,7 +180,7 @@ Port_HTTP = :80
 
 通过目标请求的拦截日志分析蓝队溯源行为，可用于跟踪对等连接事件/问题，日志文件生成在运行RedGuard所在目录下，**文件名：RedGuard.log**。
 
-![image.png](https://xzfile.aliyuncs.com/media/upload/picture/20220523104050-c1c67296-da41-1.png)
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/20220523104050-c1c67296-da41-1.png)
 
 ## 请求地域限制
 
@@ -193,7 +193,7 @@ P.S. 国内用户，不要使用**AllowLocation = 济南,beijing**这种方式�
 AllowLocation = *
 ```
 
-![1653134160(1).png](https://xzfile.aliyuncs.com/media/upload/picture/20220521195609-00f19fb8-d8fd-1.png)
+![1653134160(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/20220521195609-00f19fb8-d8fd-1.png)
 
 决定限制地域之前，可以通过以下命令手动查询IP地址归属地。
 
@@ -204,15 +204,15 @@ AllowLocation = *
 
 这里我们设置仅允许山东地域上线
 
-![image.png](https://xzfile.aliyuncs.com/media/upload/picture/20220521200158-d0d34d6c-d8fd-1.png)
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/20220521200158-d0d34d6c-d8fd-1.png)
 
 **合法流量：**
 
-![1653137496(1).png](https://xzfile.aliyuncs.com/media/upload/picture/20220521205147-c6bb200a-d904-1.png)
+![1653137496(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/20220521205147-c6bb200a-d904-1.png)
 
 **非法请求地域：**
 
-![1653137621(1).png](https://xzfile.aliyuncs.com/media/upload/picture/20220521205347-0dbc1efa-d905-1.png)
+![1653137621(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/20220521205347-0dbc1efa-d905-1.png)
 
 关于地域限制的上线，在目前的攻防演练可能比较实用，基本上省市级的护网限制的目标都是在指定区域中，而对于其他地域请求的流量自然可以忽略不计，而RedGuard这一功能不仅仅可以限制单一地域也可以根据省、市限制多个上线地域，而对其他地域请求的流量进行拦截。
 
@@ -225,7 +225,7 @@ AllowLocation = *
 AllowIP       = 127.0.0.1
 ```
 
-![image.png](https://xzfile.aliyuncs.com/media/upload/picture/20220522133017-43a90ce0-d990-1.png)
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/20220522133017-43a90ce0-d990-1.png)
 
 如上图，我们限制仅允许127.0.0.1上线，那么其他IP的请求流量就会被拦截。
 
@@ -238,7 +238,7 @@ AllowIP       = 127.0.0.1
 AllowTime     = 8:00 - 21：00
 ```
 
-![image.png](https://xzfile.aliyuncs.com/media/upload/picture/20220522133644-2a6054c2-d991-1.png)
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/20220522133644-2a6054c2-d991-1.png)
 
 ## Malleable Profile
 
@@ -249,7 +249,7 @@ RedGuard采用 Malleable C2 配置文件。然后，它解析提供的可延展�
 MalleableFile = /root/cobaltstrike/Malleable.profile
 ```
 
-![image.png](https://xzfile.aliyuncs.com/media/upload/picture/20220522134214-ef2c5ae4-d991-1.png)
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/20220522134214-ef2c5ae4-d991-1.png)
 
 风起编写的profile，推荐使用：
 
@@ -261,29 +261,29 @@ MalleableFile = /root/cobaltstrike/Malleable.profile
 
 ​	如下图所示，当我们的拦截规则设置为DROP的时候，空间测绘系统探针会对我们反向代理端口的/目录进行几次探测，理论上测绘发送的请求包就是伪造成正常的流量所示。但是当尝试几次因为请求包特征不符合RedGuard的放行要求，所以均被Close HTTP响应。最终展现在测绘平台上的效果也就是认为反向代理端口未开放。
 
-![image.png](https://xzfile.aliyuncs.com/media/upload/picture/20220522135625-ea658a42-d993-1.png)
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/20220522135625-ea658a42-d993-1.png)
 
 下图所示的流量也就是当拦截规则设置为Redirect时，我们会发现当测绘探针收到响应后会继续对我们进行目录扫描，UserAgent为随机，看起来符合正常流量的请求，但是也都成功被拦截了。
 
-![image.png](https://xzfile.aliyuncs.com/media/upload/picture/20220522140326-e5723b4c-d994-1.png)
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/20220522140326-e5723b4c-d994-1.png)
 
 **测绘平台 - 重定向拦截方式效果：**
 
-![1653200439(1).jpg](https://xzfile.aliyuncs.com/media/upload/picture/20220522142048-526e916c-d997-1.jpeg)
+![1653200439(1).jpg](https://github.com/wikiZ/RedGuardImage/raw/main/20220522142048-526e916c-d997-1.jpeg)
 
 ## 域前置
 
 ​	RedGuard是支持域前置的，在我看来一共有两种展现形式，一种是利用传统的域前置方式，在全站加速回源地址中设置为我们反向代理的端口即可实现。在原有的基础上给域前置增加了流量控制的功能，并且可以根据我们设置的重定向到指定URL使其看起来更像是真的。需要注意HTTPS HOST头RedGuard设置的要与全站加速的域名一致才可以。
 
-![1653201007(1).png](https://xzfile.aliyuncs.com/media/upload/picture/20220522143012-a26ab442-d998-1.png)
+![1653201007(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/20220522143012-a26ab442-d998-1.png)
 
 在单兵作战中，我建议可以使用上述方式，而在团队任务中，也可以通过自建“域前置”的方式来实现。 
 
-![image.png](https://xzfile.aliyuncs.com/media/upload/picture/20220522143837-cf77a944-d999-1.png)
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/20220522143837-cf77a944-d999-1.png)
 
 在自建域前置中，保持多个反向代理端口一致，HOST头一致指向后端真实的C2服务器监听端口。而这种方式，可以很好的隐藏我们的真实C2服务器，而反向代理的服务器可以通过配置防火墙仅开放代理端口即可。
 
-![image.png](https://xzfile.aliyuncs.com/media/upload/picture/20220522144944-5cb4032e-d99b-1.png)
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/20220522144944-5cb4032e-d99b-1.png)
 
 这里可以通过多个节点服务器实现，在CS监听器HTTPS上线IP配置多个我们的节点IP。
 
@@ -293,7 +293,7 @@ MalleableFile = /root/cobaltstrike/Malleable.profile
 
 如果是单兵作战的话，我们可以在云服务器防火墙设置拦截策略。
 
-![image.png](https://xzfile.aliyuncs.com/media/upload/picture/20220522150356-58b9586c-d99d-1.png)
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/20220522150356-58b9586c-d99d-1.png)
 
 然后把代理指向的地址设置为https://127.0.0.1:4433这种即可。
 
@@ -303,7 +303,7 @@ MalleableFile = /root/cobaltstrike/Malleable.profile
 
 而且因为我们的基础验证就是基于HTTP HOST请求头来做的，所以在HTTP流量中看到的也是与域前置的方式一致，但是成本更低，只需要一台云服务器即可实现。
 
-![image.png](https://xzfile.aliyuncs.com/media/upload/picture/20220522150942-26f6c264-d99e-1.png)
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/20220522150942-26f6c264-d99e-1.png)
 
 对于监听器的设置上线端口设置为RedGuard反向代理端口，监听端口为本机实际上线端口。
 
@@ -324,5 +324,5 @@ MalleableFile = /root/cobaltstrike/Malleable.profile
 
 如果有问题或者需求可以在项目下提交issue，或通过添加WeCat联系工具作者。
 
-![867551fe860b10ca1396498a85422b4.jpg](https://xzfile.aliyuncs.com/media/upload/picture/20220522141706-ce37e178-d996-1.jpeg)
+![867551fe860b10ca1396498a85422b4.jpg](https://github.com/wikiZ/RedGuardImage/raw/main/20220522141706-ce37e178-d996-1.jpeg)
 
