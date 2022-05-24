@@ -58,7 +58,7 @@ chmod +x ./RedGuard&&./RedGuard
 
 The configuration options of cert are mainly for the configuration information of the HTTPS traffic exchange certificate between the sample and the C2 front-end facility. The proxy is mainly used to configure the control options in the reverse proxy traffic. The specific use will be explained in detail below.
 
-The SSL certificate used in the traffic interaction will be generated in the cert-rsa/ directory under the directory where RedGuard is executed. You can start and stop the basic functions of the tool by modifying the configuration file **(the serial number of the certificate is generated according to the timestamp , don't worry about being associated with this feature)**.
+The SSL certificate used in the traffic interaction will be generated in the cert-rsa/ directory under the directory where RedGuard is executed. You can start and stop the basic functions of the tool by modifying the configuration file **(the serial number of the certificate is generated according to the timestamp , don't worry about being associated with this feature)**.If you want to use your own certificate,Just rename them to ca.crt and ca.key.
 
 ```bash
 openssl x509 -in ca.crt -noout -text
