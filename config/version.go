@@ -21,7 +21,7 @@ Github:%s
 
 RedGuard is a C2 front flow control tool,Can avoid Blue Teams,AVs,EDRs check.
 `
-	VERSION   = "22.5.20.1220 Alpha"
+	VERSION   = "22.5.26.1716 Alpha"
 	TITLE     = "RedGuard"
 	LICENSE   = "GPL-2.0"
 	URL       = "https://github.com/wikiZ/RedGuard"

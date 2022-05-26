@@ -10,9 +10,9 @@ English | [中文文档](https://github.com/wikiZ/RedGuard/blob/main/doc/README_
 
 ## Tool introduction
 
-​	RedGuard is a derivative work of the C2 facility pre-flow control technology. It has a lighter design, efficient flow interaction, and reliable compatibility with go language development. The core problem it solves is also in the face of increasingly complex red and blue attack and defense drills, giving the attack team a better C2 infrastructure concealment scheme, giving the interactive traffic of the C2 facility a flow control function, and intercepting those "malicious" analysis traffic, and better complete the entire attack mission.
+RedGuard is a derivative work of the C2 facility pre-flow control technology. It has a lighter design, efficient flow interaction, and reliable compatibility with go language development. The core problem it solves is also in the face of increasingly complex red and blue attack and defense drills, giving the attack team a better C2 infrastructure concealment scheme, giving the interactive traffic of the C2 facility a flow control function, and intercepting those "malicious" analysis traffic, and better complete the entire attack mission.
 
-​	RedGuard is a C2 facility pre-flow control tool that can avoid Blue Team, AVS, EDR, Cyberspace Search Engine checks.
+RedGuard is a C2 facility pre-flow control tool that can avoid Blue Team, AVS, EDR, Cyberspace Search Engine checks.
 
 ## Application scenarios
 
@@ -32,7 +32,7 @@ English | [中文文档](https://github.com/wikiZ/RedGuard/blob/main/doc/README_
 
 # 0x01 Install
 
-​	You can directly download and use the compiled version, or you can download the go package remotely for independent compilation and execution.
+You can directly download and use the compiled version, or you can download the go package remotely for independent compilation and execution.
 
 ```bash
 git clone https://github.com/wikiZ/RedGuard.git
@@ -48,7 +48,7 @@ chmod +x ./RedGuard&&./RedGuard
 
 ## initialization
 
-​	As shown in the figure below, first grant executable permissions to RedGuard and perform initialization operations. The first run will generate a configuration file in the current user directory to achieve flexible function configuration. Configuration file name: **.RedGuard_CobaltStrike.ini**.
+As shown in the figure below, first grant executable permissions to RedGuard and perform initialization operations. The first run will generate a configuration file in the current user directory to achieve flexible function configuration. Configuration file name: **.RedGuard_CobaltStrike.ini**.
 
 ![1653117445(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/20220521151731-13f938b8-d8d6-1.png)
 
@@ -65,6 +65,10 @@ openssl x509 -in ca.crt -noout -text
 ```
 
 ![1653118330(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/20220521153216-23d83cd2-d8d8-1.png)
+
+Random TLS JARM fingerprints are updated each time RedGuard is started to prevent this from being used to authenticate C2 facilities.
+
+![1653118330(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/d2d8d30fcd349bd4567c685aaa93451.jpg)
 
 ## RedGuard Usage
 
@@ -116,7 +120,7 @@ Usage of ./RedGuard:
 
 ## basic interception
 
-​	If you directly access the port of the reverse proxy, the interception rule will be triggered. Here you can see the root directory of the client request through the output log, but because the request process does not carry the requested credentials, that is, the correct HOST request header So the basic interception rule is triggered, and the traffic is redirected to https://360.net
+If you directly access the port of the reverse proxy, the interception rule will be triggered. Here you can see the root directory of the client request through the output log, but because the request process does not carry the requested credentials, that is, the correct HOST request header So the basic interception rule is triggered, and the traffic is redirected to https://360.net
 
 Here, in order to facilitate the display of the output effect, the actual use can be run in the background through `nohup ./RedGuard &`.
 
@@ -134,7 +138,7 @@ As shown in the figure above, in the case of unauthorized access, the response i
 
 ## interception method
 
-​	In the above basic interception case, the default interception method is used, that is, the illegal traffic is intercepted by redirection. By modifying the configuration file, we can change the interception method and the redirected site URL. In fact, this The other way is a redirect, which might be more aptly described as hijacking, cloning, since the response status code returned is 200, and the response is taken from another website to mimic the cloned/hijacked website as closely as possible.
+In the above basic interception case, the default interception method is used, that is, the illegal traffic is intercepted by redirection. By modifying the configuration file, we can change the interception method and the redirected site URL. In fact, this The other way is a redirect, which might be more aptly described as hijacking, cloning, since the response status code returned is 200, and the response is taken from another website to mimic the cloned/hijacked website as closely as possible.
 
 Invalid packets can be misrouted according to two strategies:
 
@@ -164,7 +168,7 @@ It can be seen that the C2 pre-flow control directly responds to illegal request
 
 ## Proxy port modification
 
-​	In fact, it is easy to understand here. The configuration of the following two parameters in the configuration file realizes the effect of changing the reverse proxy port. It is recommended to use the default port on the premise of not conflicting with the current server port. If it must be modified, then pay attention to the **:** of the parameter value not to be missing
+In fact, it is easy to understand here. The configuration of the following two parameters in the configuration file realizes the effect of changing the reverse proxy port. It is recommended to use the default port on the premise of not conflicting with the current server port. If it must be modified, then pay attention to the **:** of the parameter value not to be missing
 
 ```bash
 # HTTPS Reverse proxy port
@@ -181,7 +185,7 @@ The blue team tracing behavior is analyzed through the interception log of the t
 
 ## Request geographic restrictions
 
-​	The configuration method takes AllowLocation = Jinan, Beijing as an example. It is worth noting here that RedGuard provides two APIs for IP attribution anti-check, one for domestic users and the other for overseas users. Dynamically assign which API to use. If the target is in China, enter Chinese for the set region. Otherwise, enter English place names. It is recommended that domestic users use Chinese names. In this way, the accuracy of the attribution found and the response speed of the API are both is the best choice.
+The configuration method takes AllowLocation = Jinan, Beijing as an example. It is worth noting here that RedGuard provides two APIs for IP attribution anti-check, one for domestic users and the other for overseas users. Dynamically assign which API to use. If the target is in China, enter Chinese for the set region. Otherwise, enter English place names. It is recommended that domestic users use Chinese names. In this way, the accuracy of the attribution found and the response speed of the API are both is the best choice.
 
 P.S. Domestic users, do not use **AllowLocation = Jinan,beijing** this way! It doesn't make much sense, the first character of the parameter value determines which API to use!
 
@@ -215,7 +219,7 @@ Regarding the launch of geographical restrictions, it may be more practical in t
 
 ## Blocking based on whitelist
 
-​	In addition to the built-in blacklist of security vendor IPs in RedGuard, we can also restrict according to the whitelist. In fact, I also suggest that when doing web management, we can restrict the addresses of the online IPs according to the whitelist, so as to divide multiple IPs way of address.
+In addition to the built-in blacklist of security vendor IPs in RedGuard, we can also restrict according to the whitelist. In fact, I also suggest that when doing web management, we can restrict the addresses of the online IPs according to the whitelist, so as to divide multiple IPs way of address.
 
 ```bash
 # Whitelist list example: AllowIP = 172.16.1.1,192.168.1.1
@@ -228,7 +232,7 @@ As shown in the figure above, we only allow 127.0.0.1 to go online, then the req
 
 ## Block based on time period
 
-​	This function is more interesting. Setting the following parameter values in the configuration file means that the traffic control facility can only go online from 8:00 am to 9:00 pm. The specific application scenario here is that during the specified attack time, we allow communication with C2 Traffic interacts, and remains silent at other times. This also allows the red teams to get a good night's sleep without worrying about some blue team on the night shift being bored to analyze your Trojan and then wake up to something indescribable, hahaha.
+This function is more interesting. Setting the following parameter values in the configuration file means that the traffic control facility can only go online from 8:00 am to 9:00 pm. The specific application scenario here is that during the specified attack time, we allow communication with C2 Traffic interacts, and remains silent at other times. This also allows the red teams to get a good night's sleep without worrying about some blue team on the night shift being bored to analyze your Trojan and then wake up to something indescribable, hahaha.
 
 ```bash
 # Limit the time of requests example: AllowTime = 8:00 - 16:00
@@ -256,7 +260,7 @@ The profile written by 风起 is recommended to use:
 
 ## Cyberspace Search Engine
 
-​	As shown in the figure below, when our interception rule is set to DROP, the spatial mapping system probe will probe the / directory of our reverse proxy port several times. In theory, the request packet sent by mapping is faked as normal traffic. Show. But after several attempts, because the characteristics of the request packet do not meet the release requirements of RedGuard, they are all responded by Close HTTP. The final effect displayed on the surveying and mapping platform is that the reverse proxy port is not open.
+As shown in the figure below, when our interception rule is set to DROP, the spatial mapping system probe will probe the / directory of our reverse proxy port several times. In theory, the request packet sent by mapping is faked as normal traffic. Show. But after several attempts, because the characteristics of the request packet do not meet the release requirements of RedGuard, they are all responded by Close HTTP. The final effect displayed on the surveying and mapping platform is that the reverse proxy port is not open.
 
 ![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/20220522135625-ea658a42-d993-1.png)
 
@@ -270,7 +274,7 @@ The traffic shown in the figure below means that when the interception rule is s
 
 ## Domain fronting
 
-​	RedGuard supports Domain fronting. In my opinion, there are two forms of presentation. One is to use the traditional Domain fronting method, which can be achieved by setting the port of our reverse proxy in the site-wide acceleration back-to-source address. On the original basis, the function of traffic control is added to the domain fronting, and it can be redirected to the specified URL according to the setting we set to make it look more real. It should be noted that the RedGuard setting of the HTTPS HOST header must be consistent with the domain name of the site-wide acceleration.
+RedGuard supports Domain fronting. In my opinion, there are two forms of presentation. One is to use the traditional Domain fronting method, which can be achieved by setting the port of our reverse proxy in the site-wide acceleration back-to-source address. On the original basis, the function of traffic control is added to the domain fronting, and it can be redirected to the specified URL according to the setting we set to make it look more real. It should be noted that the RedGuard setting of the HTTPS HOST header must be consistent with the domain name of the site-wide acceleration.
 
 ![1653201007(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/20220522143012-a26ab442-d998-1.png)
 
@@ -286,7 +290,7 @@ This can be achieved through multiple node servers, and configure multiple IPs o
 
 ## CobaltStrike
 
-​	If there is a problem with the above method, the actual online C2 server cannot be directly intercepted by the firewall, because the actual load balancing request in the reverse proxy is made by the IP of the cloud server manufacturer.
+If there is a problem with the above method, the actual online C2 server cannot be directly intercepted by the firewall, because the actual load balancing request in the reverse proxy is made by the IP of the cloud server manufacturer.
 
 If it is a single soldier, we can set an interception strategy on the cloud server firewall.
 
@@ -306,13 +310,13 @@ For the listener settings, the online port is set to the RedGuard reverse proxy 
 
 # 0x05 Loading
 
-​	Thank you for your support. RedGuard will continue to improve and update it. I hope that RedGuard can be known to more security practitioners. The tool refers to the design ideas of RedWarden.
+Thank you for your support. RedGuard will continue to improve and update it. I hope that RedGuard can be known to more security practitioners. The tool refers to the design ideas of RedWarden.
 
-​	**We welcome everyone to put forward your needs, RedGuard will continue to grow and improve in these needs! **
+**We welcome everyone to put forward your needs, RedGuard will continue to grow and improve in these needs! **
 
-​	**About the developer 风起 related articles:https://www.anquanke.com/member.html?memberId=148652**
+**About the developer 风起 related articles:https://www.anquanke.com/member.html?memberId=148652**
 
-​	**Kunyu: https://github.com/knownsec/Kunyu**
+**Kunyu: https://github.com/knownsec/Kunyu**
 
 > 风起于青萍之末，浪成于微澜之间。
 
@@ -322,4 +326,3 @@ For the listener settings, the online port is set to the RedGuard reverse proxy 
 If you have any questions or requirements, you can submit an issue under the project, or contact the tool author by adding WeCat.
 
 ![867551fe860b10ca1396498a85422b4.jpg](https://github.com/wikiZ/RedGuardImage/raw/main/20220522141706-ce37e178-d996-1.png)
-

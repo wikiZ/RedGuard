@@ -10,14 +10,15 @@ package core
 import (
 	"RedGuard/lib"
 	"crypto/tls"
+	"github.com/wxnacy/wgo/arrays"
 	"io"
+	"math/rand"
 	"net/http"
 	"net/http/httputil"
 	"net/url"
 	"strconv"
 	"sync"
-
-	"github.com/wxnacy/wgo/arrays"
+	"time"
 )
 
 var (
@@ -124,9 +125,22 @@ func ProxyManger(action, port, pattern string) {
 	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{
 		InsecureSkipVerify: true,
 	}
+	// Disable client connection caching to connection pools
+	http.DefaultTransport.(*http.Transport).DisableKeepAlives = true
+	rand.Seed(time.Now().UnixNano())
 	server := &http.Server{
 		Addr:    port,   // proxy port
 		Handler: handle, // Cache structure
+		TLSConfig: &tls.Config{
+			CipherSuites: lib.MicsSlice([]uint16{
+				0x0005, 0x000a, 0x002f,
+				0x0035, 0x003c, 0x009c,
+				0x009d, 0xc011, 0xc012,
+				0xc013, 0xc014, 0xc027,
+				0xc02f, 0xc030, 0xcca8,
+			}, rand.Intn(2)+1),
+		},
+		TLSNextProto: make(map[string]func(*http.Server, *tls.Conn, http.Handler), 1),
 	}
 	logger.Warningf("Proxy Listen Port %s (%s)", port, action)
 	_startUp.Unlock()
