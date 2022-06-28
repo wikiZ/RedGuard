@@ -8,20 +8,25 @@
 package core
 
 import (
-	"RedGuard/lib"
-	"crypto/tls"
-	"github.com/wxnacy/wgo/arrays"
 	"io"
 	"math/rand"
-	"net/http"
-	"net/http/httputil"
 	"net/url"
 	"strconv"
+	"strings"
 	"sync"
 	"time"
+
+	"RedGuard/lib"
+
+	"github.com/sleeyax/ja3rp/crypto/tls"
+	"github.com/sleeyax/ja3rp/net/http"
+	"github.com/sleeyax/ja3rp/net/http/httputil"
+	"github.com/wxnacy/wgo/arrays"
 )
 
 var (
+	ip            string                                    // HTTP remote IP
+	redirectURL   string                                    // Proxy redirect URL
 	_addressArray []string                                  // By request list
 	_startUp      sync.Mutex                                // mutex lock
 	_hostProxy    = make(map[string]*httputil.ReverseProxy) // Used to cache httputil.ReverseProxy
@@ -36,16 +41,20 @@ func NewProxy(proxyURL string, dropType bool) (*httputil.ReverseProxy, error) {
 	}
 	proxy := httputil.NewSingleHostReverseProxy(destinationURL)
 	// dropType Check whether the response to the request is changed
-	if dropType {
-		proxy.ModifyResponse = modifyResponse() // Modifies the response to the request
-	}
+	proxy.ModifyResponse = modifyResponse(dropType) // Modifies the response to the request
 	return proxy, nil
 }
 
-func modifyResponse() func(*http.Response) error {
+func modifyResponse(drop bool) func(*http.Response) error {
 	return func(resp *http.Response) error {
 		defer func(Body io.ReadCloser) {
-			_ = Body.Close() // Direct shutdown response
+			logger.Warningf("[RESPONSE] HTTP %s, length: %d", resp.Status, resp.ContentLength)
+			if drop {
+				// DROP Request
+				logger.Alertf("[DROP] Source IP: %s", ip)
+				_ = Body.Close() // Direct shutdown response
+				return
+			}
 		}(resp.Body)
 		return nil
 	}
@@ -53,20 +62,27 @@ func modifyResponse() func(*http.Response) error {
 
 // ProxyRequestHandler A reverse proxy processes HTTP requests
 func (h *baseHandle) ServeHTTP(write http.ResponseWriter, req *http.Request) {
-	host := &req.Host
-	// Obtain the domain name and target map
-	hostTarget := lib.JsonToMap(lib.ReadConfig(
-		"proxy",
-		"HostTarget",
-		lib.InitConfig()),
+	var (
+		host = &req.Host
+		cfg  = lib.InitConfig() // config file object
+		// Obtain the domain name and target map
+		hostTarget = lib.JsonToMap(lib.ReadConfig(
+			"proxy",
+			"HostTarget",
+			cfg),
+		)
+		// Read the configuration file to check whether DROP is enabled
+		dropAction = lib.ReadConfig("proxy", "drop_action", cfg)
+		// IP address of the host that initiates the request
 	)
+	var isDrop bool
+	var proxy *httputil.ReverseProxy
 	// Determine the URL to be redirected to
-	redirectURL := lib.ReadConfig("proxy", "Redirect", lib.InitConfig())
-	// Read the configuration file to check whether DROP is enabled
-	isDrop, _ := strconv.ParseBool(lib.ReadConfig("proxy", "DROP", lib.InitConfig()))
-	ip := lib.ConvertIP(req.RemoteAddr) // IP address of the host that initiates the request
+	redirectURL = lib.ReadConfig("proxy", "Redirect", cfg)
+	ip = lib.ConvertIP(req.RemoteAddr)
 	// Check whether the host is verified
-	if IPHash := lib.EncodeMD5(ip); arrays.ContainsString(_addressArray, IPHash) == -1 {
+	if IPHash := lib.EncodeMD5(req.JA3); arrays.ContainsString(_addressArray, req.JA3) == -1 {
+		logger.Noticef("JA3 FingerPrint: %s", IPHash)
 		logger.Noticef("[REQUEST] %s %s", req.Method, req.RequestURI)
 		// Request filtering method
 		if !ProxyFilterManger(req) {
@@ -98,18 +114,26 @@ LOOK:
 	if len(_addressArray) > 0 {
 		_addressArray = _addressArray[:len(_addressArray)-1]
 	}
-	// Determine whether to redirect or intercept intercepted traffic
-	proxy, _ := NewProxy(redirectURL, isDrop)
-	// TODO: Maybe we need a little optimization here, right?
-	if isDrop {
-		// DROP Request
-		logger.Alertf("[DROP] Source IP: %s", ip)
-	} else {
-		// REDIRECT Request
-		logger.Alertf("[REDIRECT] Source IP: %s -> Destination Site: %s", ip, redirectURL)
+	// dropAction Select the reverse proxy interception mode
+	switch dropAction {
+	// redirect
+	case "redirect":
+		http.Redirect(write, req, redirectURL, http.StatusTemporaryRedirect)
+		goto REDIRECT
+	// reset Turning off the HTTP response
+	case "reset":
+		isDrop = true
+	// proxy Hijacking target requests response information
+	case "proxy":
+		break
 	}
+	// Determine whether to redirect or intercept intercepted traffic
+	proxy, _ = NewProxy(redirectURL, isDrop)
 	// Unauthorized access is redirected to the specified URL
 	proxy.ServeHTTP(write, req)
+REDIRECT:
+	// REDIRECT Request
+	logger.Alertf("[%s] Source IP: %s -> Destination Site: %s", strings.ToUpper(dropAction), ip, redirectURL)
 }
 
 // ProxyManger Initialize the reverse proxy and pass in the address of the real back-end service
@@ -118,8 +142,12 @@ LOOK:
 // @param	port	  string	reverse proxy listening port
 // @param	pattern	  string	pattern associated with the listening port type
 func ProxyManger(action, port, pattern string) {
+	var (
+		handle        = &baseHandle{}
+		config        = &tls.Config{} // Example Initialize TLS config
+		_isHasCert, _ = strconv.ParseBool(lib.ReadConfig("cert", "HasCert", lib.InitConfig()))
+	)
 	_startUp.Lock() // 我知道这可能是一个bug哈哈哈，但是它可能不影响什么，就不修了。
-	handle := &baseHandle{}
 	http.Handle(pattern, handle)
 	// Cancels the validity verification of the destination TLS certificate
 	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{
@@ -128,10 +156,9 @@ func ProxyManger(action, port, pattern string) {
 	// Disable client connection caching to connection pools
 	http.DefaultTransport.(*http.Transport).DisableKeepAlives = true
 	rand.Seed(time.Now().UnixNano())
-	server := &http.Server{
-		Addr:    port,   // proxy port
-		Handler: handle, // Cache structure
-		TLSConfig: &tls.Config{
+	if !_isHasCert {
+		config = &tls.Config{
+			// JARM FingerPrint Random
 			CipherSuites: lib.MicsSlice([]uint16{
 				0x0005, 0x000a, 0x002f,
 				0x0035, 0x003c, 0x009c,
@@ -139,7 +166,12 @@ func ProxyManger(action, port, pattern string) {
 				0xc013, 0xc014, 0xc027,
 				0xc02f, 0xc030, 0xcca8,
 			}, rand.Intn(2)+1),
-		},
+		}
+	}
+	server := &http.Server{
+		Addr:         port,   // proxy port
+		Handler:      handle, // Cache structure
+		TLSConfig:    config, // TLS Server Config
 		TLSNextProto: make(map[string]func(*http.Server, *tls.Conn, http.Handler), 1),
 	}
 	logger.Warningf("Proxy Listen Port %s (%s)", port, action)

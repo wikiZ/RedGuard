@@ -20,6 +20,7 @@ type Cert struct {
 	Locality     string
 	Organization string
 	DNSNameTo    string
+	HasCert      string
 	DNSName      []string
 }
 
@@ -27,7 +28,7 @@ type Proxy struct {
 	HostTarget    string
 	HTTPSPort     string
 	HTTPort       string
-	DROP          string
+	DropAction    string
 	Redirect      string
 	AllowLocation string
 	AllowIP       string

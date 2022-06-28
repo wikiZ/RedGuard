@@ -2,9 +2,9 @@
 
 [![GitHub stars](https://img.shields.io/github/stars/wikiZ/RedGuard)](https://github.com/knownsec/Kunyu) [![GitHub issues](https://img.shields.io/github/issues/wikiZ/RedGuard)](https://github.com/knownsec/Kunyu/issues) [![GitHub release](https://img.shields.io/github/release/wikiZ/RedGuard)](https://github.com/knownsec/Kunyu/releases) [![](https://img.shields.io/badge/author-风起-blueviolet)](https://github.com/wikiZ) 
 
---------------
-
 中文文档 | [English](https://github.com/wikiZ/RedGuard/blob/main/README.md)
+
+![1653117445(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/42d448a4cd030c05bacb8bde759b5d8.png)
 
 # 0x00 介绍
 
@@ -17,12 +17,13 @@ RedGuard是一个C2设施前置流量控制工具，可以避免Blue Team,AVS,ED
 ## 应用场景
 
 - 攻防演练中防守方根据态势感知平台针对C2交互流量的分析溯源
-- 防范云沙箱环境下针对木马样本的恶意分析
+- 根据JA3指纹库识别防范云沙箱环境下针对木马样本的恶意分析
 - 阻止恶意的请求来实施重放攻击，实现混淆上线的效果
 - 在明确上线服务器IP的情况下，以白名单的方式限制访问交互流量的请求
 - 防范网络空间测绘技术针对C2设施的扫描识别，并重定向或拦截扫描探针的流量
 - 支持对多个C2服务器的前置流量控制，并可实现域前置的效果实现负载均衡上线，达到隐匿的效果
 - 能够通过请求IP反查API接口针对根据 IP 地址的归属地进行地域性的主机上线限制
+- 在不更改源码的情况下，解决分阶段checksum8规则路径解析存在的强特征。
 - 通过目标请求的拦截日志分析蓝队溯源行为，可用于跟踪对等连接事件/问题
 - 具有自定义对样本合法交互的时间段进行设置，实现仅在工作时间段内进行流量交互的功能
 - Malleable C2 Profile 解析器能够严格根据 malleable profile验证入站 HTTP/S 请求，并在违规情况下丢弃外发数据包（支持Malleable Profiles 4.0+）
@@ -38,7 +39,7 @@ RedGuard是一个C2设施前置流量控制工具，可以避免Blue Team,AVS,ED
 git clone https://github.com/wikiZ/RedGuard.git
 cd RedGuard
 # 也可以使用upx压缩编译后的文件体积
-go build -ldflags "-s -w"
+go build -ldflags "-s -w" -trimpath
 # 赋予工具可执行权限，并进行初始化操作
 chmod +x ./RedGuard&&./RedGuard
 
@@ -50,11 +51,11 @@ chmod +x ./RedGuard&&./RedGuard
 
 如下图，首先对RedGuard赋予可执行权限并进行初始化操作，第一次运行会在当前用户目录下生成配置文件，以实现灵活的功能配置，**配置文件名：.RedGuard_CobaltStrike.ini**。
 
-![1653117445(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/20220521151731-13f938b8-d8d6-1.png)
+![1653117707(1).png](https://raw.githubusercontent.com/wikiZ/RedGuardImage/main/1656308555577.jpg)
 
 **配置文件内容：**
 
-![1653117707(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/20220521152151-af330f34-d8d6-1.png)
+![1653117707(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/1656310498272.png)
 
 cert的配置选项主要是针对样本与C2前置设施的HTTPS流量交互证书的配置信息，proxy主要用于配置反向代理流量中的控制选项，具体使用会在下面进行详细讲解。
 
@@ -64,11 +65,18 @@ cert的配置选项主要是针对样本与C2前置设施的HTTPS流量交互证
 openssl x509 -in ca.crt -noout -text
 ```
 
-![1653118330(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/20220521153216-23d83cd2-d8d8-1.png)
+![1653118330(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/1656308972417.jpg)
 
 每次启动RedGuard都会更新随机TLS JARM指纹，防止被以此佐证C2设施。
 
 ![1653118330(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/d2d8d30fcd349bd4567c685aaa93451.jpg)
+
+在使用自己证书的情况下，到配置文件中修改HasCert参数为true，防止因为JARM混淆随机化导致的CipherSuites加密套件与自定义证书不兼容导致的无法正常通信问题。
+
+```bash
+# Whether to use the certificate you have applied for true/false
+HasCert      = false
+```
 
 ## RedGuard Usage
 
@@ -76,6 +84,10 @@ openssl x509 -in ca.crt -noout -text
 root@VM-4-13-ubuntu:~# ./RedGuard -h
 
 Usage of ./RedGuard:
+  -DropAction string
+        RedGuard interception action (default "redirect")
+  -HasCert string
+        Whether to use the certificate you have applied for (default "false")
   -allowIP string
         Proxy Requests Allow IP (default "*")
   -allowLocation string
@@ -87,11 +99,9 @@ Usage of ./RedGuard:
   -country string
         Cert Country (default "CN")
   -dns string
-        Cert DNSName
-  -drop string
-        Proxy Filter Enable DROP (default "false")
+        Cert DNSName (default "*.aliyun.com,manager.channel.aliyun.com,*.acs-internal.aliyuncs.com\",*.connect.aliyun.com,aliyun.com,whois.www.net.cn,tianchi-global.com")
   -host string
-        Set Proxy HostTarget
+        Set Proxy HostTarget (default "{\"360.net\":\"http://127.0.0.1:8080\",\"360.com\":\"https://127.0.0.1:4433\"}")
   -http string
         Set Proxy HTTP Port (default ":80")
   -https string
@@ -124,7 +134,7 @@ Usage of ./RedGuard:
 
 这里为了方便展示输出效果，实际使用可以通过`nohup ./RedGuard &`后台运行。
 
-![1653130661(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/20220521185753-dd1280a6-d8f4-1.png)
+![1653130661(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/1656309416534.png)
 
 ```bash
 {"360.net":"http://127.0.0.1:8080","360.com":"https://127.0.0.1:4433"}
@@ -132,7 +142,7 @@ Usage of ./RedGuard:
 
 从上面的slice不难看出，360.net对应了代理到本地8080端口，360.com指向了本地的4433端口，且对应了使用的HTTP协议的不同，在后续上线中，需要注意监听器的协议类型需要和这里设置的保持一致，并设置对应HOST请求头。
 
-![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/20220521191828-bd41a344-d8f7-1.png)
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/1656309543334.jpg)
 
 如上图，在未授权情况下，我们得到的响应信息也是重定向的站点返回信息。
 
@@ -144,12 +154,13 @@ Usage of ./RedGuard:
 
 - **reset**：立即终止 TCP 连接。
 - **proxy**：从另一个网站获取响应，以尽可能接近地模仿克隆/劫持的网站。
+- **redirect**：重定向到指定网站返回HTTP状态码302，对重定向的网站无要求。
 
 ```bash
-# Determines whether to intercept intercepted traffic default false / true
-DROP = false
+# RedGuard interception action: redirect / rest / proxy (Hijack HTTP Response)
+drop_action   = proxy
 # URL to redirect to
-Redirect = https://360.net
+Redirect      = https://360.net
 ```
 
 配置文件中 **Redirect = URL**  指向的就是劫持的URL地址，RedGuard支持“热更改”，也就是说在工具通过nohup这种方式在后台运行的过程中，我们依旧可以通过修改配置文件的内容进行实时的功能启停。
@@ -162,7 +173,7 @@ Redirect = https://360.net
 
 而另一种拦截方式就是DROP，直接Close HTTP通信响应，通过设置 **DROP = true** 启用，具体拦截效果如下图：
 
-![1653132755(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/20220521193245-bc078708-d8f9-1.png)
+![1653132755(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/1656310664285.jpg)
 
 可以看到，没有获取到HTTP响应码，C2前置流量控制对非法请求直接close响应，在网络空间测绘的探测中，DROP的方式可以实现隐藏端口开放情况的作用，具体效果可以看下面的案例分析。
 
@@ -181,7 +192,7 @@ Port_HTTP = :80
 
 通过目标请求的拦截日志分析蓝队溯源行为，可用于跟踪对等连接事件/问题，日志文件生成在运行RedGuard所在目录下，**文件名：RedGuard.log**。
 
-![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/20220523104050-c1c67296-da41-1.png)
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/1656310909975.jpg)
 
 ## 请求地域限制
 
@@ -194,7 +205,7 @@ P.S. 国内用户，不要使用**AllowLocation = 济南,beijing**这种方式�
 AllowLocation = *
 ```
 
-![1653134160(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/20220521195609-00f19fb8-d8fd-1.png)
+![1653134160(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/1656311033506.jpg)
 
 决定限制地域之前，可以通过以下命令手动查询IP地址归属地。
 
@@ -226,7 +237,7 @@ AllowLocation = *
 AllowIP       = 127.0.0.1
 ```
 
-![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/20220522133017-43a90ce0-d990-1.png)
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/1656311197849.png)
 
 如上图，我们限制仅允许127.0.0.1上线，那么其他IP的请求流量就会被拦截。
 
@@ -236,10 +247,10 @@ AllowIP       = 127.0.0.1
 
 ```bash
 # Limit the time of requests example: AllowTime = 8:00 - 16:00
-AllowTime     = 8:00 - 21：00
+AllowTime     = 8:00 - 21:00
 ```
 
-![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/20220522133644-2a6054c2-d991-1.png)
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/1656311327769.png)
 
 ## Malleable Profile
 
@@ -250,7 +261,7 @@ RedGuard采用 Malleable C2 配置文件。然后，它解析提供的可延展�
 MalleableFile = /root/cobaltstrike/Malleable.profile
 ```
 
-![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/20220522134214-ef2c5ae4-d991-1.png)
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/1656311591693.png)
 
 风起编写的profile，推荐使用：
 
@@ -262,15 +273,19 @@ MalleableFile = /root/cobaltstrike/Malleable.profile
 
 如下图所示，当我们的拦截规则设置为DROP的时候，空间测绘系统探针会对我们反向代理端口的/目录进行几次探测，理论上测绘发送的请求包就是伪造成正常的流量所示。但是当尝试几次因为请求包特征不符合RedGuard的放行要求，所以均被Close HTTP响应。最终展现在测绘平台上的效果也就是认为反向代理端口未开放。
 
-![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/20220522135625-ea658a42-d993-1.png)
+![image.png](https://raw.githubusercontent.com/wikiZ/RedGuardImage/main/1656312184116.png)
 
 下图所示的流量也就是当拦截规则设置为Redirect时，我们会发现当测绘探针收到响应后会继续对我们进行目录扫描，UserAgent为随机，看起来符合正常流量的请求，但是也都成功被拦截了。
 
-![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/20220522140326-e5723b4c-d994-1.png)
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/1656312557035.png)
+
+**测绘平台 - 劫持响应拦截方式效果：**
+
+![1653200439(1).jpg](https://github.com/wikiZ/RedGuardImage/raw/main/1656313188878.png)
 
 **测绘平台 - 重定向拦截方式效果：**
 
-![1653200439(1).jpg](https://github.com/wikiZ/RedGuardImage/raw/main/20220522142048-526e916c-d997-1.png)
+![1653200439(1).jpg](https://github.com/wikiZ/RedGuardImage/raw/main/1656406644535.jpg)
 
 ## 域前置
 
@@ -284,7 +299,7 @@ RedGuard是支持域前置的，在我看来一共有两种展现形式，一种
 
 在自建域前置中，保持多个反向代理端口一致，HOST头一致指向后端真实的C2服务器监听端口。而这种方式，可以很好的隐藏我们的真实C2服务器，而反向代理的服务器可以通过配置防火墙仅开放代理端口即可。
 
-![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/20220522144944-5cb4032e-d99b-1.png)
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/1656313773114.jpg)
 
 这里可以通过多个节点服务器实现，在CS监听器HTTPS上线IP配置多个我们的节点IP。
 

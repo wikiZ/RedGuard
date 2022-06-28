@@ -11,7 +11,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net"
-	"net/http"
 	"strconv"
 	"strings"
 	"time"
@@ -20,6 +19,7 @@ import (
 	"RedGuard/lib"
 
 	parser "github.com/D00Movenok/goMalleable"
+	"github.com/sleeyax/ja3rp/net/http"
 	"github.com/wxnacy/wgo/arrays"
 )
 
