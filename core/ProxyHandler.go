@@ -80,6 +80,10 @@ func (h *baseHandle) ServeHTTP(write http.ResponseWriter, req *http.Request) {
 	// Determine the URL to be redirected to
 	redirectURL = lib.ReadConfig("proxy", "Redirect", cfg)
 	ip = lib.ConvertIP(req.RemoteAddr)
+	// Obtaining the real IP address
+	if req.Header.Get("X-Forwarded-For") != "" {
+		ip = req.Header.Get("X-Forwarded-For")
+	}
 	// Check whether the host is verified
 	if IPHash := lib.EncodeMD5(req.JA3); arrays.ContainsString(_addressArray, req.JA3) == -1 {
 		logger.Noticef("JA3 FingerPrint: %s", IPHash)

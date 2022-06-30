@@ -2065,3 +2065,74 @@
 [2022-06-27 13:35:24] [RedGuard/core.ProxyManger] Proxy Listen Port :443 (HTTPS)
 [2022-06-27 13:35:33] [RedGuard/lib.CreateConfig] RedGuard initialization is complete!
 [2022-06-27 13:35:33] [RedGuard/lib.CreateConfig] RedGuard config path is: C:\Users\风起/.RedGuard_CobaltStrike.ini
+[2022-06-29 14:23:34] [RedGuard/lib.InitGenerateSelfSignedCert] A default SSL certificate is being generated for the reverse proxy...
+[2022-06-29 14:23:34] [main.(*cobaltStrike).serverInit] HostTarget: {"360.net":"http://127.0.0.1:8080","360.com":"https://127.0.0.1:4433"}
+[2022-06-29 14:23:34] [RedGuard/core.ProxyManger] Proxy Listen Port :80 (HTTP)
+[2022-06-29 14:23:34] [RedGuard/core.ProxyManger] Proxy Listen Port :443 (HTTPS)
+[2022-06-29 14:24:29] [RedGuard/lib.InitGenerateSelfSignedCert] A default SSL certificate is being generated for the reverse proxy...
+[2022-06-29 14:24:29] [main.(*cobaltStrike).serverInit] HostTarget: {"360.net":"http://127.0.0.1:8080","360.com":"https://127.0.0.1:4433"}
+[2022-06-29 14:24:29] [RedGuard/core.ProxyManger] Proxy Listen Port :80 (HTTP)
+[2022-06-29 14:24:29] [RedGuard/core.ProxyManger] Proxy Listen Port :443 (HTTPS)
+[2022-06-29 14:24:54] [RedGuard/lib.InitGenerateSelfSignedCert] A default SSL certificate is being generated for the reverse proxy...
+[2022-06-29 14:24:54] [main.(*cobaltStrike).serverInit] HostTarget: {"360.net":"http://127.0.0.1:8080","360.com":"https://127.0.0.1:4433"}
+[2022-06-29 14:24:54] [RedGuard/core.ProxyManger] Proxy Listen Port :80 (HTTP)
+[2022-06-29 14:24:54] [RedGuard/core.ProxyManger] Proxy Listen Port :443 (HTTPS)
+[2022-06-29 15:17:29] [RedGuard/core.(*baseHandle).ServeHTTP] JA3 FingerPrint: 07f9ac0700dcc554249f644244e291a1
+[2022-06-29 15:17:29] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] POST /api/key/activate?readonly=false
+[2022-06-29 15:17:29] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - AcunetixWVS
+[2022-06-29 15:17:29] [RedGuard/core.modifyResponse.func1.1] [RESPONSE] HTTP 301 Moved Permanently, length: 169
+[2022-06-29 15:17:29] [RedGuard/core.(*baseHandle).ServeHTTP] [PROXY] Source IP: 127.0.0.1 -> Destination Site: https://360.net
+[2022-06-30 10:22:03] [RedGuard/lib.InitGenerateSelfSignedCert] A default SSL certificate is being generated for the reverse proxy...
+[2022-06-30 10:22:03] [main.(*cobaltStrike).serverInit] HostTarget: {"360.net":"http://127.0.0.1:8080","360.com":"https://127.0.0.1:4433"}
+[2022-06-30 10:22:03] [RedGuard/core.ProxyManger] Proxy Listen Port :80 (HTTP)
+[2022-06-30 10:22:03] [RedGuard/core.ProxyManger] Proxy Listen Port :443 (HTTPS)
+[2022-06-30 10:22:17] [RedGuard/core.(*baseHandle).ServeHTTP] JA3 FingerPrint: 58dfe0bb2ac63056d7221d194e98a32f
+[2022-06-30 10:22:17] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /
+[2022-06-30 10:22:17] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36
+[2022-06-30 10:22:17] [RedGuard/core.modifyResponse.func1.1] [RESPONSE] HTTP 301 Moved Permanently, length: 169
+[2022-06-30 10:22:17] [RedGuard/core.(*baseHandle).ServeHTTP] [PROXY] Source IP: 127.0.0.1 -> Destination Site: https://360.net
+[2022-06-30 10:22:57] [RedGuard/lib.InitGenerateSelfSignedCert] A default SSL certificate is being generated for the reverse proxy...
+[2022-06-30 10:22:57] [main.(*cobaltStrike).serverInit] HostTarget: {"360.net":"http://127.0.0.1:8080","360.com":"https://127.0.0.1:4433"}
+[2022-06-30 10:22:57] [RedGuard/core.ProxyManger] Proxy Listen Port :443 (HTTPS)
+[2022-06-30 10:22:57] [RedGuard/core.ProxyManger] Proxy Listen Port :80 (HTTP)
+[2022-06-30 10:23:58] [RedGuard/core.(*baseHandle).ServeHTTP] JA3 FingerPrint: 9553183a251cdf98be9fc3b6ec0d9720
+[2022-06-30 10:23:58] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /
+[2022-06-30 10:23:58] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36
+[2022-06-30 10:23:58] [RedGuard/core.modifyResponse.func1.1] [RESPONSE] HTTP 301 Moved Permanently, length: 169
+[2022-06-30 10:23:58] [RedGuard/core.(*baseHandle).ServeHTTP] [PROXY] Source IP: 127.0.0.1 -> Destination Site: https://360.net
+[2022-06-30 10:25:05] [RedGuard/lib.InitGenerateSelfSignedCert] A default SSL certificate is being generated for the reverse proxy...
+[2022-06-30 10:25:05] [main.(*cobaltStrike).serverInit] HostTarget: {"360.net":"http://127.0.0.1:8080","360.com":"https://127.0.0.1:4433"}
+[2022-06-30 10:25:05] [RedGuard/core.ProxyManger] Proxy Listen Port :80 (HTTP)
+[2022-06-30 10:25:05] [RedGuard/core.ProxyManger] Proxy Listen Port :443 (HTTPS)
+[2022-06-30 10:25:20] [RedGuard/core.(*baseHandle).ServeHTTP] JA3 FingerPrint: ab6c50ef473b76a2aaf48bd06d20f8e1
+[2022-06-30 10:25:20] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /
+[2022-06-30 10:25:20] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36
+[2022-06-30 10:25:20] [RedGuard/core.modifyResponse.func1.1] [RESPONSE] HTTP 301 Moved Permanently, length: 169
+[2022-06-30 10:25:20] [RedGuard/core.(*baseHandle).ServeHTTP] [PROXY] Source IP: 127.0.0.1 -> Destination Site: https://360.net
+[2022-06-30 10:26:43] [RedGuard/lib.InitGenerateSelfSignedCert] A default SSL certificate is being generated for the reverse proxy...
+[2022-06-30 10:26:43] [main.(*cobaltStrike).serverInit] HostTarget: {"360.net":"http://127.0.0.1:8080","360.com":"https://127.0.0.1:4433"}
+[2022-06-30 10:26:43] [RedGuard/core.ProxyManger] Proxy Listen Port :80 (HTTP)
+[2022-06-30 10:26:43] [RedGuard/core.ProxyManger] Proxy Listen Port :443 (HTTPS)
+[2022-06-30 10:26:52] [RedGuard/core.(*baseHandle).ServeHTTP] JA3 FingerPrint: ab263e1ed7aa06baf8cf22176b724ac3
+[2022-06-30 10:26:52] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /
+[2022-06-30 10:26:52] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36
+[2022-06-30 10:26:52] [RedGuard/core.modifyResponse.func1.1] [RESPONSE] HTTP 301 Moved Permanently, length: 169
+[2022-06-30 10:26:52] [RedGuard/core.(*baseHandle).ServeHTTP] [PROXY] Source IP: 127.0.0.1 -> Destination Site: https://360.net
+[2022-06-30 10:37:37] [RedGuard/lib.InitGenerateSelfSignedCert] A default SSL certificate is being generated for the reverse proxy...
+[2022-06-30 10:37:37] [main.(*cobaltStrike).serverInit] HostTarget: {"360.net":"http://127.0.0.1:8080","360.com":"https://127.0.0.1:4433"}
+[2022-06-30 10:37:37] [RedGuard/core.ProxyManger] Proxy Listen Port :443 (HTTPS)
+[2022-06-30 10:37:37] [RedGuard/core.ProxyManger] Proxy Listen Port :80 (HTTP)
+[2022-06-30 10:37:48] [RedGuard/core.(*baseHandle).ServeHTTP] JA3 FingerPrint: 7be3ebb24597f2a22a24655de944ce65
+[2022-06-30 10:37:48] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /
+[2022-06-30 10:37:48] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36
+[2022-06-30 10:37:48] [RedGuard/core.modifyResponse.func1.1] [RESPONSE] HTTP 301 Moved Permanently, length: 169
+[2022-06-30 10:37:48] [RedGuard/core.(*baseHandle).ServeHTTP] [PROXY] Source IP: 127.0.0.1 -> Destination Site: https://360.net
+[2022-06-30 10:42:20] [RedGuard/lib.InitGenerateSelfSignedCert] A default SSL certificate is being generated for the reverse proxy...
+[2022-06-30 10:42:20] [main.(*cobaltStrike).serverInit] HostTarget: {"360.net":"http://127.0.0.1:8080","360.com":"https://127.0.0.1:4433"}
+[2022-06-30 10:42:20] [RedGuard/core.ProxyManger] Proxy Listen Port :443 (HTTPS)
+[2022-06-30 10:42:20] [RedGuard/core.ProxyManger] Proxy Listen Port :80 (HTTP)
+[2022-06-30 10:42:26] [RedGuard/core.(*baseHandle).ServeHTTP] JA3 FingerPrint: e99822918c9735a154a910c0732b7097
+[2022-06-30 10:42:26] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /
+[2022-06-30 10:42:26] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36
+[2022-06-30 10:42:26] [RedGuard/core.modifyResponse.func1.1] [RESPONSE] HTTP 301 Moved Permanently, length: 169
+[2022-06-30 10:42:26] [RedGuard/core.(*baseHandle).ServeHTTP] [PROXY] Source IP: 127.0.0.1 -> Destination Site: https://360.net
