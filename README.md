@@ -41,7 +41,7 @@ You can directly download and use the compiled version, or you can download the 
 git clone https://github.com/wikiZ/RedGuard.git
 cd RedGuard
 # You can also use upx to compress the compiled file size
-go build -ldflags "-s -w"
+go build -ldflags "-s -w" -trimpath
 # Give the tool executable permission and perform initialization operations
 chmod +x ./RedGuard&&./RedGuard
 
@@ -152,7 +152,7 @@ As shown in the figure above, in the case of unauthorized access, the response i
 
 In the above basic interception case, the default interception method is used, that is, the illegal traffic is intercepted by redirection. By modifying the configuration file, we can change the interception method and the redirected site URL. In fact, this The other way is a redirect, which might be more aptly described as hijacking, cloning, since the response status code returned is 200, and the response is taken from another website to mimic the cloned/hijacked website as closely as possible.
 
-Invalid packets can be misrouted according to two strategies:
+Invalid packets can be misrouted according to three strategies:
 
 - **reset**: Terminate the TCP connection immediately.
 - **proxy**: Get a response from another website to mimic the cloned/hijacked website as closely as possible.
