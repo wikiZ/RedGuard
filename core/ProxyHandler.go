@@ -51,7 +51,7 @@ func modifyResponse(drop bool) func(*http.Response) error {
 			logger.Warningf("[RESPONSE] HTTP %s, length: %d", resp.Status, resp.ContentLength)
 			if drop {
 				// DROP Request
-				logger.Alertf("[DROP] Source IP: %s", req.RemoteAddr)
+				logger.Alertf("[DROP] Source IP: %s", resp.Request.RemoteAddr)
 				_ = Body.Close() // Direct shutdown response
 				return
 			}
