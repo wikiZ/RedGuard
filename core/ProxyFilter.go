@@ -132,6 +132,7 @@ func ProxyFilterManger(req *http.Request) (status bool) {
 			}
 		}
 	}
+
 	// Check the location of the requested IP address
 	if allowLocation != "" && allowLocation != "*" {
 		// @param	allowLocation	string  The territory that is allowed to go online

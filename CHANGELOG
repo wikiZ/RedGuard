@@ -1,3 +1,7 @@
+## [22.7.4.11.30] - 2022-7-4
+### Added
+- Fix inconsistent request IP address and interception IP address Domain fronting
+
 ## [22.6.30.1107] - 2022-6-30
 ### Added
 - Domain fronting Obtain the actual requested IP address
