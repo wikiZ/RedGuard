@@ -51,7 +51,7 @@ func modifyResponse(drop bool) func(*http.Response) error {
 			logger.Warningf("[RESPONSE] HTTP %s, length: %d", resp.Status, resp.ContentLength)
 			if drop {
 				// DROP Request
-				logger.Alertf("[DROP] Source IP: %s", ip)
+				logger.Alertf("[DROP] Source IP: %s", req.RemoteAddr)
 				_ = Body.Close() // Direct shutdown response
 				return
 			}
@@ -79,10 +79,10 @@ func (h *baseHandle) ServeHTTP(write http.ResponseWriter, req *http.Request) {
 	var proxy *httputil.ReverseProxy
 	// Determine the URL to be redirected to
 	redirectURL = lib.ReadConfig("proxy", "Redirect", cfg)
-	ip = lib.ConvertIP(req.RemoteAddr)
+	req.RemoteAddr = lib.ConvertIP(req.RemoteAddr)
 	// Obtaining the real IP address
 	if req.Header.Get("X-Forwarded-For") != "" {
-		ip = req.Header.Get("X-Forwarded-For")
+		req.RemoteAddr = req.Header.Get("X-Forwarded-For")
 	}
 	// Check whether the host is verified
 	if IPHash := lib.EncodeMD5(req.JA3); arrays.ContainsString(_addressArray, req.JA3) == -1 {
@@ -92,7 +92,7 @@ func (h *baseHandle) ServeHTTP(write http.ResponseWriter, req *http.Request) {
 		if !ProxyFilterManger(req) {
 			goto LOOK // Redirect to the specified site
 		}
-		logger.Noticef("[REQUEST] %s - %s", ip, req.UserAgent())
+		logger.Noticef("[REQUEST] %s - %s", req.RemoteAddr, req.UserAgent())
 		_addressArray = append(_addressArray, IPHash) // Add to the list after verification for the first time
 	}
 	// Fetch directly from cache
@@ -137,7 +137,7 @@ LOOK:
 	proxy.ServeHTTP(write, req)
 REDIRECT:
 	// REDIRECT Request
-	logger.Alertf("[%s] Source IP: %s -> Destination Site: %s", strings.ToUpper(dropAction), ip, redirectURL)
+	logger.Alertf("[%s] Source IP: %s -> Destination Site: %s", strings.ToUpper(dropAction), req.RemoteAddr, redirectURL)
 }
 
 // ProxyManger Initialize the reverse proxy and pass in the address of the real back-end service
