@@ -120,7 +120,6 @@ func ProxyFilterManger(req *http.Request) (status bool) {
 		allowTime     = lib.ReadConfig("proxy", "AllowTime", cfg)     // Gets the allowed online time in the configuration file
 		malleableFile = lib.ReadConfig("proxy", "MalleableFile", cfg) // Obtain the profile path
 		banIP         = data.BANIP
-		banJA3        = data.BANJA3
 	)
 	// Check whether ban ip is matched
 	for _, banAddr := range strings.Split(banIP, "\n") {
