@@ -196,6 +196,17 @@ The blue team tracing behavior is analyzed through the interception log of the t
 
 ![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/1656310909975.jpg)
 
+
+## RedGuard Obtain the real IP address
+
+This section describes how to configure RG to obtain the real IP address of a request. You only need to add the following configuration to the profile of the C2 device, that is, to obtain the real IP address of the target through the request header X-Forwarded-For.
+
+```bash
+http-config {
+    set trust_x_forwarded_for "true";
+}
+```
+
 ## Request geographic restrictions
 
 The configuration method takes AllowLocation = Jinan, Beijing as an example. It is worth noting here that RedGuard provides two APIs for IP attribution anti-check, one for domestic users and the other for overseas users. Dynamically assign which API to use. If the target is in China, enter Chinese for the set region. Otherwise, enter English place names. It is recommended that domestic users use Chinese names. In this way, the accuracy of the attribution found and the response speed of the API are both is the best choice.
