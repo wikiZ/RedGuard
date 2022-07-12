@@ -8,12 +8,12 @@
 package lib
 
 import (
+	"RedGuard/config"
 	"RedGuard/core/parameter"
 	"fmt"
+	"io/ioutil"
 	"os"
 	"os/user"
-
-	"RedGuard/config"
 
 	"github.com/go-ini/ini"
 )
@@ -30,17 +30,19 @@ func InitConfig() *ini.File {
 	// Check whether loading failed
 	if err != nil {
 		logger.Errorf("Fail to read file: %v", err)
-		goto LOOK
+		os.Exit(0)
 	}
 	// return *ini.File object
 	return cfg
-LOOK:
-	return nil
 }
 
-func CreateConfig(C2Server string) (int, bool) {
+func CreateConfig(C2Server string, ConfigPath string) (int, bool) {
 	currentUser, _ := user.Current() // Current operating system user directory
 	_ConfigFilename = fmt.Sprintf("%s/.RedGuard_%s.ini", currentUser.HomeDir, C2Server)
+	// Verify that the configuration file is customized
+	if file, _ := ioutil.ReadFile(ConfigPath); len(file) != 0 {
+		_ConfigFilename = ConfigPath // Configuration file using a custom path
+	}
 	// Check whether the current operating system user directory configuration file exists
 	if _, err := os.Stat(_ConfigFilename); err == nil || os.IsExist(err) {
 		return 0, true

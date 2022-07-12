@@ -84,12 +84,16 @@ func main() {
 	)
 	core.CmdParse(&parse, &cert, &_proxy)
 	// Check whether RedGuard has been initialized
-	if num, isExits := lib.CreateConfig(parse.C2Type /* C2 Facility Type */); isExits {
+	if num, isExits := lib.CreateConfig(parse.C2Type /* C2 Facility Type */, parse.ConfigPath); isExits {
 		switch {
 		case parse.Update:
 			lib.UpdateConfig(&cert, &_proxy) // Update RedGuard Config
 			logger.Notice("RedGuard Configuration file updated successfully!")
 		case parse.IP != "":
+			if lib.CheckIP(parse.IP) == false {
+				logger.Warning("Please enter a valid IP address")
+				os.Exit(0)
+			}
 			logger.Noticef("Search ipLookUpHelper: %s", parse.IP)
 			core.IPLookUp(parse.Location /* owning place to be verified */, parse.IP) // Query the location of an IP address
 		case num == 0:

@@ -12,7 +12,7 @@ Organization = Alibaba (China) Technology Co., Ltd.
 # Cert User Country
 Country      = CN
 # Whether to use the certificate you have applied for true/false
-HasCert      = false
+HasCert      = true
 
 [proxy]
 # key   : Header Host value of the reverse proxy

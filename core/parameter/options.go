@@ -8,10 +8,11 @@
 package parameter
 
 type Parses struct {
-	Update   bool
-	C2Type   string
-	IP       string
-	Location string
+	Update     bool
+	IP         string
+	C2Type     string
+	Location   string
+	ConfigPath string
 }
 
 type Cert struct {

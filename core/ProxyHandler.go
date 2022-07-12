@@ -84,6 +84,8 @@ func (h *baseHandle) ServeHTTP(write http.ResponseWriter, req *http.Request) {
 	if req.Header.Get("X-Forwarded-For") != "" {
 		req.RemoteAddr = req.Header.Get("X-Forwarded-For")
 	}
+	// Set the forwarding header XFF so that C2 obtains the online real IP address
+	req.Header.Set("X-Forwarded-For", req.RemoteAddr)
 	// Check whether the host is verified
 	if IPHash := lib.EncodeMD5(req.JA3); arrays.ContainsString(_addressArray, req.JA3) == -1 {
 		logger.Noticef("JA3 FingerPrint: %s", IPHash)

@@ -37,3 +37,11 @@ func EncodeMD5(s string) string {
 	md5Str := hex.EncodeToString(hash.Sum(nil))
 	return md5Str
 }
+
+// CheckIP Check whether the entered IP address is valid
+func CheckIP(ip string) bool {
+	if m, _ := regexp.MatchString("^(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)$", ip); !m {
+		return false
+	}
+	return true
+}

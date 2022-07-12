@@ -94,7 +94,7 @@ func MalleableFilter(file string, req *http.Request) (isFilter bool) {
 			var num int // Exception counter
 			// Traverse the target profile requirements header slice
 			for _, profileHeader := range malleable.headerParam {
-				if reqHeader != profileHeader {
+				if strings.ToLower(reqHeader) != strings.ToLower(profileHeader) {
 					continue
 				}
 				num += 1 // The same header exists
@@ -120,6 +120,7 @@ func ProxyFilterManger(req *http.Request) (status bool) {
 		allowTime     = lib.ReadConfig("proxy", "AllowTime", cfg)     // Gets the allowed online time in the configuration file
 		malleableFile = lib.ReadConfig("proxy", "MalleableFile", cfg) // Obtain the profile path
 		banIP         = data.BANIP
+		banJA3        = data.BANJA3
 	)
 	// Check whether ban ip is matched
 	for _, banAddr := range strings.Split(banIP, "\n") {
@@ -132,7 +133,6 @@ func ProxyFilterManger(req *http.Request) (status bool) {
 			}
 		}
 	}
-
 	// Check the location of the requested IP address
 	if allowLocation != "" && allowLocation != "*" {
 		// @param	allowLocation	string  The territory that is allowed to go online

@@ -1,10 +1,11 @@
-## [22.7.4.11.30] - 2022-7-4
+## [22.7.12.1111] - 2022-7-12
 ### Added
-- Fix inconsistent request IP address and interception IP address Domain fronting
-
-## [22.6.30.1107] - 2022-6-30
-### Added
-- Domain fronting Obtain the actual requested IP address
+Profile Header authentication ignores case
+Disable the default JARM fingerprint randomization parameter
+Change the long version name!!
+Forward the packet XFF header so that C2 gets the real IP address
+Custom configuration file path
+Added validity verification for parameter IP input
 
 ## [22.6.28.1712] - 2022-6-28
 ### Added
