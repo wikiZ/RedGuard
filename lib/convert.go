@@ -11,6 +11,7 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"encoding/json"
+	"os"
 	"regexp"
 )
 
@@ -44,4 +45,15 @@ func CheckIP(ip string) bool {
 		return false
 	}
 	return true
+}
+
+func FileExists(path string) (bool, error) {
+	_, err := os.Stat(path)
+	if err == nil {
+		return true, nil
+	}
+	if os.IsNotExist(err) {
+		return false, nil
+	}
+	return false, err
 }

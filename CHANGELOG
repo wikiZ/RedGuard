@@ -1,3 +1,7 @@
+## [22.7.14.1043] - 2022-7-14
+### Added
+- Resolve the problem that the custom certificate is overwritten
+
 ## [22.7.12.1111] - 2022-7-12
 ### Added
 - Profile Header authentication ignores case

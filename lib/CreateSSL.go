@@ -89,6 +89,12 @@ func GenerateSelfSignedCert(cert *parameter.Cert) {
 }
 
 func InitGenerateSelfSignedCert() {
+	// Check whether an SSL certificate is generated
+	if _existsCrt, _ := FileExists("cert-rsa/ca.crt"); _existsCrt {
+		if _existsKey, _ := FileExists("cert-rsa/ca.key"); _existsKey {
+			return
+		}
+	}
 	// Example Create a CA certificate storage directory
 	if _, err := os.Stat("cert-rsa"); err != nil {
 		_ = os.Mkdir("cert-rsa", 0766) // Directory permissions
