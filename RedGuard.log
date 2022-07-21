@@ -538,24 +538,4 @@
 [2022-06-01 15:37:41] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36
 [2022-06-01 15:37:41] [RedGuard/core.modifyResponse.func1.1] [RESPONSE] HTTP 404 Not Found, length: 0
 [2022-06-01 15:37:41] [RedGuard/core.(*baseHandle).ServeHTTP] [REDIRECT] Source IP: 127.0.0.1 -> Destination Site: https://cloud.tencent.com/
-
-[2022-07-14 10:41:04] [RedGuard/lib.InitGenerateSelfSignedCert] A default SSL certificate is being generated for the reverse proxy...
-[2022-07-14 10:41:04] [main.(*cobaltStrike).serverInit] HostTarget: {"360.net":"http://127.0.0.1:8080","360.com":"https://127.0.0.1:4433"}
-[2022-07-14 10:41:04] [RedGuard/core.ProxyManger] Proxy Listen Port :80 (HTTP)
-[2022-07-14 10:41:04] [RedGuard/core.ProxyManger] Proxy Listen Port :443 (HTTPS)
-[2022-07-14 10:41:12] [main.(*cobaltStrike).serverInit] HostTarget: {"360.net":"http://127.0.0.1:8080","360.com":"https://127.0.0.1:4433"}
-[2022-07-14 10:41:12] [RedGuard/core.ProxyManger] Proxy Listen Port :80 (HTTP)
-[2022-07-14 10:41:12] [RedGuard/core.ProxyManger] Proxy Listen Port :443 (HTTPS)
-[2022-07-14 10:41:51] [RedGuard/lib.InitGenerateSelfSignedCert] A default SSL certificate is being generated for the reverse proxy...
-[2022-07-14 10:41:51] [main.(*cobaltStrike).serverInit] HostTarget: {"360.net":"http://127.0.0.1:8080","360.com":"https://127.0.0.1:4433"}
-[2022-07-14 10:41:51] [RedGuard/core.ProxyManger] Proxy Listen Port :80 (HTTP)
-[2022-07-14 10:41:51] [RedGuard/core.ProxyManger] Proxy Listen Port :443 (HTTPS)
-[2022-07-14 10:42:20] [RedGuard/lib.CreateConfig] RedGuard initialization is complete!
-[2022-07-14 10:42:21] [RedGuard/lib.CreateConfig] RedGuard config path is: C:\Users\风起/.RedGuard_CobaltStrike.ini
-[2022-07-14 10:42:24] [RedGuard/lib.InitGenerateSelfSignedCert] A default SSL certificate is being generated for the reverse proxy...
-[2022-07-14 10:42:24] [main.(*cobaltStrike).serverInit] HostTarget: {"360.net":"http://127.0.0.1:8080","360.com":"https://127.0.0.1:4433"}
-[2022-07-14 10:42:24] [RedGuard/core.ProxyManger] Proxy Listen Port :80 (HTTP)
-[2022-07-14 10:42:24] [RedGuard/core.ProxyManger] Proxy Listen Port :443 (HTTPS)
-[2022-07-14 10:43:15] [main.(*cobaltStrike).serverInit] HostTarget: {"360.net":"http://127.0.0.1:8080","360.com":"https://127.0.0.1:4433"}
-[2022-07-14 10:43:15] [RedGuard/core.ProxyManger] Proxy Listen Port :80 (HTTP)
-[2022-07-14 10:43:15] [RedGuard/core.ProxyManger] Proxy Listen Port :443 (HTTPS)
+[2

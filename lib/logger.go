@@ -7,9 +7,7 @@
 
 package lib
 
-import (
-	"github.com/phachon/go-logger"
-)
+import "github.com/phachon/go-logger"
 
 func Logger() *go_logger.Logger {
 	logger := go_logger.NewLogger()
@@ -23,7 +21,8 @@ func Logger() *go_logger.Logger {
 	fileConfig := &go_logger.FileConfig{
 		Filename:  "./RedGuard.log",
 		MaxSize:   1024 * 1024, // Maximum file size (KB). The default value is 0
-		MaxLine:   100000,
+		MaxLine:   50000,
+		MaxBak:    1,
 		DateSlice: "d",
 		Format:    "[%timestamp_format%] [%function%] %body%",
 	}

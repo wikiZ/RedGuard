@@ -1,3 +1,7 @@
+## [22.7.21.1632] - 2022-7-21
+### Added
+- Limit the maximum number of log backup files that can be generated
+
 ## [22.7.14.1043] - 2022-7-14
 ### Added
 - Resolve the problem that the custom certificate is overwritten
