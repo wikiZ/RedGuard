@@ -41,7 +41,7 @@ You can directly download and use the compiled version, or you can download the 
 git clone https://github.com/wikiZ/RedGuard.git
 cd RedGuard
 # You can also use upx to compress the compiled file size
-go build -ldflags "-s -w"
+go build -ldflags "-s -w" -trimpath
 # Give the tool executable permission and perform initialization operations
 chmod +x ./RedGuard&&./RedGuard
 

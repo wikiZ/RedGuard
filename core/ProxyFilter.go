@@ -119,6 +119,7 @@ func ProxyFilterManger(req *http.Request) (status bool) {
 		allowIP       = lib.ReadConfig("proxy", "AllowIP", cfg)       // Obtain the online IP address whitelist
 		allowTime     = lib.ReadConfig("proxy", "AllowTime", cfg)     // Gets the allowed online time in the configuration file
 		malleableFile = lib.ReadConfig("proxy", "MalleableFile", cfg) // Obtain the profile path
+		banJA3        = data.BANJA3
 		banIP         = data.BANIP
 	)
 	// Check whether ban ip is matched
@@ -130,6 +131,13 @@ func ProxyFilterManger(req *http.Request) (status bool) {
 				logger.Errorf("[DROP] %s Requested IP is forbidden to access", ip)
 				return false
 			}
+		}
+	}
+	// Check whether the REQUESTED IP JA3 fingerprint is a cloud sandbox fingerprint
+	for _, banja3 := range strings.Split(banJA3, "\n") {
+		if banja3 == lib.EncodeMD5(req.JA3) {
+			logger.Errorf("[DROP] %s Requested HOST JA3 FingerPrint is forbidden to access", ip)
+			return false
 		}
 	}
 	// Check the location of the requested IP address

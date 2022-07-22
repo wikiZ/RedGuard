@@ -1,3 +1,7 @@
+## [22.7.22.1036] - 2022-7-22
+### Added
+- Add ThreatBook Cloud SandBox to JA3 Fingerprint Base Interception rule library
+
 ## [22.7.21.1632] - 2022-7-21
 ### Added
 - Limit the maximum number of log backup files that can be generated
