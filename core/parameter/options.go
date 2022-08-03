@@ -35,6 +35,8 @@ type Proxy struct {
 	AllowIP       string
 	AllowTime     string
 	MalleableFile string
+	EdgeHost      string
+	EdgeTarget    string
 }
 
 // ProxyConf Reverse proxy configuration structure

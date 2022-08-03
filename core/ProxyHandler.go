@@ -73,16 +73,25 @@ func (h *baseHandle) ServeHTTP(write http.ResponseWriter, req *http.Request) {
 		)
 		// Read the configuration file to check whether DROP is enabled
 		dropAction = lib.ReadConfig("proxy", "drop_action", cfg)
-		// IP address of the host that initiates the request
+		// Read the Edge Host Communication Domain
+		edgeHost = lib.ReadConfig("proxy", "EdgeHost", cfg)
+		// Read the Edge Host Proxy Target
+		edgeTarget = lib.ReadConfig("proxy", "EdgeTarget", cfg)
 	)
 	var isDrop bool
 	var proxy *httputil.ReverseProxy
+	req.RemoteAddr = lib.ConvertIP(req.RemoteAddr)
 	// Determine the URL to be redirected to
 	redirectURL = lib.ReadConfig("proxy", "Redirect", cfg)
-	req.RemoteAddr = lib.ConvertIP(req.RemoteAddr)
 	// Obtaining the real IP address
 	if req.Header.Get("X-Forwarded-For") != "" {
 		req.RemoteAddr = req.Header.Get("X-Forwarded-For")
+	}
+	// Check whether Edge HOST Domain is enabled
+	if edgeHost != "*" && edgeTarget != "*" && edgeHost != "" && edgeTarget != "" {
+		// Replace request HOST
+		hostTarget[edgeHost], req.Host = hostTarget[*host], edgeHost
+		delete(hostTarget, edgeTarget)
 	}
 	// Set the forwarding header XFF so that C2 obtains the online real IP address
 	req.Header.Set("X-Forwarded-For", req.RemoteAddr)
@@ -102,6 +111,7 @@ func (h *baseHandle) ServeHTTP(write http.ResponseWriter, req *http.Request) {
 		fn.ServeHTTP(write, req)
 		return
 	}
+
 	// Check whether the domain name is in the whitelist
 	if target, ok := hostTarget[*host]; ok {
 		proxy, err := NewProxy(target, false)

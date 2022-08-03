@@ -82,7 +82,8 @@ func UpdateConfig(cert *parameter.Cert, proxy *parameter.Proxy) {
 		_proxyLIst = map[string]string{
 			"Port_HTTP": proxy.HTTPort, "Port_HTTPS": proxy.HTTPSPort, "Redirect": proxy.Redirect,
 			"AllowIP": proxy.AllowIP, "AllowTime": proxy.AllowTime, "AllowLocation": proxy.AllowLocation,
-			"DropAction": proxy.DropAction, "HostTarget": proxy.HostTarget, "MalleableFile": proxy.MalleableFile,
+			"drop_action": proxy.DropAction, "HostTarget": proxy.HostTarget, "MalleableFile": proxy.MalleableFile,
+			"EdgeHost": proxy.EdgeHost, "EdgeTarget": proxy.EdgeTarget,
 		}
 		cfg = InitConfig()
 	)

@@ -30,8 +30,12 @@ Redirect      = https://360.net
 AllowLocation = *
 # Whitelist list example: AllowIP = 172.16.1.1,192.168.1.1
 AllowIP       = *
-# Limit the time of requests example: AllowTime = 8:00 - 16:00
+# Limit the  time of requests example: AllowTime = 8:00 - 16:00
 AllowTime     = *
 # C2 Malleable File Path
 MalleableFile = *
+# Edge Host Communication Domain
+EdgeHost    = *
+# Edge Host Proxy Target example: EdgeTarget = 360.com
+EdgeTarget  = *
 `

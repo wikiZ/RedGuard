@@ -34,5 +34,7 @@ func CmdParse(parse *parameter.Parses, cert *parameter.Cert, proxy *parameter.Pr
 	flag.StringVar(&proxy.AllowIP, "allowIP", "*", "Proxy Requests Allow IP")
 	flag.StringVar(&proxy.AllowTime, "allowTime", "*", "Proxy Requests Allow Time")
 	flag.StringVar(&proxy.MalleableFile, "malleable", "*", "Set Proxy Requests Filter Malleable File")
+	flag.StringVar(&proxy.EdgeHost, "EdgeHost", "*", "Set Edge Host Communication Domain")
+	flag.StringVar(&proxy.EdgeTarget, "EdgeTarget", "*", "Set Edge Host Proxy Target")
 	flag.Parse()
 }

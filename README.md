@@ -88,8 +88,12 @@ root@VM-4-13-ubuntu:~# ./RedGuard -h
 Usage of ./RedGuard:
   -DropAction string
         RedGuard interception action (default "redirect")
+  -EdgeHost string
+        Set Edge Host Communication Domain (default "*")
+  -EdgeTarget string
+        Set Edge Host Proxy Target (default "*")
   -HasCert string
-        Whether to use the certificate you have applied for (default "false")
+        Whether to use the certificate you have applied for (default "true")
   -allowIP string
         Proxy Requests Allow IP (default "*")
   -allowLocation string
@@ -98,6 +102,8 @@ Usage of ./RedGuard:
         Proxy Requests Allow Time (default "*")
   -common string
         Cert CommonName (default "*.aliyun.com")
+  -config string
+        Set Config Path
   -country string
         Cert Country (default "CN")
   -dns string
@@ -316,6 +322,12 @@ In the self-built Domain fronting, keep multiple reverse proxy ports consistent,
 
 This can be achieved through multiple node servers, and configure multiple IPs of our nodes in the CS listener HTTPS online IP.
 
+## Edge Node
+
+RedGuard 22.08.03 updated the edge host online settings - custom intranet host interaction domain name, and the edge host uses the domain front CDN node interaction. The asymmetry of the information exchanged between the two hosts is achieved, making it more difficult to trace the source and make it difficult to check.
+
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/66b9e60fb8303b3c6b457cc8134a436.png)
+
 ## CobaltStrike
 
 If there is a problem with the above method, the actual online C2 server cannot be directly intercepted by the firewall, because the actual load balancing request in the reverse proxy is made by the IP of the cloud server manufacturer.
@@ -371,6 +383,20 @@ Thank you for your support. RedGuard will continue to improve and update it. I h
 
 **About the developer 风起 related articles:https://www.anquanke.com/member.html?memberId=148652**
 
+> 2022Kcon Author of the weapon spectrum of the hacker conference
+>
+> The 10th ISC Internet Security Conference Advanced Offensive and Defense Forum "C2 Front Flow Control" topic
+>
+> https://isc.n.cn/m/pages/live/index?channel_id=iscyY043&ncode=UR6KZ&room_id=1981905&server_id=785016&tab_id=253
+>
+> Analysis of cloud sandbox flow identification technology
+>
+> https://www.anquanke.com/post/id/277431
+>
+> Realization of JARM Fingerprint Randomization Technology
+>
+> https://www.anquanke.com/post/id/276546
+
 **Kunyu: https://github.com/knownsec/Kunyu**
 
 > 风起于青萍之末，浪成于微澜之间。
@@ -378,6 +404,6 @@ Thank you for your support. RedGuard will continue to improve and update it. I h
 
 # 0x06 Community
 
-If you have any questions or requirements, you can submit an issue under the project, or contact the tool author by adding WeCat.
+If you have any questions or requirements, you can submit an issue under the project, or contact the tool author by adding WeChat.
 
 ![867551fe860b10ca1396498a85422b4.jpg](https://github.com/wikiZ/RedGuardImage/raw/main/20220522141706-ce37e178-d996-1.png)

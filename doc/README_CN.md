@@ -83,11 +83,15 @@ HasCert      = false
 ```bash
 root@VM-4-13-ubuntu:~# ./RedGuard -h
 
-Usage of ./RedGuard:
+Usage of ./RedGuard.exe:
   -DropAction string
         RedGuard interception action (default "redirect")
+  -EdgeHost string
+        Set Edge Host Communication Domain (default "*")
+  -EdgeTarget string
+        Set Edge Host Proxy Target (default "*")
   -HasCert string
-        Whether to use the certificate you have applied for (default "false")
+        Whether to use the certificate you have applied for (default "true")
   -allowIP string
         Proxy Requests Allow IP (default "*")
   -allowLocation string
@@ -96,12 +100,14 @@ Usage of ./RedGuard:
         Proxy Requests Allow Time (default "*")
   -common string
         Cert CommonName (default "*.aliyun.com")
+  -config string
+        Set Config Path
   -country string
         Cert Country (default "CN")
   -dns string
-        Cert DNSName (default "*.aliyun.com,manager.channel.aliyun.com,*.acs-internal.aliyuncs.com\",*.connect.aliyun.com,aliyun.com,whois.www.net.cn,tianchi-global.com")
+        Cert DNSName
   -host string
-        Set Proxy HostTarget (default "{\"360.net\":\"http://127.0.0.1:8080\",\"360.com\":\"https://127.0.0.1:4433\"}")
+        Set Proxy HostTarget
   -http string
         Set Proxy HTTP Port (default ":80")
   -https string
@@ -313,6 +319,12 @@ RedGuard是支持域前置的，在我看来一共有两种展现形式，一种
 
 这里可以通过多个节点服务器实现，在CS监听器HTTPS上线IP配置多个我们的节点IP。
 
+## 边缘节点
+
+RedGuard 22.08.03更新了边缘主机上线设置-自定义内网主机交互域名，而边缘主机使用域前置CDN节点交互。达到了两台主机之间交互信息的不对称，使溯源难度更大，难以排查。
+
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/66b9e60fb8303b3c6b457cc8134a436.png)
+
 ## CobaltStrike上线
 
 如果说上面的这种方式有一个问题就是，实际上线的C2服务器是不能通过防火墙直接拦截掉的，因为在反向代理中实际进行负载均衡请求的是云服务器厂商IP进行的。
@@ -368,6 +380,20 @@ RedGuard接收到请求：
 
 **关于开发者 风起 相关文章：https://www.anquanke.com/member.html?memberId=148652**
 
+> 2022Kcon黑客大会兵器谱作者
+>
+> 第十届ISC互联网安全大会 高级攻防论坛《C2设施前置流量控制技术》议题
+>
+> https://isc.n.cn/m/pages/live/index?channel_id=iscyY043&ncode=UR6KZ&room_id=1981905&server_id=785016&tab_id=253
+>
+> 云沙箱流量识别技术剖析
+>
+> https://www.anquanke.com/post/id/277431
+>
+> JARM指纹随机化技术实现
+>
+> https://www.anquanke.com/post/id/276546
+
 **Kunyu: https://github.com/knownsec/Kunyu**
 
 > 风起于青萍之末，浪成于微澜之间。
@@ -375,6 +401,6 @@ RedGuard接收到请求：
 
 # 0x06 Community
 
-如果有问题或者需求可以在项目下提交issue，或通过添加WeCat联系工具作者。
+如果有问题或者需求可以在项目下提交issue，或通过添加WeChat联系工具作者。
 
 ![867551fe860b10ca1396498a85422b4.jpg](https://github.com/wikiZ/RedGuardImage/raw/main/20220522141706-ce37e178-d996-1.png)
