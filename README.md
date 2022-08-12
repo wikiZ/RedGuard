@@ -185,6 +185,14 @@ Another interception method is DROP, which directly closes the HTTP communicatio
 
 It can be seen that the C2 front flow control directly close response to illegal requests without the HTTP response code. In the detection of cyberspace mapping, the DROP method can hide the opening of ports. The specific effect can be seen in the following case. analyze.
 
+## JA3 fingerprint recognition cloud sandbox analysis traffic
+
+RedGuard currently supports the function of identifying cloud sandboxes based on JA3 fingerprints, which can identify and intercept network requests initiated in the cloud sandbox environment to prevent subsequent connectivity analysis, which further affects the security of C2 facilities.
+
+Currently supports the identification and interception of the threatbook cloud sandbox as an effect demonstration
+
+![1653132755(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/ebd60b93323db5096328e8f20a2f1df.jpg)
+
 ## Proxy port modification
 
 The configuration of the following two parameters in the configuration file realizes the effect of changing the reverse proxy port. It is recommended to use the default port hiding as long as it does not conflict with the current server port. If it must be modified, then pay attention to the `:` of the parameter value not to be missing
