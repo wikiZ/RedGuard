@@ -45,3 +45,10 @@ type ProxyConf struct {
 	Action  string
 	Pattern string
 }
+
+// SampleFinger Set listener fingerprint identification rules
+// example [Accept-Finger: 866e5289337ab033f89bc57c5274c7ca]
+type SampleFinger struct {
+	FieldName   string // Set the name of the HTTP Header identification field
+	FieldFinger string
+}

@@ -2,7 +2,7 @@ package config
 
 var RedGuardConfig = `[cert]
 # User Optional name
-DNSName      = *.aliyun.com,manager.channel.aliyun.com,*.acs-internal.aliyuncs.com,*.connect.aliyun.com,aliyun.com,whois.www.net.cn,tianchi-global.com
+DNSName      = *.aliyun.com,manager.channel.aliyun.com,*.acs-internal.aliyuncs.com",*.connect.aliyun.com,aliyun.com,whois.www.net.cn,tianchi-global.com
 # Cert User CommonName
 CommonName   = *.aliyun.com
 # Cert User Locality
@@ -23,7 +23,7 @@ Port_HTTPS    = :443
 # HTTP Reverse proxy port
 Port_HTTP     = :80
 # RedGuard interception action: redirect / reset / proxy (Hijack HTTP Response)
-drop_action   = proxy
+drop_action   = redirect
 # URL to redirect to
 Redirect      = https://360.net
 # IP address owning restrictions example:AllowLocation = 山东,上海,杭州 or shanghai,beijing
@@ -35,7 +35,13 @@ AllowTime     = *
 # C2 Malleable File Path
 MalleableFile = *
 # Edge Host Communication Domain
-EdgeHost    = *
+EdgeHost      = *
 # Edge Host Proxy Target example: EdgeTarget = 360.com
-EdgeTarget  = *
+EdgeTarget    = *
+
+[SampleFinger]
+# HTTP Request Header Field
+FieldName   = *
+# Sample Finger example:xxxxxx,xxxxxx
+FieldFinger = *
 `

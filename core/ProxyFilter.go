@@ -119,9 +119,22 @@ func ProxyFilterManger(req *http.Request) (status bool) {
 		allowIP       = lib.ReadConfig("proxy", "AllowIP", cfg)       // Obtain the online IP address whitelist
 		allowTime     = lib.ReadConfig("proxy", "AllowTime", cfg)     // Gets the allowed online time in the configuration file
 		malleableFile = lib.ReadConfig("proxy", "MalleableFile", cfg) // Obtain the profile path
+		fieldName     = lib.ReadConfig("SampleFinger", "FieldName", cfg)
+		fieldFinger   = lib.ReadConfig("SampleFinger", "FieldFinger", cfg)
 		banJA3        = data.BANJA3
 		banIP         = data.BANIP
 	)
+
+	// sample finger verify
+	if f := req.Header.Get(fieldName); fieldName != "*" && fieldFinger != "*" && f != "" {
+		finger := lib.EncodeMD5(req.Header.Get("Host") + f)
+		logger.Noticef("Sample Finger: %s", finger)
+		if strings.Contains(fieldFinger, finger) /* finger Check*/ {
+			logger.Errorf("[DROP] Requested Sample Finger is forbidden to access")
+			return false
+		}
+	}
+
 	// Check whether ban ip is matched
 	for _, banAddr := range strings.Split(banIP, "\n") {
 		// Check whether the requested IP address is in the correct IP address format or network segment format

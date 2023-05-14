@@ -99,11 +99,11 @@ func (h *baseHandle) ServeHTTP(write http.ResponseWriter, req *http.Request) {
 	if IPHash := lib.EncodeMD5(req.JA3); arrays.ContainsString(_addressArray, req.JA3) == -1 {
 		logger.Noticef("JA3 FingerPrint: %s", IPHash)
 		logger.Noticef("[REQUEST] %s %s", req.Method, req.RequestURI)
+		logger.Noticef("[REQUEST] %s - %s", req.RemoteAddr, req.UserAgent())
 		// Request filtering method
 		if !ProxyFilterManger(req) {
 			goto LOOK // Redirect to the specified site
 		}
-		logger.Noticef("[REQUEST] %s - %s", req.RemoteAddr, req.UserAgent())
 		_addressArray = append(_addressArray, IPHash) // Add to the list after verification for the first time
 	}
 	// Fetch directly from cache

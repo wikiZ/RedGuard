@@ -13,7 +13,7 @@ import (
 	"RedGuard/core/parameter"
 )
 
-func CmdParse(parse *parameter.Parses, cert *parameter.Cert, proxy *parameter.Proxy) {
+func CmdParse(parse *parameter.Parses, cert *parameter.Cert, finger *parameter.SampleFinger, proxy *parameter.Proxy) {
 	flag.BoolVar(&parse.Update, "u", false, `Enable configuration file modification`)
 	flag.StringVar(&parse.C2Type, "type", `CobaltStrike`, `C2 Server Type`)
 	flag.StringVar(&parse.IP, "ip", ``, `IPLookUP IP`)
@@ -36,5 +36,7 @@ func CmdParse(parse *parameter.Parses, cert *parameter.Cert, proxy *parameter.Pr
 	flag.StringVar(&proxy.MalleableFile, "malleable", "*", "Set Proxy Requests Filter Malleable File")
 	flag.StringVar(&proxy.EdgeHost, "EdgeHost", "*", "Set Edge Host Communication Domain")
 	flag.StringVar(&proxy.EdgeTarget, "EdgeTarget", "*", "Set Edge Host Proxy Target")
+	flag.StringVar(&finger.FieldName, "FieldName", "", "Set the name of the HTTP Header identification field")
+	flag.StringVar(&finger.FieldFinger, "FieldFinger", "", "Set HTTP Header identification field Info")
 	flag.Parse()
 }

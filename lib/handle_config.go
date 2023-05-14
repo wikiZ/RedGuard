@@ -73,17 +73,20 @@ func ReadConfig(section, key string, cfg *ini.File) string {
 
 // UpdateConfig Modify the content of the configuration file
 // Oh, my God, this is not elegant!
-func UpdateConfig(cert *parameter.Cert, proxy *parameter.Proxy) {
+func UpdateConfig(cert *parameter.Cert, proxy *parameter.Proxy, finger *parameter.SampleFinger) {
 	var (
 		_certList = map[string]string{
 			"Locality": cert.Locality, "Country": cert.Country, "Organization": cert.Organization,
 			"CommonName": cert.CommonName, "DNSName": cert.DNSNameTo, "HasCert": cert.HasCert,
 		}
-		_proxyLIst = map[string]string{
+		_proxyList = map[string]string{
 			"Port_HTTP": proxy.HTTPort, "Port_HTTPS": proxy.HTTPSPort, "Redirect": proxy.Redirect,
 			"AllowIP": proxy.AllowIP, "AllowTime": proxy.AllowTime, "AllowLocation": proxy.AllowLocation,
 			"drop_action": proxy.DropAction, "HostTarget": proxy.HostTarget, "MalleableFile": proxy.MalleableFile,
 			"EdgeHost": proxy.EdgeHost, "EdgeTarget": proxy.EdgeTarget,
+		}
+		_sampleFinger = map[string]string{
+			"FieldName": finger.FieldName, "FieldFinger": finger.FieldFinger,
 		}
 		cfg = InitConfig()
 	)
@@ -92,7 +95,10 @@ func UpdateConfig(cert *parameter.Cert, proxy *parameter.Proxy) {
 		WriteConfig("cert", k, v, cfg)
 	}
 	// re proxy Write Config
-	for k, v := range _proxyLIst {
+	for k, v := range _proxyList {
 		WriteConfig("proxy", k, v, cfg)
+	}
+	for k, v := range _sampleFinger {
+		WriteConfig("SampleFinger", k, v, cfg)
 	}
 }

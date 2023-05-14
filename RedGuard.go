@@ -78,16 +78,17 @@ func main() {
 	fmt.Println(fmt.Sprintf(config.BANNER, config.VERSION, config.URL)) // output banner information.
 	// Create the tool argument
 	var (
-		parse  parameter.Parses // Basic parameter structure
-		cert   parameter.Cert   // Certificate configuration parameter structure
-		_proxy parameter.Proxy  // Proxy configuration parameter structure
+		parse   parameter.Parses // Basic parameter structure
+		_cert   parameter.Cert   // Certificate configuration parameter structure
+		_proxy  parameter.Proxy  // Proxy configuration parameter structure
+		_finger parameter.SampleFinger
 	)
-	core.CmdParse(&parse, &cert, &_proxy)
+	core.CmdParse(&parse, &_cert, &_finger, &_proxy)
 	// Check whether RedGuard has been initialized
 	if num, isExits := lib.CreateConfig(parse.C2Type /* C2 Facility Type */, parse.ConfigPath); isExits {
 		switch {
 		case parse.Update:
-			lib.UpdateConfig(&cert, &_proxy) // Update RedGuard Config
+			lib.UpdateConfig(&_cert, &_proxy, &_finger) // Update RedGuard Config
 			logger.Notice("RedGuard Configuration file updated successfully!")
 		case parse.IP != "":
 			if lib.CheckIP(parse.IP) == false {

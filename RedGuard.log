@@ -3,8 +3,8 @@
 [2022-05-23 10:34:36] [RedGuard/core.ProxyManger] Proxy Listen Port :80 (HTTP)
 [2022-05-23 10:34:36] [RedGuard/core.ProxyManger] Proxy Listen Port :443 (HTTPS)
 [2022-05-23 10:34:57] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /
-[2022-05-23 10:34:57] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 111.14.218.206 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36 Edg/101.0.1210.53
-[2022-05-23 10:34:57] [RedGuard/core.(*baseHandle).ServeHTTP] [REDIRECT] Source IP: 111.14.218.206 -> Destination Site: https://360.net
+[2022-05-23 10:34:57] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 111.14.218.xxx - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36 Edg/101.0.1210.53
+[2022-05-23 10:34:57] [RedGuard/core.(*baseHandle).ServeHTTP] [REDIRECT] Source IP: 111.14.218.xxx -> Destination Site: https://360.net
 [2022-05-23 10:35:52] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /
 [2022-05-23 10:35:52] [RedGuard/core.IPLookUp] {
 	"status": "0",
@@ -13,13 +13,13 @@
 	"data": [
 		{
 			"ExtendedLocation": "",
-			"OriginQuery": "111.14.218.206",
+			"OriginQuery": "111.14.218.xxx",
 			"appinfo": "",
 			"disp_type": 0,
-			"fetchkey": "111.14.218.206",
+			"fetchkey": "111.14.218.xxx",
 			"location": "山东省济南市 移动",
 			"origip": "111.14.218.206",
-			"origipquery": "111.14.218.206",
+			"origipquery": "111.14.218.xxx",
 			"resourceid": "6006",
 			"role_id": 0,
 			"shareImage": 1,

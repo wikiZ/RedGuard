@@ -291,6 +291,49 @@ MalleableFile = /root/cobaltstrike/Malleable.profile
 
 > https://github.com/wikiZ/CobaltStrike-Malleable-Profile
 
+## Sample FingerPrint
+
+RedGuard 23.05.13已更新木马样本指纹识别功能，该功能基于对Malleable Profile自定义设置HTTP Header字段，作为该指纹“**样本Salt值**”为相同**C2监听器/**Header Host提供唯一辨识并结合其他相关请求字段生成木马样本指纹，用于自定义样本存活性。根据攻击方任务需求，针对希望失效的样本进行**“下线操作”**，更好的规避恶意研判流量的样本通联性关联及分阶段样本PAYLOAD攻击载荷获取分析，给予攻击方更加个性化的隐匿措施。
+
+针对不同C2监听器，我们可以设置不同Malleable Profile配置别称并自定义相关header的字段名及值，作为样本Salt值并以此作为区分不同样本之间的辨识之一。下列代码是为了方便说明，而在实际攻防场景下我们可以给予更加贴合实际的HTTP请求包字段作为判断依据。
+
+```bash
+http-get "listen2" {
+	set uri "/image.gif";
+	client {
+		header "Accept-Finger" "866e5289337ab033f89bc57c5274c7ca"; //用户自定义字段名及值
+		metadata {
+			print
+		}
+	}
+}
+```
+
+**HTTP流量**
+
+![image.png](https://raw.githubusercontent.com/wikiZ/RedGuardImage/main/10b7b4d8f1d66bbf98e404332bf5d87.png)
+
+如图所示，我们根据上述样本Salt值及Host字段作为指纹生成依据，这里我们已知:
+
+- **Salt值：866e5289337ab033f89bc57c5274c7ca**
+- **Host字段值：redguard.com**
+
+这里根据对上述值进行拼接得到sample指纹为：
+
+```bash
+22e6db08c5ef1889d64103a290ac145c
+```
+
+目前已知上述样本指纹，现在我们在RedGuard配置文件中设置自定义的Header字段及样本指纹用于恶意流量拦截，值得注意的是我们可以拓展多个样本指纹，不同指纹之间以逗号分隔，FieldName需要和Malleable Profile中配置的Header字段名称达成一致。
+
+![image.png](https://raw.githubusercontent.com/wikiZ/RedGuardImage/main/aa7488ece6370ff2559400a108664a4.png)
+
+因为RedGuard的配置文件为热配置，所以这里我们不需要重新启停RG即可实现针对希望失效的样本进行拦截，当我们希望该样本重新生效时，只需在RG配置文件中删除相关样本指纹即可实现。
+
+**演示效果**
+
+![image.png](https://raw.githubusercontent.com/wikiZ/RedGuardImage/main/4d37798254ba9b5729ac886f90a10f7.png)
+
 # 0x04 案例分析
 
 ## 空间测绘
