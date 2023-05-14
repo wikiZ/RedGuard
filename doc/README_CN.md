@@ -293,9 +293,9 @@ MalleableFile = /root/cobaltstrike/Malleable.profile
 
 ## Sample FingerPrint
 
-RedGuard 23.05.13已更新木马样本指纹识别功能，该功能基于对Malleable Profile自定义设置HTTP Header字段，作为该指纹“**样本Salt值**”为相同**C2监听器/**Header Host提供唯一辨识并结合其他相关请求字段生成木马样本指纹，用于自定义样本存活性。根据攻击方任务需求，针对希望失效的样本进行**“下线操作”**，更好的规避恶意研判流量的样本通联性关联及分阶段样本PAYLOAD攻击载荷获取分析，给予攻击方更加个性化的隐匿措施。
+RedGuard 23.05.13已更新木马样本指纹识别功能，该功能基于对Malleable Profile自定义设置HTTP Header字段作为该指纹“**样本Salt值**”，为相同**C2监听器/**Header Host提供唯一辨识。此外，结合其他相关请求字段生成的木马样本指纹，可用于检测自定义样本存活性。根据攻击方任务要求，木马样本指纹识别功能可针对希望失效的样本进行**“下线操作”**，更好地规避恶意研判流量的样本通联性关联及分阶段样本PAYLOAD攻击载荷获取分析，给予攻击方更加个性化的隐匿措施。
 
-针对不同C2监听器，我们可以设置不同Malleable Profile配置别称并自定义相关header的字段名及值，作为样本Salt值并以此作为区分不同样本之间的辨识之一。下列代码是为了方便说明，而在实际攻防场景下我们可以给予更加贴合实际的HTTP请求包字段作为判断依据。
+针对不同C2监听器，我们可以给不同的Malleable Profile配置别称、自定义相关header的字段名和值作为样本Salt值，以此作为区分不同样本之间的辨识之一。下列代码是为了方便说明，而在实际攻防场景下我们可以给予更加贴合实际的HTTP请求包字段作为判断依据。
 
 ```bash
 http-get "listen2" {
@@ -318,13 +318,13 @@ http-get "listen2" {
 - **Salt值：866e5289337ab033f89bc57c5274c7ca**
 - **Host字段值：redguard.com**
 
-这里根据对上述值进行拼接得到sample指纹为：
+根据对上述值进行拼接得到sample指纹为：
 
 ```bash
 22e6db08c5ef1889d64103a290ac145c
 ```
 
-目前已知上述样本指纹，现在我们在RedGuard配置文件中设置自定义的Header字段及样本指纹用于恶意流量拦截，值得注意的是我们可以拓展多个样本指纹，不同指纹之间以逗号分隔，FieldName需要和Malleable Profile中配置的Header字段名称达成一致。
+目前已知上述样本指纹，现在我们在RedGuard配置文件中设置自定义的Header字段及样本指纹用于恶意流量拦截。值得注意的是，我们可以拓展多个样本指纹，不同指纹之间以逗号分隔，FieldName需要和Malleable Profile中配置的Header字段名称保持一致。
 
 ![image.png](https://raw.githubusercontent.com/wikiZ/RedGuardImage/main/aa7488ece6370ff2559400a108664a4.png)
 
