@@ -83,7 +83,7 @@ func UpdateConfig(cert *parameter.Cert, proxy *parameter.Proxy, finger *paramete
 			"Port_HTTP": proxy.HTTPort, "Port_HTTPS": proxy.HTTPSPort, "Redirect": proxy.Redirect,
 			"AllowIP": proxy.AllowIP, "AllowTime": proxy.AllowTime, "AllowLocation": proxy.AllowLocation,
 			"drop_action": proxy.DropAction, "HostTarget": proxy.HostTarget, "MalleableFile": proxy.MalleableFile,
-			"EdgeHost": proxy.EdgeHost, "EdgeTarget": proxy.EdgeTarget,
+			"EdgeHost": proxy.EdgeHost, "EdgeTarget": proxy.EdgeTarget, "DelHeader": proxy.DelHeader,
 		}
 		_sampleFinger = map[string]string{
 			"FieldName": finger.FieldName, "FieldFinger": finger.FieldFinger,

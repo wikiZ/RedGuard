@@ -38,6 +38,8 @@ MalleableFile = *
 EdgeHost      = *
 # Edge Host Proxy Target example: EdgeTarget = 360.com
 EdgeTarget    = *
+# Customize the header to be deleted example: Keep-Alive,Transfer-Encoding
+DelHeader     = *
 
 [SampleFinger]
 # HTTP Request Header Field

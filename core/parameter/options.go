@@ -37,6 +37,7 @@ type Proxy struct {
 	MalleableFile string
 	EdgeHost      string
 	EdgeTarget    string
+	DelHeader     string
 }
 
 // ProxyConf Reverse proxy configuration structure

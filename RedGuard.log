@@ -316,4 +316,184 @@
 [2022-05-30 17:33:19] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /js/config.js
 [2022-05-30 17:33:19] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/53L, like Gecko) Chrome/90.0.4430.212 Safari/537.36
 [2022-05-30 17:33:19] [RedGuard/core.modifyResponse.func1.1] [RESPONSE] HTTP 301 Moved Permanently, length: 169
-[2022-05-30 17:33:20] [RedGuard/core.modifyResponse.func1.1] [REDIRECT] Source IP: 127.0.0.1 -> Destination Site: https://360.net
+[2022-05-30 17:33:20] [RedGuard/core.modifyResponse.func1.1] [REDIRECT] Source IP: 127.0.0.1 -> Destination Site: https://360.net[2023-08-19 22:28:45] [RedGuard/lib.CreateConfig] RedGuard initialization is complete!
+[2023-08-19 22:28:45] [RedGuard/lib.CreateConfig] RedGuard config path is: C:\Users\风起/.RedGuard_CobaltStrike.ini
+[2023-08-19 22:28:48] [main.(*cobaltStrike).serverInit] HostTarget: {"360.net":"http://127.0.0.1:8080","360.com":"https://127.0.0.1:4433"}
+[2023-08-19 22:28:48] [RedGuard/core.ProxyManger] Proxy Listen Port :80 (HTTP)
+[2023-08-19 22:28:48] [RedGuard/core.ProxyManger] Proxy Listen Port :443 (HTTPS)
+[2023-08-19 22:29:16] [RedGuard/core.(*baseHandle).ServeHTTP] JA3 FingerPrint: d41d8cd98f00b204e9800998ecf8427e
+[2023-08-19 22:29:16] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /
+[2023-08-19 22:29:16] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36
+[2023-08-19 22:29:16] [RedGuard/core.(*baseHandle).ServeHTTP] [REDIRECT] Source IP: 127.0.0.1 -> Destination Site: https://360.net
+[2023-08-19 22:29:34] [main.(*cobaltStrike).serverInit] HostTarget: {"360.net":"http://127.0.0.1:8080","360.com":"https://127.0.0.1:4433"}
+[2023-08-19 22:29:34] [RedGuard/core.ProxyManger] Proxy Listen Port :80 (HTTP)
+[2023-08-19 22:29:34] [RedGuard/core.ProxyManger] Proxy Listen Port :443 (HTTPS)
+[2023-08-19 22:29:41] [RedGuard/core.(*baseHandle).ServeHTTP] JA3 FingerPrint: d41d8cd98f00b204e9800998ecf8427e
+[2023-08-19 22:29:41] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /
+[2023-08-19 22:29:41] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36
+[2023-08-19 22:29:41] [RedGuard/core.(*baseHandle).ServeHTTP] [REDIRECT] Source IP: 127.0.0.1 -> Destination Site: https://360.net
+[2023-08-19 22:30:23] [main.(*cobaltStrike).serverInit] HostTarget: {"360.net":"http://127.0.0.1:8080","360.com":"https://127.0.0.1:4433"}
+[2023-08-19 22:30:23] [RedGuard/core.ProxyManger] Proxy Listen Port :80 (HTTP)
+[2023-08-19 22:30:23] [RedGuard/core.ProxyManger] Proxy Listen Port :443 (HTTPS)
+[2023-08-19 22:30:26] [RedGuard/core.(*baseHandle).ServeHTTP] JA3 FingerPrint: d41d8cd98f00b204e9800998ecf8427e
+[2023-08-19 22:30:26] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /
+[2023-08-19 22:30:26] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36
+[2023-08-19 22:30:26] [RedGuard/core.(*baseHandle).ServeHTTP] [REDIRECT] Source IP: 127.0.0.1 -> Destination Site: https://360.net
+[2023-08-19 22:31:16] [main.(*cobaltStrike).serverInit] HostTarget: {"360.net":"http://127.0.0.1:8080","360.com":"https://127.0.0.1:4433"}
+[2023-08-19 22:31:16] [RedGuard/core.ProxyManger] Proxy Listen Port :80 (HTTP)
+[2023-08-19 22:31:16] [RedGuard/core.ProxyManger] Proxy Listen Port :443 (HTTPS)
+[2023-08-19 22:31:24] [RedGuard/core.(*baseHandle).ServeHTTP] JA3 FingerPrint: d41d8cd98f00b204e9800998ecf8427e
+[2023-08-19 22:31:24] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /
+[2023-08-19 22:31:24] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36
+[2023-08-19 22:31:24] [RedGuard/core.(*baseHandle).ServeHTTP] [REDIRECT] Source IP: 127.0.0.1 -> Destination Site: https://360.net
+[2023-08-19 22:31:39] [main.(*cobaltStrike).serverInit] HostTarget: {"360.net":"http://127.0.0.1:8080","360.com":"https://127.0.0.1:4433"}
+[2023-08-19 22:31:39] [RedGuard/core.ProxyManger] Proxy Listen Port :80 (HTTP)
+[2023-08-19 22:31:39] [RedGuard/core.ProxyManger] Proxy Listen Port :443 (HTTPS)
+[2023-08-19 22:31:43] [RedGuard/core.(*baseHandle).ServeHTTP] JA3 FingerPrint: d41d8cd98f00b204e9800998ecf8427e
+[2023-08-19 22:31:43] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /
+[2023-08-19 22:31:43] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36
+[2023-08-19 22:31:43] [RedGuard/core.(*baseHandle).ServeHTTP] [REDIRECT] Source IP: 127.0.0.1 -> Destination Site: https://360.net
+[2023-08-19 22:31:57] [RedGuard/core.(*baseHandle).ServeHTTP] JA3 FingerPrint: 07f9ac0700dcc554249f644244e291a1
+[2023-08-19 22:31:57] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] POST /api/key/activate?readonly=false
+[2023-08-19 22:31:57] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - AcunetixWVS
+[2023-08-19 22:31:57] [RedGuard/core.(*baseHandle).ServeHTTP] [REDIRECT] Source IP: 127.0.0.1 -> Destination Site: https://360.net
+[2023-08-19 22:33:41] [main.(*cobaltStrike).serverInit] HostTarget: {"360.net":"http://127.0.0.1:8080","360.com":"https://127.0.0.1:4433"}
+[2023-08-19 22:33:41] [RedGuard/core.ProxyManger] Proxy Listen Port :80 (HTTP)
+[2023-08-19 22:33:41] [RedGuard/core.ProxyManger] Proxy Listen Port :443 (HTTPS)
+[2023-08-19 22:33:49] [RedGuard/core.(*baseHandle).ServeHTTP] JA3 FingerPrint: d41d8cd98f00b204e9800998ecf8427e
+[2023-08-19 22:33:49] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /
+[2023-08-19 22:33:49] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36
+[2023-08-19 22:33:49] [RedGuard/core.(*baseHandle).ServeHTTP] [REDIRECT] Source IP: 127.0.0.1 -> Destination Site: https://360.net
+[2023-08-19 22:33:50] [RedGuard/core.(*baseHandle).ServeHTTP] JA3 FingerPrint: d41d8cd98f00b204e9800998ecf8427e
+[2023-08-19 22:33:50] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /
+[2023-08-19 22:33:50] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36
+[2023-08-19 22:33:50] [RedGuard/core.(*baseHandle).ServeHTTP] [REDIRECT] Source IP: 127.0.0.1 -> Destination Site: https://360.net
+[2023-08-19 22:35:27] [main.(*cobaltStrike).serverInit] HostTarget: {"360.net":"http://127.0.0.1:8080","360.com":"https://127.0.0.1:4433"}
+[2023-08-19 22:35:27] [RedGuard/core.ProxyManger] Proxy Listen Port :443 (HTTPS)
+[2023-08-19 22:35:27] [RedGuard/core.ProxyManger] Proxy Listen Port :80 (HTTP)
+[2023-08-19 22:35:39] [RedGuard/core.(*baseHandle).ServeHTTP] JA3 FingerPrint: d41d8cd98f00b204e9800998ecf8427e
+[2023-08-19 22:35:39] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /
+[2023-08-19 22:35:39] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36
+[2023-08-19 22:35:39] [RedGuard/core.(*baseHandle).ServeHTTP] [REDIRECT] Source IP: 127.0.0.1 -> Destination Site: https://360.net
+[2023-08-19 22:35:39] [RedGuard/core.(*baseHandle).ServeHTTP] JA3 FingerPrint: d41d8cd98f00b204e9800998ecf8427e
+[2023-08-19 22:35:39] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /
+[2023-08-19 22:35:39] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36
+[2023-08-19 22:35:39] [RedGuard/core.(*baseHandle).ServeHTTP] [REDIRECT] Source IP: 127.0.0.1 -> Destination Site: https://360.net
+[2023-08-19 22:42:20] [main.(*cobaltStrike).serverInit] HostTarget: {"360.net":"http://127.0.0.1:8080","360.com":"https://127.0.0.1:4433"}
+[2023-08-19 22:42:20] [RedGuard/core.ProxyManger] Proxy Listen Port :80 (HTTP)
+[2023-08-19 22:42:20] [RedGuard/core.ProxyManger] Proxy Listen Port :443 (HTTPS)
+[2023-08-19 22:42:26] [RedGuard/core.(*baseHandle).ServeHTTP] JA3 FingerPrint: d41d8cd98f00b204e9800998ecf8427e
+[2023-08-19 22:42:26] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /
+[2023-08-19 22:42:26] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36
+[2023-08-19 22:42:27] [RedGuard/core.modifyResponse.func1.1] [RESPONSE] HTTP 200 OK, length: -1
+[2023-08-19 22:42:27] [RedGuard/core.(*baseHandle).ServeHTTP] [PROXY] Source IP: 127.0.0.1 -> Destination Site: https://market.baidu.com
+[2023-08-19 22:42:28] [RedGuard/core.(*baseHandle).ServeHTTP] JA3 FingerPrint: d41d8cd98f00b204e9800998ecf8427e
+[2023-08-19 22:42:28] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /img/pv.gif?.stamp=1692456147940&Referer=
+[2023-08-19 22:42:28] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36
+[2023-08-19 22:42:28] [RedGuard/core.modifyResponse.func1.1] [RESPONSE] HTTP 200 OK, length: -1
+[2023-08-19 22:42:29] [RedGuard/core.(*baseHandle).ServeHTTP] JA3 FingerPrint: d41d8cd98f00b204e9800998ecf8427e
+[2023-08-19 22:42:29] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /favicon.ico
+[2023-08-19 22:42:29] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36
+[2023-08-19 22:42:29] [RedGuard/core.modifyResponse.func1.1] [RESPONSE] HTTP 200 OK, length: -1
+[2023-08-19 22:42:29] [RedGuard/core.(*baseHandle).ServeHTTP] [PROXY] Source IP: 127.0.0.1 -> Destination Site: https://market.baidu.com
+[2023-08-19 22:43:32] [main.(*cobaltStrike).serverInit] HostTarget: {"360.net":"http://127.0.0.1:8080","360.com":"https://127.0.0.1:4433"}
+[2023-08-19 22:43:32] [RedGuard/core.ProxyManger] Proxy Listen Port :80 (HTTP)
+[2023-08-19 22:43:32] [RedGuard/core.ProxyManger] Proxy Listen Port :443 (HTTPS)
+[2023-08-19 22:43:37] [RedGuard/core.(*baseHandle).ServeHTTP] JA3 FingerPrint: d41d8cd98f00b204e9800998ecf8427e
+[2023-08-19 22:43:37] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /
+[2023-08-19 22:43:37] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36
+[2023-08-19 22:43:38] [RedGuard/core.modifyResponse.func1.1] [RESPONSE] HTTP 200 OK, length: -1
+[2023-08-19 22:43:38] [RedGuard/core.(*baseHandle).ServeHTTP] [PROXY] Source IP: 127.0.0.1 -> Destination Site: https://market.baidu.com
+[2023-08-19 22:43:39] [RedGuard/core.(*baseHandle).ServeHTTP] JA3 FingerPrint: d41d8cd98f00b204e9800998ecf8427e
+[2023-08-19 22:43:39] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /img/pv.gif?.stamp=1692456219015&Referer=
+[2023-08-19 22:43:39] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36
+[2023-08-19 22:43:40] [RedGuard/core.modifyResponse.func1.1] [RESPONSE] HTTP 200 OK, length: -1
+[2023-08-19 22:43:40] [RedGuard/core.(*baseHandle).ServeHTTP] JA3 FingerPrint: d41d8cd98f00b204e9800998ecf8427e
+[2023-08-19 22:43:40] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /favicon.ico
+[2023-08-19 22:43:40] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36
+[2023-08-19 22:43:41] [RedGuard/core.modifyResponse.func1.1] [RESPONSE] HTTP 200 OK, length: -1
+[2023-08-19 22:43:41] [RedGuard/core.(*baseHandle).ServeHTTP] [PROXY] Source IP: 127.0.0.1 -> Destination Site: https://market.baidu.com
+[2023-08-19 22:48:03] [main.(*cobaltStrike).serverInit] HostTarget: {"360.net":"http://127.0.0.1:8080","360.com":"https://127.0.0.1:4433"}
+[2023-08-19 22:48:03] [RedGuard/core.ProxyManger] Proxy Listen Port :80 (HTTP)
+[2023-08-19 22:48:03] [RedGuard/core.ProxyManger] Proxy Listen Port :443 (HTTPS)
+[2023-08-19 22:48:10] [RedGuard/core.(*baseHandle).ServeHTTP] JA3 FingerPrint: d41d8cd98f00b204e9800998ecf8427e
+[2023-08-19 22:48:10] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /
+[2023-08-19 22:48:10] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36
+[2023-08-19 22:48:12] [RedGuard/core.modifyResponse.func1.1] [RESPONSE] HTTP 200 OK, length: -1
+[2023-08-19 22:48:12] [RedGuard/core.(*baseHandle).ServeHTTP] [PROXY] Source IP: 127.0.0.1 -> Destination Site: https://market.baidu.com
+[2023-08-19 22:48:14] [RedGuard/core.(*baseHandle).ServeHTTP] JA3 FingerPrint: d41d8cd98f00b204e9800998ecf8427e
+[2023-08-19 22:48:14] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /favicon.ico
+[2023-08-19 22:48:14] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36
+[2023-08-19 22:48:15] [RedGuard/core.modifyResponse.func1.1] [RESPONSE] HTTP 200 OK, length: -1
+[2023-08-19 22:48:15] [RedGuard/core.(*baseHandle).ServeHTTP] [PROXY] Source IP: 127.0.0.1 -> Destination Site: https://market.baidu.com
+[2023-08-19 22:48:32] [RedGuard/core.(*baseHandle).ServeHTTP] JA3 FingerPrint: d41d8cd98f00b204e9800998ecf8427e
+[2023-08-19 22:48:32] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /
+[2023-08-19 22:48:32] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36
+[2023-08-19 22:48:32] [RedGuard/core.modifyResponse.func1.1] [RESPONSE] HTTP 200 OK, length: -1
+[2023-08-19 22:48:32] [RedGuard/core.(*baseHandle).ServeHTTP] [PROXY] Source IP: 127.0.0.1 -> Destination Site: https://market.baidu.com
+[2023-08-19 22:48:34] [RedGuard/core.(*baseHandle).ServeHTTP] JA3 FingerPrint: d41d8cd98f00b204e9800998ecf8427e
+[2023-08-19 22:48:34] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /img/pv.gif?.stamp=1692456514051&Referer=
+[2023-08-19 22:48:34] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36
+[2023-08-19 22:48:34] [RedGuard/core.modifyResponse.func1.1] [RESPONSE] HTTP 200 OK, length: -1
+[2023-08-19 22:48:44] [RedGuard/core.(*baseHandle).ServeHTTP] JA3 FingerPrint: d41d8cd98f00b204e9800998ecf8427e
+[2023-08-19 22:48:44] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /favicon.ico
+[2023-08-19 22:48:44] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36
+[2023-08-19 22:48:44] [RedGuard/core.modifyResponse.func1.1] [RESPONSE] HTTP 200 OK, length: -1
+[2023-08-19 22:48:44] [RedGuard/core.(*baseHandle).ServeHTTP] [PROXY] Source IP: 127.0.0.1 -> Destination Site: https://market.baidu.com
+[2023-08-19 22:48:53] [RedGuard/core.(*baseHandle).ServeHTTP] JA3 FingerPrint: d41d8cd98f00b204e9800998ecf8427e
+[2023-08-19 22:48:53] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /
+[2023-08-19 22:48:53] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36
+[2023-08-19 22:48:53] [RedGuard/core.modifyResponse.func1.1] [RESPONSE] HTTP 200 OK, length: -1
+[2023-08-19 22:48:53] [RedGuard/core.(*baseHandle).ServeHTTP] [PROXY] Source IP: 127.0.0.1 -> Destination Site: https://market.baidu.com
+[2023-08-19 22:48:54] [RedGuard/core.(*baseHandle).ServeHTTP] JA3 FingerPrint: d41d8cd98f00b204e9800998ecf8427e
+[2023-08-19 22:48:54] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /img/pv.gif?.stamp=1692456534121&Referer=
+[2023-08-19 22:48:54] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36
+[2023-08-19 22:48:54] [RedGuard/core.modifyResponse.func1.1] [RESPONSE] HTTP 200 OK, length: -1
+[2023-08-19 22:49:10] [RedGuard/core.(*baseHandle).ServeHTTP] JA3 FingerPrint: d41d8cd98f00b204e9800998ecf8427e
+[2023-08-19 22:49:10] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /favicon.ico
+[2023-08-19 22:49:10] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36
+[2023-08-19 22:49:10] [RedGuard/core.modifyResponse.func1.1] [RESPONSE] HTTP 200 OK, length: -1
+[2023-08-19 22:49:10] [RedGuard/core.(*baseHandle).ServeHTTP] [PROXY] Source IP: 127.0.0.1 -> Destination Site: https://market.baidu.com
+[2023-08-19 23:09:04] [main.(*cobaltStrike).serverInit] HostTarget: {"360.net":"http://127.0.0.1:8080","360.com":"https://127.0.0.1:4433"}
+[2023-08-19 23:09:04] [RedGuard/core.ProxyManger] Proxy Listen Port :443 (HTTPS)
+[2023-08-19 23:09:04] [RedGuard/core.ProxyManger] Proxy Listen Port :80 (HTTP)
+[2023-08-19 23:09:28] [RedGuard/core.(*baseHandle).ServeHTTP] JA3 FingerPrint: d41d8cd98f00b204e9800998ecf8427e
+[2023-08-19 23:09:28] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /
+[2023-08-19 23:09:28] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36
+[2023-08-19 23:09:29] [RedGuard/core.modifyResponse.func1.1] [RESPONSE] HTTP 200 OK, length: -1
+[2023-08-19 23:09:29] [RedGuard/core.(*baseHandle).ServeHTTP] [PROXY] Source IP: 127.0.0.1 -> Destination Site: https://market.baidu.com
+[2023-08-19 23:09:30] [RedGuard/core.(*baseHandle).ServeHTTP] JA3 FingerPrint: d41d8cd98f00b204e9800998ecf8427e
+[2023-08-19 23:09:30] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /img/pv.gif?.stamp=1692457770219&Referer=
+[2023-08-19 23:09:30] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36
+[2023-08-19 23:09:30] [RedGuard/core.modifyResponse.func1.1] [RESPONSE] HTTP 200 OK, length: -1
+[2023-08-19 23:13:22] [main.(*cobaltStrike).serverInit] HostTarget: {"360.net":"http://127.0.0.1:8080","360.com":"https://127.0.0.1:4433"}
+[2023-08-19 23:13:22] [RedGuard/core.ProxyManger] Proxy Listen Port :80 (HTTP)
+[2023-08-19 23:13:22] [RedGuard/core.ProxyManger] Proxy Listen Port :443 (HTTPS)
+[2023-08-19 23:14:53] [RedGuard/core.(*baseHandle).ServeHTTP] JA3 FingerPrint: d41d8cd98f00b204e9800998ecf8427e
+[2023-08-19 23:14:53] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /
+[2023-08-19 23:14:53] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36
+[2023-08-19 23:14:54] [RedGuard/core.modifyResponse.func1.1] [RESPONSE] HTTP 200 OK, length: -1
+[2023-08-19 23:14:54] [RedGuard/core.(*baseHandle).ServeHTTP] [PROXY] Source IP: 127.0.0.1 -> Destination Site: https://market.baidu.com
+[2023-08-19 23:14:55] [RedGuard/core.(*baseHandle).ServeHTTP] JA3 FingerPrint: d41d8cd98f00b204e9800998ecf8427e
+[2023-08-19 23:14:55] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /img/pv.gif?.stamp=1692458095001&Referer=
+[2023-08-19 23:14:55] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36
+[2023-08-19 23:14:55] [RedGuard/core.modifyResponse.func1.1] [RESPONSE] HTTP 200 OK, length: -1
+[2023-08-19 23:14:56] [RedGuard/core.(*baseHandle).ServeHTTP] JA3 FingerPrint: d41d8cd98f00b204e9800998ecf8427e
+[2023-08-19 23:14:56] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /favicon.ico
+[2023-08-19 23:14:56] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36
+[2023-08-19 23:14:57] [RedGuard/core.modifyResponse.func1.1] [RESPONSE] HTTP 200 OK, length: -1
+[2023-08-19 23:14:57] [RedGuard/core.(*baseHandle).ServeHTTP] [PROXY] Source IP: 127.0.0.1 -> Destination Site: https://market.baidu.com
+[2023-08-19 23:15:09] [RedGuard/core.(*baseHandle).ServeHTTP] JA3 FingerPrint: d41d8cd98f00b204e9800998ecf8427e
+[2023-08-19 23:15:09] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /
+[2023-08-19 23:15:09] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36
+[2023-08-19 23:15:09] [RedGuard/core.modifyResponse.func1.1] [RESPONSE] HTTP 200 OK, length: -1
+[2023-08-19 23:15:09] [RedGuard/core.(*baseHandle).ServeHTTP] [PROXY] Source IP: 127.0.0.1 -> Destination Site: https://market.baidu.com
+[2023-08-19 23:15:09] [RedGuard/core.(*baseHandle).ServeHTTP] JA3 FingerPrint: d41d8cd98f00b204e9800998ecf8427e
+[2023-08-19 23:15:09] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /img/pv.gif?.stamp=1692458109917&Referer=
+[2023-08-19 23:15:09] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36
+[2023-08-19 23:15:10] [RedGuard/core.modifyResponse.func1.1] [RESPONSE] HTTP 200 OK, length: -1
+[2023-08-19 23:15:10] [RedGuard/core.(*baseHandle).ServeHTTP] JA3 FingerPrint: d41d8cd98f00b204e9800998ecf8427e
+[2023-08-19 23:15:10] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] GET /favicon.ico
+[2023-08-19 23:15:10] [RedGuard/core.(*baseHandle).ServeHTTP] [REQUEST] 127.0.0.1 - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36
+[2023-08-19 23:15:11] [RedGuard/core.modifyResponse.func1.1] [RESPONSE] HTTP 200 OK, length: -1
+[2023-08-19 23:15:11] [RedGuard/core.(*baseHandle).ServeHTTP] [PROXY] Source IP: 127.0.0.1 -> Destination Site: https://market.baidu.com

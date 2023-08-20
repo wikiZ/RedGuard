@@ -53,11 +53,11 @@ chmod +x ./RedGuard&&./RedGuard
 
 As shown in the figure below, Set executable permissions and initialize RedGuard. The first run will generate a configuration file in the current user home directory to achieve flexible function configuration. Configuration file name: **.RedGuard_CobaltStrike.ini**.
 
-![1653117707(1).png](https://raw.githubusercontent.com/wikiZ/RedGuardImage/main/1656308555577.jpg)
+![1653117707(1).png](https://raw.githubusercontent.com/wikiZ/RedGuardImage/main/1692550594507.png)
 
 **Configuration file content:**
 
-![1653117707(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/1656310498272.png)
+![1653117707(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/1692550409350.png)
 
 The configuration options of cert are mainly for the configuration information of SSL certificate encrypted HTTPS communication between the sample and the C2 front infrastructure. The proxy is mainly used to configure the control options in the reverse proxy traffic. The specific use will be explained in detail below.
 
@@ -86,12 +86,18 @@ HasCert      = false
 root@VM-4-13-ubuntu:~# ./RedGuard -h
 
 Usage of ./RedGuard:
+  -DelHeader string
+        Customize the header to be deleted
   -DropAction string
         RedGuard interception action (default "redirect")
   -EdgeHost string
         Set Edge Host Communication Domain (default "*")
   -EdgeTarget string
         Set Edge Host Proxy Target (default "*")
+  -FieldFinger string
+        Set HTTP Header identification field Info
+  -FieldName string
+        Set the name of the HTTP Header identification field
   -HasCert string
         Whether to use the certificate you have applied for (default "true")
   -allowIP string
@@ -129,7 +135,6 @@ Usage of ./RedGuard:
   -type string
         C2 Server Type (default "CobaltStrike")
   -u    Enable configuration file modification
-  
 ```
 
 **P.S. You can use the parameter command to modify the configuration file. Of course, I think it may be more convenient to modify it manually with vim.**
@@ -292,6 +297,17 @@ MalleableFile = /root/cobaltstrike/Malleable.profile
 The profile written by 风起 is recommended to use:
 
 > <https://github.com/wikiZ/CobaltStrike-Malleable-Profile>
+
+## Custom Delete Response Fields
+
+In Cobalt Strike 4.7+, Teamserver automatically removes the Content-Encoding header without any notification, potentially causing a malleable http-(get|post).server violation. For example, there is no Content-type in the CS Server response packet, but after being forwarded by RedGuard, the Content-Type is added to the header of the response packet, which causes cf to cache the page, causing interference.
+
+After RedGuard 23.08.21, the function of customizing the header of the response packet has been added. Users can customize and delete the header information in the response packet by modifying the configuration file to solve the problem of incorrect parsing.
+
+```bash
+# Customize the header to be deleted example: Keep-Alive,Transfer-Encoding
+DelHeader     = Keep-Alive,Transfer-Encoding
+```
 
 ## Sample FingerPrint
 

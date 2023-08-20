@@ -34,21 +34,28 @@ var (
 
 type baseHandle struct{}
 
-func NewProxy(proxyURL string, dropType bool) (*httputil.ReverseProxy, error) {
+func NewProxy(proxyURL string, dropType bool, delHeader string) (*httputil.ReverseProxy, error) {
 	destinationURL, err := url.Parse(proxyURL)
 	if err != nil {
 		return nil, err
 	}
 	proxy := httputil.NewSingleHostReverseProxy(destinationURL)
 	// dropType Check whether the response to the request is changed
-	proxy.ModifyResponse = modifyResponse(dropType) // Modifies the response to the request
+	proxy.ModifyResponse = modifyResponse(dropType, delHeader) // Modifies the response to the request
 	return proxy, nil
 }
 
-func modifyResponse(drop bool) func(*http.Response) error {
+func modifyResponse(drop bool, delHeader string) func(*http.Response) error {
 	return func(resp *http.Response) error {
 		defer func(Body io.ReadCloser) {
 			logger.Warningf("[RESPONSE] HTTP %s, length: %d", resp.Status, resp.ContentLength)
+			delHeaderList := strings.Split(delHeader, ",")
+			if delHeader != "*" && delHeaderList != nil {
+				// Delete the header field specified in the RG response type
+				for _, header := range delHeaderList {
+					resp.Header.Del(header)
+				}
+			}
 			if drop {
 				// DROP Request
 				logger.Alertf("[DROP] Source IP: %s", resp.Request.RemoteAddr)
@@ -77,6 +84,8 @@ func (h *baseHandle) ServeHTTP(write http.ResponseWriter, req *http.Request) {
 		edgeHost = lib.ReadConfig("proxy", "EdgeHost", cfg)
 		// Read the Edge Host Proxy Target
 		edgeTarget = lib.ReadConfig("proxy", "EdgeTarget", cfg)
+		// Customize the header to be deleted
+		delHeader = lib.ReadConfig("proxy", "DelHeader", cfg)
 	)
 	var isDrop bool
 	var proxy *httputil.ReverseProxy
@@ -98,6 +107,7 @@ func (h *baseHandle) ServeHTTP(write http.ResponseWriter, req *http.Request) {
 	// Check whether the host is verified
 	if IPHash := lib.EncodeMD5(req.JA3); arrays.ContainsString(_addressArray, req.JA3) == -1 {
 		logger.Noticef("JA3 FingerPrint: %s", IPHash)
+		logger.Noticef("[REQUEST] Host:%s", req.Host)
 		logger.Noticef("[REQUEST] %s %s", req.Method, req.RequestURI)
 		logger.Noticef("[REQUEST] %s - %s", req.RemoteAddr, req.UserAgent())
 		// Request filtering method
@@ -114,7 +124,7 @@ func (h *baseHandle) ServeHTTP(write http.ResponseWriter, req *http.Request) {
 
 	// Check whether the domain name is in the whitelist
 	if target, ok := hostTarget[*host]; ok {
-		proxy, err := NewProxy(target, false)
+		proxy, err := NewProxy(target, false, delHeader)
 		if err != nil {
 			logger.Error("Proxy Exception")
 		}
@@ -144,7 +154,7 @@ LOOK:
 		break
 	}
 	// Determine whether to redirect or intercept intercepted traffic
-	proxy, _ = NewProxy(redirectURL, isDrop)
+	proxy, _ = NewProxy(redirectURL, isDrop, delHeader)
 	// Unauthorized access is redirected to the specified URL
 	proxy.ServeHTTP(write, req)
 REDIRECT:

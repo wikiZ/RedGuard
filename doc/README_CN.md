@@ -51,11 +51,11 @@ chmod +x ./RedGuard&&./RedGuard
 
 如下图，首先对RedGuard赋予可执行权限并进行初始化操作，第一次运行会在当前用户目录下生成配置文件，以实现灵活的功能配置，**配置文件名：.RedGuard_CobaltStrike.ini**。
 
-![1653117707(1).png](https://raw.githubusercontent.com/wikiZ/RedGuardImage/main/1656308555577.jpg)
+![1653117707(1).png](https://raw.githubusercontent.com/wikiZ/RedGuardImage/main/1692550594507.png)
 
 **配置文件内容：**
 
-![1653117707(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/1656310498272.png)
+![1653117707(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/1692550409350.png)
 
 cert的配置选项主要是针对样本与C2前置设施的HTTPS流量交互证书的配置信息，proxy主要用于配置反向代理流量中的控制选项，具体使用会在下面进行详细讲解。
 
@@ -83,13 +83,19 @@ HasCert      = false
 ```bash
 root@VM-4-13-ubuntu:~# ./RedGuard -h
 
-Usage of ./RedGuard.exe:
+Usage of ./RedGuard:
+  -DelHeader string
+        Customize the header to be deleted
   -DropAction string
         RedGuard interception action (default "redirect")
   -EdgeHost string
         Set Edge Host Communication Domain (default "*")
   -EdgeTarget string
         Set Edge Host Proxy Target (default "*")
+  -FieldFinger string
+        Set HTTP Header identification field Info
+  -FieldName string
+        Set the name of the HTTP Header identification field
   -HasCert string
         Whether to use the certificate you have applied for (default "true")
   -allowIP string
@@ -290,6 +296,17 @@ MalleableFile = /root/cobaltstrike/Malleable.profile
 风起编写的profile，推荐使用：
 
 > https://github.com/wikiZ/CobaltStrike-Malleable-Profile
+
+## 自定义删除响应字段
+
+在 Cobalt Strike 4.7+ 中，Teamserver 会在没有任何通知的情况下自动删除 Content-Encoding 标头，从而可能导致违反可延展http-(get|post).server。例如CS Server响应包中没有Content-type，但经过了RedGuard转发后，在响应包Header添加了Content-Type，然后导致cf对这个页面进行了缓存，造成了干扰。
+
+在RedGuard 23.08.21版本后增加了自定义响应包Header头的功能，用户可以通过修改配置文件的方式进行自定义删除的响应包中的Header信息，以解决错误解析的问题。
+
+```bash
+# Customize the header to be deleted example: Keep-Alive,Transfer-Encoding
+DelHeader     = Keep-Alive,Transfer-Encoding
+```
 
 ## Sample FingerPrint
 

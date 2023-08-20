@@ -38,5 +38,6 @@ func CmdParse(parse *parameter.Parses, cert *parameter.Cert, finger *parameter.S
 	flag.StringVar(&proxy.EdgeTarget, "EdgeTarget", "*", "Set Edge Host Proxy Target")
 	flag.StringVar(&finger.FieldName, "FieldName", "", "Set the name of the HTTP Header identification field")
 	flag.StringVar(&finger.FieldFinger, "FieldFinger", "", "Set HTTP Header identification field Info")
+	flag.StringVar(&finger.FieldFinger, "DelHeader", "", "Customize the header to be deleted")
 	flag.Parse()
 }
