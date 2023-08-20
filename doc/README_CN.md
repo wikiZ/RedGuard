@@ -299,7 +299,7 @@ MalleableFile = /root/cobaltstrike/Malleable.profile
 
 ## 自定义删除响应字段
 
-在 Cobalt Strike 4.7+ 中，Teamserver 会在没有任何通知的情况下自动删除 Content-Encoding 标头，从而可能导致违反可延展http-(get|post).server。例如CS Server响应包中没有Content-type，但经过了RedGuard转发后，在响应包Header添加了Content-Type，然后导致cf对这个页面进行了缓存，造成了干扰。
+在 Cobalt Strike 4.7+ 中，Teamserver 会在没有任何通知的情况下自动删除 Content-Encoding 标头，从而可能导致违反可延展http-(get|post).server。而且如果CS Server响应报文中没有Content-type，但经过RedGuard转发后，在响应报文头中添加了Content-Type，导致cf缓存页面，造成干扰。
 
 在RedGuard 23.08.21版本后增加了自定义响应包Header头的功能，用户可以通过修改配置文件的方式进行自定义删除的响应包中的Header信息，以解决错误解析的问题。
 
