@@ -300,7 +300,7 @@ The profile written by 风起 is recommended to use:
 
 ## Custom Delete Response Fields
 
-In Cobalt Strike 4.7+, Teamserver automatically removes the Content-Encoding header without any notification, potentially causing a malleable http-(get|post).server violation. For example, there is no Content-type in the CS Server response packet, but after being forwarded by RedGuard, the Content-Type is added to the header of the response packet, which causes cf to cache the page, causing interference.
+In Cobalt Strike 4.7+, Teamserver automatically removes the Content-Encoding header without any notification, potentially causing a malleable http-(get|post).server violation. Moreover, if there is no Content-type in the CS Server response message, but after being forwarded by RedGuard, the Content-Type is added to the response message header, causing cf to cache the page and causing interference.
 
 After RedGuard 23.08.21, the function of customizing the header of the response packet has been added. Users can customize and delete the header information in the response packet by modifying the configuration file to solve the problem of incorrect parsing.
 
