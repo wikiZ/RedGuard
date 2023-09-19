@@ -465,6 +465,10 @@ Thank you for your support. RedGuard will continue to improve and update it. I h
 > Realization of JARM Fingerprint Randomization Technology
 >
 > <https://www.anquanke.com/post/id/276546>
+>
+> C2 Infrastructure Threat Intelligence Countermeasures
+>
+> <https://paper.seebug.org/3022/>
 
 **Kunyu: <https://github.com/knownsec/Kunyu>**
 
