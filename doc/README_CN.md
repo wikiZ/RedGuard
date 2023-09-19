@@ -464,6 +464,10 @@ RedGuard接收到请求：
 > JARM指纹随机化技术实现
 >
 > https://www.anquanke.com/post/id/276546
+>
+> C2 基础设施威胁情报对抗策略
+>
+> https://paper.seebug.org/3022/
 
 **Kunyu: https://github.com/knownsec/Kunyu**
 
