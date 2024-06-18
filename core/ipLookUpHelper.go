@@ -83,8 +83,10 @@ func IPLookUp(location, ip string) (state bool) {
 			_ = json.Indent(&prettyJSON, []byte(IPLook.body), "", "\t")
 			logger.Emergency(string(prettyJSON.Bytes()))
 			// Check whether the IP address is the same as the specified location
-			if strings.Contains(strings.ToLower(IPLook.location), strings.ToLower(location)) {
-				return true // The query result is true
+			for _, location := range strings.Split(location, ",") {
+				if strings.Contains(strings.ToLower(IPLook.location), strings.ToLower(location)) {
+					return true // The query result is true
+				}
 			}
 		}
 	}
