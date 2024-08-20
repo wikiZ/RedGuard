@@ -80,6 +80,55 @@ In the case of using your own certificate, modify the HasCert parameter in the c
 HasCert      = false
 ```
 
+### Forged TLS certificates
+
+When deploying a Domain fronting to hide C2 traffic, the accelerated domain name does not have HTTPS certificate information by default. This is obviously problematic, so you need to pay attention to configuring the certificate when configuring the domain name. This is also the default basis for determining whether the sample is domain front-end traffic.
+
+![1653118330(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/1.png)
+
+[^Tencent Cloud]: Content Delivery Network Certificate Configuration
+
+I believe that everyone will have some questions after reading this, **How to obtain the configured certificate? If you use your own application for the certificate, it will not meet the anonymity effect we expect. **Here you can use the cloned certificate for configuration. Taking Tencent Cloud as an example, it was found in the test that it would not verify the validity of the custom uploaded certificate. We can use the same certificate as the actual site of the accelerated domain name to forge it. Although the forged certificate cannot communicate when replacing the default certificate of CS under normal circumstances, it will not verify the validity when deployed on the cloud service provider CDN full-site acceleration and RedGuard, and C2 interactive traffic can communicate normally.
+
+**The following is the existing project address on Github**
+
+```bash
+https://github.com/virusdefender/copy-cert
+```
+
+Although the certificate on the front-end traffic side of the sample domain has been resolved, from the perspective of large-scale network mapping, our C2 server is still exposed to the outside world and may still be detected and associated with the real C2 server. At this time, RedGuard can be used to modify the fronting default certificate of C2 to achieve anonymity.
+
+![1653118330(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/2.png)
+
+[^intelligence information]: TLS Certificates
+
+The above is the effect of the forged certificate of the C2 server. It can be seen that it is credible and not expired in the intelligence of the Threatbook community. The main way to obtain the digital certificate is to extract and update it in real time during sample analysis in the cloud sandbox, but it is obviously not effectively verified. The status value only verifies the expiration time. The certificate trust verification should only be based on whether normal communication can be achieved.
+
+It should be noted that Threatbook intelligence does not mark the SNI and HOST addresses of sample requests with certificate intelligence. This is actually to prevent false positives. I think this is correct. As an important basis for assisting researchers in analysis, threat intelligence is better to be incomplete than to point to the wrong direction, which will cause misjudgment in subsequent analysis. If configuring certificates for full-site acceleration is to forge certificates for communication traffic, then configuring the pre-response certificate of RedGuard C2 is to forge the behavioral characteristics of the real C2 server deployed on the public network to achieve anti-mapping effects, which is very necessary.
+
+Extract the certificate serial number: `55e6acaed1f8a430f9a938c5`, and perform HEX encoding to obtain the TLS certificate fingerprint: `26585094245224241434632730821`
+
+|       IP       | Port | Protocol |   Service    | Country |  City  |         Title         |    Time    |
+| :------------: | :--: | :------: | :----------: | :-----: | :----: | :-------------------: | :--------: |
+| 103.211.xx.90  | 443  |  https   | Apache httpd |  China  | Suzhou | 百度图片-发现多彩世界 | 2023-08-28 |
+| 223.113.xx.207 | 443  |  https   |     JSP3     |  China  | Xuzhou |     403 Forbidden     | 2023-08-28 |
+| 223.112.xx.48  | 443  |  https   |     JSP3     |  China  | Xuzhou |     403 Forbidden     | 2023-08-28 |
+| 223.113.xx.40  | 443  |  https   |     JSP3     |  China  | Xuzhou |     403 Forbidden     | 2023-08-28 |
+| 223.113.xx.31  | 443  |  https   |     JSP3     |  China  |        |    405 Not Allowed    | 2023-08-28 |
+| 223.113.xx.206 | 443  |  https   |     JSP3     |  China  | Xuzhou |     403 Forbidden     | 2023-08-28 |
+
+**Search Result Amount: 2291**
+
+Through cyberspace mapping, 2,291 independent IP addresses were discovered, and verification confirmed that they all had TLS certificates belonging to Baidu. It is difficult to determine whether it is malicious communication based solely on the communication traffic. However, the TLS certificates for the domain front-end + C2 front-end traffic facilities were forged, successfully interfering with space mapping and threat intelligence, causing incorrect information association, making the attacker's traffic characteristics more realistic, and achieving the purpose of forging normal communication traffic.
+
+![1653118330(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/3.png)
+
+[^RedGuard]: RG asset using the default certificate
+
+Even if there is no hidden forwarding processing before the C2 traffic front-end facility, it is best to change the certificate for RedGuard. By default, any fingerprint library formed by the fingerprint identification of common components currently used in cyberspace mapping uses the **behavior** of the default configuration characteristics of common components for identification. Different groups may show different unique characteristics during these customization processes. Of course, the formation of fingerprints requires a certain understanding of the target component, so as to extract the default characteristics of the target and form an associated fingerprint. Here, the behavioral characteristics of the RG certificate are used for cyberspace mapping, which is associated with a large number of RG nodes deployed on the public network.
+
+**It is not surprising that the author was able to extract the fingerprint, but it is still recommended that RedGuard users modify the default certificate information and be a professional hacker:)**
+
 ## RedGuard Parameters
 
 ```bash
@@ -190,9 +239,50 @@ Another interception method is DROP, which directly closes the HTTP communicatio
 
 It can be seen that the C2 front flow control directly close response to illegal requests without the HTTP response code. In the detection of cyberspace mapping, the DROP method can hide the opening of ports. The specific effect can be seen in the following case. analyze.
 
+### Hijacking site responses
+
+I believe that many users will be interested in **hijacking response**. The general principle is that when the client initiates a request to the real C2 server, since it does not meet the inbound rules, the C2 server will obtain the specified normal site and return its response information. Therefore, from the effect request end, it seems to be interacting with the IP service, but in fact, the intermediate C2 server is used as a proxy server to interact with the normal site, and it is difficult to find abnormalities. If it meets the inbound request, the traffic request will be forwarded to the real C2 service listening port for interaction, and the real listening port has been filtered by the cloud firewall, allowing only local access, and it cannot be directly accessed from the outside. **So from the perspective of external port opening, only the HTTP/S port is open, and in a sense, this is indeed the online port of C2. **
+
+![1](https://github.com/wikiZ/RedGuardImage/blob/main/7.png?raw=true)
+
+[^Traffic flow diagram]: C2 server traffic interaction process
+
+In the cyberspace mapping data, the HTTP/S open port response code of the IP is 200, not a 307 jump, which is more authentic.
+
+![1](https://github.com/wikiZ/RedGuardImage/blob/main/8.png?raw=true)
+
+The HTTPS certificate has the same effect as the forged certificate mentioned above, and both are fingerprints of real certificates.
+
+![1](https://github.com/wikiZ/RedGuardImage/blob/main/9.png?raw=true)
+
+I believe that many red teams will widely use concealment methods such as cloud functions/domain fronting in the process of fighting projects. However, in today's offensive and defensive confrontation, the above two concealment methods have a fatal problem, that is, they can directly connect to the C2 service. The result is undoubtedly that when we grasp the cloud function address or the interactive IP/HOST of the domain fronting, we can directly access the C2 listening service and prove that it is an attack facility.
+
+![1](https://github.com/wikiZ/RedGuardImage/blob/main/11.png?raw=true)
+
+**Since the traffic can directly reach C2, it is worth considering whether the security device can perform CS scanning on the traffic that does not match the SNI and HOST to identify whether it is malicious traffic. The same is true for cloud functions or sandbox environments. In addition to the sample side, there can also be more traffic-level analysis processes. **
+
+After the hijacking response, direct access to the HTTP service can interact with the website normally, but Cscan cannot scan out the sample information because the traffic cannot reach the real C2 listener. Normal C2 interaction is possible only when the characteristics of traffic initiation are met. However, there is a problem. The C2 scanning script needs to comply with the inbound rules, which puts a certain test on the coding ability of the blue team analysts. The currently public scanning script is in the form of Nmap.
+
+![1](https://github.com/wikiZ/RedGuardImage/blob/main/12.png?raw=true)
+
 ## JA3 fingerprint recognition cloud sandbox analysis traffic
 
-RedGuard currently supports the function of identifying cloud sandboxes based on JA3 fingerprints, which can identify and intercept network requests initiated in the cloud sandbox environment to prevent subsequent connectivity analysis, which further affects the security of C2 facilities.
+JA3 provides a more recognizable fingerprint for encrypted communications between clients and servers. It uses TLS fingerprints to identify TLS negotiations between malicious clients and servers, thereby achieving the effect of associating malicious clients. This fingerprint is easy to generate on any platform using MD5 encryption and is currently widely used in threat intelligence. For example, it can be seen in sample analysis reports of some sandboxes to prove the correlation between different samples.
+
+If we can master the JA3(S) of the C2 server and the malicious client, even if the traffic is encrypted and the IP address or domain name of the C2 server is unknown, we can still identify the TLS negotiation between the malicious client and the server through TLS fingerprinting. **I believe that everyone can think of this after seeing this, which is also a measure to deal with traffic forwarding concealment methods such as domain fronting, reverse proxy, and cloud function. Through the sandbox execution sample identification and C2 communication TLS negotiation and generate JA3(S) fingerprints, which can be applied to threat intelligence to achieve auxiliary tracing. **
+
+I announced this technology in 2022. When testing the micro-step sandbox environment, I found that although the number of egress IPs requesting interaction was small, it was not accurate to identify the sandbox by IP, and this was a feature that was easily changed, but its JA3 fingerprint was unique in the same system environment. Later, I received feedback that the sandbox had completed fingerprint randomization, but recent tests have found that it has not been fully implemented. I still hope to face the problem of fingerprints on the traffic side.
+
+- **Threatbook Sandbox Currently mainly the following JA3 fingerprints:**
+  - 55826aa9288246f7fcafab38353ba734
+
+From the perspective of the cloud sandbox, by monitoring the traffic interaction between the sample and the C2 server, the JA3(S) fingerprint is generated to identify the malicious client and thus make an association. Thinking in reverse, as a traffic control facility in front of C2, we can also perform such operations to obtain the JA3 fingerprint of the client request. By debugging different sandbox environments, these JA3 fingerprints are obtained to form a fingerprint library, thereby forming a basic interception strategy.
+
+Imagine that in the process of staged Trojan interaction, the loader will first pull the shellcode of the remote address. Then, when the traffic identifies that the request meets the cloud sandbox characteristics of the JA3 fingerprint library, it will intercept the subsequent requests. If the shellcode cannot be obtained, the entire loading process cannot be completed, and the sandbox naturally cannot fully analyze it. If the environment is a stageless Trojan, then the sandbox analysis will also not be able to be finally uploaded to the C2 server. I believe everyone has woken up from a sleep and found a lot of long-timed sandbox records hanging on the C2. Of course, in an ideal state, we can identify different sandbox environments, which mainly depends on the reliability of the fingerprint library.
+
+During the test, I found that after adding the JA3 fingerprint of ZoomEye GO language request library to the fingerprint library and monitoring the RG request traffic, most of the requests triggered the basic interception of the JA3 fingerprint library feature. Here I guess that the underlying language of the surveying and mapping product is part of the scanning task implemented in GO language. Through a link, the scanning logic composed of different underlying languages finally completed the entire scanning task. This also explains why the scanning of some surveying and mapping products triggered the JA3 fingerprint interception feature of the GO language request library. **The recognition rule principle is the same as that of the cloud sandbox fingerprint. Both use the uniqueness of the request client environment and the request library. Unlike the PC side, the request environment of these products will basically not be changed at will, which also enables us to grasp its traffic side fingerprint and intercept**, so can we think about whether the security device can use the JA3 fingerprint of the active detection traffic as the basis for interception? Of course, when the business traffic is large, there may be a certain amount of false alarms. Here we only propose theoretically feasible product requirements.
+
+**P.S. Users can also upload samples to the sandbox to obtain and verify their JA3 fingerprints and add them to the fingerprint library. It should be noted that it is meaningless if the sandbox only changes the JA3 fingerprint to not the above fingerprint. What really needs to be solved is that each time the sandbox performs dynamic analysis, it is not the same fingerprint, and its changes need to meet the requirements of not repeating as much as possible. If the repetition rate is high, it will still be used as a fingerprint. **
 
 Currently supports the identification and interception of the threatbook cloud sandbox as an effect demonstration
 
@@ -354,46 +444,6 @@ Because RedGuard’s configuration file is a hot configuration, we don’t need 
 
 # 0x04 Case Analysis
 
-## Cyberspace Search Mapping
-
-As shown in the figure below, when our interception rule is set to DROP, the spatial mapping system probe will probe the / directory of our reverse proxy port several times. In theory, the request packet sent by mapping is faked as normal traffic as shown. But after several attempts, because the signature of the request packet do not meet the release requirements of RedGuard, they are all responded by Close HTTP. The final effect displayed on the surveying and mapping platform is that the reverse proxy port is not open.
-
-![image.png](https://raw.githubusercontent.com/wikiZ/RedGuardImage/main/1656312184116.png)
-
-The traffic shown in the figure below means that when the interception rule is set to Redirect, we will find that when the mapping probe receives a response, it will continue to scan our directory. User-Agent is random, which seems to be in line with normal traffic requests, but both successfully blocked.
-
-![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/1656312557035.png)
-
-**Mapping Platform - Hijack Response Intercept Mode Effect:**
-
-![1653200439(1).jpg](https://github.com/wikiZ/RedGuardImage/raw/main/1656313188878.png)
-
-**Surveying and mapping platform - effect of redirection interception:**
-
-![1653200439(1).jpg](https://github.com/wikiZ/RedGuardImage/raw/main/1656406644535.jpg)
-
-## Domain fronting
-
-RedGuard supports Domain fronting. In my opinion, there are two forms of presentation. One is to use the traditional Domain fronting method, which can be achieved by setting the port of our reverse proxy in the site-wide acceleration back-to-origin address. On the original basis, the function of traffic control is added to the domain fronting, and it can be redirected to the specified URL according to the setting we set to make it look more real. It should be noted that the RedGuard setting of the HTTPS HOST header must be consistent with the domain name of the site-wide acceleration.
-
-![1653201007(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/20220522143012-a26ab442-d998-1.png)
-
-In single combat, I suggest that the above method can be used, and in team tasks, it can also be achieved by self-built "Domain fronting".
-
-![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/20220522143837-cf77a944-d999-1.png)
-
-In the self-built Domain fronting, keep multiple reverse proxy ports consistent, and the HOST header consistently points to the real C2 server listening port of the backend. In this way, our real C2 server can be well hidden, and the server of the reverse proxy can only open the proxy port by configuring the firewall.
-
-![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/1656313773114.jpg)
-
-This can be achieved through multiple node servers, and configure multiple IPs of our nodes in the CS listener HTTPS online IP.
-
-## Edge Node
-
-RedGuard 22.08.03 updated the edge host conection settings - custom intranet host interaction domain name, and the edge host uses the domain front CDN node interaction. This makes the information asymmetry between the two hosts, making it more difficult to trace the source and make it difficult to troubleshoot.
-
-![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/66b9e60fb8303b3c6b457cc8134a436.png)
-
 ## CobaltStrike
 
 If there is a problem with the above method, the actual online C2 server cannot be directly intercepted by the firewall, because the actual load balancing request in the reverse proxy is made by the IP of the cloud server manufacturer.
@@ -440,6 +490,135 @@ The listener is set to the actual line port that matches the address RedGuard ac
 RedGuard received the request:
 
 ![867551fe860b10ca1396498a85422b4.jpg](https://github.com/wikiZ/RedGuardImage/raw/main/159a00e6c5596bc3542701b4a8020b1.png)
+
+## Cyberspace Search Mapping
+
+As shown in the figure below, when our interception rule is set to DROP, the spatial mapping system probe will probe the / directory of our reverse proxy port several times. In theory, the request packet sent by mapping is faked as normal traffic as shown. But after several attempts, because the signature of the request packet do not meet the release requirements of RedGuard, they are all responded by Close HTTP. The final effect displayed on the surveying and mapping platform is that the reverse proxy port is not open.
+
+![image.png](https://raw.githubusercontent.com/wikiZ/RedGuardImage/main/1656312184116.png)
+
+The traffic shown in the figure below means that when the interception rule is set to Redirect, we will find that when the mapping probe receives a response, it will continue to scan our directory. User-Agent is random, which seems to be in line with normal traffic requests, but both successfully blocked.
+
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/1656312557035.png)
+
+**Mapping Platform - Hijack Response Intercept Mode Effect:**
+
+![1653200439(1).jpg](https://github.com/wikiZ/RedGuardImage/raw/main/1656313188878.png)
+
+**Surveying and mapping platform - effect of redirection interception:**
+
+![1653200439(1).jpg](https://github.com/wikiZ/RedGuardImage/raw/main/1656406644535.jpg)
+
+## Domain fronting
+
+RedGuard supports Domain fronting. In my opinion, there are two forms of presentation. One is to use the traditional Domain fronting method, which can be achieved by setting the port of our reverse proxy in the site-wide acceleration back-to-origin address. On the original basis, the function of traffic control is added to the domain fronting, and it can be redirected to the specified URL according to the setting we set to make it look more real. It should be noted that the RedGuard setting of the HTTPS HOST header must be consistent with the domain name of the site-wide acceleration.
+
+![1653201007(1).png](https://github.com/wikiZ/RedGuardImage/raw/main/20220522143012-a26ab442-d998-1.png)
+
+In single combat, I suggest that the above method can be used, and in team tasks, it can also be achieved by self-built "Domain fronting".
+
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/20220522143837-cf77a944-d999-1.png)
+
+In the self-built Domain fronting, keep multiple reverse proxy ports consistent, and the HOST header consistently points to the real C2 server listening port of the backend. In this way, our real C2 server can be well hidden, and the server of the reverse proxy can only open the proxy port by configuring the firewall.
+
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/1656313773114.jpg)
+
+This can be achieved through multiple node servers, and configure multiple IPs of our nodes in the CS listener HTTPS online IP.
+
+## Honeypot malicious trap
+
+**The principle of malicious honeypot trapping mainly relies on the hijacking response or redirection function of RG traffic guidance, which guides analysts who are evaluating C2 facilities to the address of the honeypot sandbox. In the hijacking response state, RG will direct request traffic that does not meet the inbound rules to the honeypot assets. **When encountering some more powerful honeypots (such as those that capture operator mobile phone numbers), the client will initiate a request according to the response of the target site and be hijacked by jsonp to obtain relevant information.
+
+Imagine that when analysts directly access the C2 online port, they will be directed to the honeypot asset, which will undoubtedly cause disturbance to the analysts. The analysts are maliciously directed to request the honeypot asset, and the honeypot monitoring end captures the relevant information of the blue team analysts and traces the error. If the analysis target is wrong from the beginning, how can you get a good result? This will undoubtedly cause serious internal friction for the defense team.
+
+**Here is a set of ZoomEye fingerprints associated with honeypot assets:**
+
+```bash
+(iconhash:"9fd6f0e56f12adfc2a4da2f6002fea7a" (title:"然之协同" +"iframe" +">v.ignoreNotice")) ("/static/js/2.ca599e2d.chunk.js?t=" +title:"OA办公系统") ("data.sloss.xyz/get_code.js?access") ("/monitordevinfo/common.js") (app:"honeyport" +country:china +after:"2022-08-22")
+```
+
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/4.png)
+
+The way to achieve this effect is very simple, you only need to change the relevant key values in the RG configuration file.
+
+```bash
+# RedGuard interception action: redirect / reset / proxy (Hijack HTTP Response)
+drop_action   = proxy
+# URL to redirect to
+Redirect      = https://market.baidu.com
+```
+
+**P.S. I believe everyone knows how to configure it without explanation:)**
+
+This method is a kind of cunning trick, which is more reflected in the idea. If it is further utilized, the honeypot capture function can be deployed in the C2 front-end traffic control facility and then interactive traffic can be directed. The effect is that the client's browser cache data can be obtained just like a traditional honeypot. However, I personally feel that in the public version, it may not be meaningful to apply it to the current attack and defense confrontation. It is meaningless for the attacker to capture the social information of the blue team analyst and then trace it. Of course, taking a step back, this may make the analysis of C2 samples more dangerous. When the attacker of the black and gray industries can obtain the virtual identity of the analyst, if the virtual and real identities can be converted, it is still relatively dangerous. **So I think that future research and analysis should be more cautious and vigilant. **
+
+## C2 traffic based on edge node link interaction
+
+In the attack and defense confrontation scenario, most unit networks are still border-based defense. Here we consider a scenario where the external servers in the DMZ area are often configured with relevant access policies in a normal business environment. At this time, when the external servers at the edge can access the network but cannot directly access the intranet host, the PC or related servers in the intranet do not directly access the public network, but can access the business servers in the DMZ area, then I can use the host of the edge node as an RG node to transfer the intranet online traffic to our C2 facilities. Does it sound very similar to the conventional proxy transfer online? However, this is just a form of display of the skill implementation. Let's continue to look at more TIPS.
+
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/1660187188707.png)
+
+When we take down an edge host during the management process, assuming that we have taken over the Shell permissions, we will deploy RG on this server as our front-end node** (in actual scenarios, configuration files are hard-coded in the program, and even the Trojan horse and RG are combined into the same program)**.
+
+**The configuration file is as follows:**
+
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/1660183480032.png)
+
+For the specific configuration, we mainly focus on the arrows. **The arrow 1 above is the HOST domain name for the interaction between the intranet host and the edge node**. It is recommended to set the relevant intranet domain name according to the specific scenario of the target unit. Imagine the traffic interaction between two hosts in the intranet about the intranet domain name. Does BT have the courage to directly cut off the interactive traffic? Of course, if they can determine that it is malicious interactive traffic. **The arrow 2 points to the setting of the conventional domain frontend**. This key-value pair, the key corresponds to the online HOST and the value corresponds to the proxy address. Here we can set it to any HTTPS domain name using the same CDN manufacturer**(CDN node IP is also OK, remember to bring http(s):// protocol).**
+
+EdgeHost is the domain name used by our cloud service provider's domain frontend, which is also the domain name used by the RG edge node when interacting with C2 through the CDN node. Yes, RG will modify the HOST domain name of the legitimate request and modify it to the cloud service CDN domain name that can communicate normally.
+
+EdgeTarget is the domain name for intranet interaction, which needs to be the same as arrow 1. Only traffic requested by the domain name set here by HOST will be considered legitimate, and RG will be further modified to the cloud service CDN domain name for subsequent communication.
+
+**Here we summarize:**
+
+That is, the interaction between the edge node and the host in the intranet is through the set intranet domain name. When the Trojan initiates a request to the edge node of the RG, it will determine whether the request traffic HOST is the intranet domain name set in the configuration file. If it is in compliance, it is considered legitimate. The RG will modify the HOST to the cloud service provider CDN domain name set by the EdgeHost for subsequent communication and transfer the traffic to the C2 server, achieving full concealment and high obfuscation of the entire link. Imagine that the intranet domain name interacts with the edge node with the intranet domain name, but the edge node further changes the actual interactive proxy address and interactive HOST, achieving an asymmetric interactive information between the two hosts, making tracing more difficult and difficult to investigate.
+
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/66b9e60fb8303b3c6b457cc8134a436.png)
+
+**Interaction traffic between edge nodes and intranet hosts, as shown in the figure above**
+
+Another advantage of this approach is that in the cloud sandbox environment, since our interactive IP is customized according to the intranet, it is impossible for the sandbox to perform connectivity correlation analysis on the intranet IP during analysis.
+
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/9f247da30a078c83079465a55d6df6d.jpg)
+
+One thing to note when configuring is that the HOST for the Trojan request should be:
+
+- **HOST: Intranet domain name (set in the RG configuration file)**
+- **IP: Intranet IP of edge host**
+- **Online port: 443 (matches the http(s) listening port in the RG configuration file)**
+- **Listening port: the port where C2 is actually online**
+
+The C2 listener settings are as follows:
+
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/1660189311172.jpg)
+
+In contrast to the request, the HOST of the C2 listener should be the CDN domain name of the cloud service provider, as long as the final traffic can be transferred to the C2 server.
+
+Intranet node interaction traffic, as shown in the figure below, it can be seen that the intranet IP in the DMZ area normally accesses port 443. It is not surprising that the intranet server or PC is connected to the business system in the DMZ area.
+
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/e84350da6fc7e5b0195177047cf945c.jpg)
+
+The interactive traffic of the edge host is shown in the figure. In actual scenarios, there will not be a large number of TIME_WAIT. Here, I set the heartbeat packet sleep to 0 for testing. It is safer to set a larger heartbeat packet jitter and sleep time in actual scenarios. And I personally think that HTTP traffic is not used in actual scenarios. Isn't plain text traffic a waste of time? So generally this port will not be opened. We will change the RG file name to Tomcat, Apache, Nginx, etc. to make the interaction look more confusing.
+
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/2d703582e313f535c6c4f48b922bed8.jpg)
+
+Regarding the heartbeat packet jitter and sleep time, you can simply set the following fields in the Malleable C2 Profile file.
+
+```bash
+set sleeptime "3000";
+set jitter    "20";
+```
+
+If you do not set it, an abnormal heartbeat packet alarm may appear. Of course, in most cases, researchers will think it is a false alarm and ignore it. However, for the sake of safety, it is recommended to configure it so that it will not cause an abnormal heartbeat packet alarm. At that time, it was tested by 360 NDR equipment, and the specific effect is as follows:
+
+![image.png](https://github.com/wikiZ/RedGuardImage/raw/main/3b15f94c57fa78bcf31cd67f4b8f191.jpg)
+
+As for HTTPS traffic, any traffic monitoring device on the market cannot censor traffic. Current monitoring devices are essentially sensitive word matching. Even in a certain manufacturer's equipment data packet detection competition, it is required to use plaintext packets, which makes people wonder whether RTs really interact with plaintext traffic in actual combat scenarios? In addition to the asymmetric interactive information mentioned above, the biggest advantage of this method is that the RG node is placed at the edge node to achieve front-end traffic control, thus giving it the same functional effect as a regular RG.
+
+The back-end nodes of the RG nodes are transformed into CDN nodes to forward to the C2 server. In conventional scenarios, the front-end nodes of the domains are all used as the first-layer request nodes, and the edge hosts are put online after the RG. The interaction between the business system in the DMZ area and the public network CDN IP also looks so harmonious. In this process, neither the intranet host nor the edge host directly interacts with our C2, which is also the elegance of this advanced concealment technique.
+
+**Of course, in addition to the above-mentioned advantages over netsh and iptables proxy transfer, simple configuration and the absence of configuration records are also one of the advantages. **
 
 # 0x05 Loading
 
